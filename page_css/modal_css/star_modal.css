@@ -1,0 +1,79 @@
+/* star_modal_style */
+.star_option_modal{
+    transition: 0.5s;
+    top: 100px;
+    display: none;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.695);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    
+}
+.star_option{
+    padding-top: 20px;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    position: relative;
+    top: 20%;
+    border-radius: 5px;
+    margin: auto;
+}
+.star_option p.email_information{
+    display: none;
+}
+.star_option b{
+    font-size: 20px;
+}
+.star_option .buttons{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.star_option .buttons input{
+    display: none;
+}
+.star_option button{
+   padding: 5px;
+   transition: 0.5s;
+   font-size: 18px;
+   width: 100px;
+   margin: 0 10px;
+   cursor: pointer;
+   border: none;
+   border-radius: 5px;
+   border: 2px solid #d08e0b;
+   color: #d08e0b;
+   background-color: rgb(51, 51, 51);
+}
+.star_option button:hover{
+    opacity: 0.5;
+}
+.star_option span.star_number{
+    color: #d08e0b;
+} 
+.star_option .count_number{
+    color: rgb(79, 130, 3);
+    font-size: 18px;
+}
+.star_option .count_number p{
+    transition: 0.5s;
+}
+.star_option textarea{
+    resize: none;
+    outline: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 20px;
+    padding: 5px;
+    border: 2px solid #d08e0b;
+    border-radius: 5px;
+    bottom: 80px;
+}

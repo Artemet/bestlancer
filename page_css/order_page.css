@@ -1,0 +1,196 @@
+/* order_page_style */
+.order_page .user_information{
+    display: flex;
+    align-items: center;
+}
+.order_page .user_information img{
+    border: 2px solid #d08e0b;
+    border-radius: 5px;
+    height: 80px;
+    width: 80px;
+    margin-right: 20px;
+}
+.order_page .user_information a{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(79, 130, 3);
+}
+.order_page .user_information a:hover{
+    text-decoration: underline;
+}
+.order_page .user_information a span{
+    color: #d08e0b;
+}
+.order_page .header h2{
+    padding-top: 35px;
+    font-size: 25px !important;
+    border-top: 3px solid #d08e0b;
+}
+.order_page .order_information{
+    border-bottom: 3px solid rgb(79, 130, 3);
+    padding-bottom: 16px;
+}
+.order_page .price{
+    color: #d08e0b;
+    font-size: 21px;
+}
+.order_page .price p{
+    margin: 0;
+}
+.order_page .header_wrapper{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.order_page .button_choice{
+    padding: 10px;
+    display: grid;
+    grid-gap: 10px;
+}
+.order_page .button_choice button{
+    width: 200px;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #d08e0b;
+    color: rgb(51, 51, 51);
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+.order_page .button_choice button:hover{
+    opacity: 0.7;
+}
+.order_page .button_choice .ready_application{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.order_page .users_applications{
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+.order_page .application{
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid rgb(79, 130, 3);
+}
+.order_page .application .application_part{
+    display: flex;
+    align-items: center;
+}
+.order_page .application img{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    border: 2px solid #d08e0b;
+    margin-right: 10px;
+}
+.order_page .application a{
+    color: rgb(79, 130, 3);
+    text-decoration: none;
+    font-size: 18px;
+}
+.order_page .application_number_wrapper{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.order_page .application_number_wrapper a{
+    color: #d08e0b;
+    font-size: 20px;
+}
+.order_page .application_number_wrapper span{
+    font-size: 22px;
+    color: rgb(79, 130, 3);
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;    
+}
+.order_page .user_order .application_part{
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+}
+.order_page .user_order .arrow{
+    text-align: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+.order_page .user_order .arrow svg{
+    transition: 0.5s;
+}
+.order_page .user_order .arrow svg.animation{
+    transform: rotate(180deg);
+}
+.order_page .user_order .part_one{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 10px;
+}
+.order_page .user_order .part_one p{
+    font-size: 18px;
+    border-right: 2px solid rgb(79, 130, 3);
+    border-bottom: 2px solid #d08e0b;
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+}
+.order_page .user_order .part_one span{
+    color: #d08e0b;
+    font-weight: 600;
+    font-size: 25px;
+    padding-left: 20px;
+}
+.order_page .user_order .part_two{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+    align-items: center;
+}
+.order_page .user_order .part_two p{
+    color: rgb(79, 130, 3);
+    font-size: 18px;
+    margin: 0;
+}
+.order_page .user_order .sub_information{
+    transition: 0.5s;
+    overflow: hidden;
+    height: 0;
+    background-color: rgba(211, 211, 211, 0.206);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.order_page .user_order .sub_information_animation{
+    height: 17vh;
+}
+.order_page .user_order .button_option{
+    display: grid;
+    margin-left: auto;
+    width: 250px;
+    grid-gap: 10px;
+}
+.order_page .user_order .button_option button{
+    cursor: pointer;
+    background-color: #d08e0b;
+    color: rgb(51, 51, 51);
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    transition: 0.5s;
+    padding: 5px;
+    font-size: 15px;
+}
+.order_page .user_order .button_option button:hover{
+    opacity: 0.7;
+}
+.order_page .files{
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 3px solid rgb(79, 130, 3);
+}
+.order_page .files a{
+    color: #d08e0b;
+    font-size: 17px;
+}

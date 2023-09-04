@@ -1,0 +1,25 @@
+/* tasks_medias */
+@media only screen and (max-width: 728px){
+    .tasks_container{
+        grid-template-columns: 1fr;
+    }
+    .tasks_container .make_order{
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 385px){
+    .orders .order{
+        grid-template-columns: 1fr;
+    }
+    .tasks_container .order_part{
+        border: none;
+    }
+    .tasks_container p.price{
+        text-align: center;
+    }
+    .tasks_container p.price{
+        padding-top: 10px;
+        margin-top: 10px;
+        border-top: 2px solid rgb(79, 130, 3);
+    }
+}

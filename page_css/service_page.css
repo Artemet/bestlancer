@@ -1,0 +1,107 @@
+/* service_page_style */
+.service_page .user_information{
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.service_page .user_information img{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    border: 2px solid #d08e0b;
+    margin-right: 10px;
+}
+.service_page .user_wrapper{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid rgb(79, 130, 3);
+}
+.service_page .icon_choice{
+    padding-top: 20px;
+    display: flex;
+}
+.service_page .icon_choice svg{
+    margin-left: 10px;
+    font-size: 23px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.service_page .icon_choice svg:hover{
+    fill: tomato !important;
+}
+.service_page .user_wrapper a{
+    color: rgb(79, 130, 3);
+    font-size: 20px;
+    text-decoration: none;
+}
+.service_page .service_image{
+    text-align: center;
+}
+.service_page .service_image img{
+    height: 500px;
+    border-radius: 20px;
+}
+.service_page .button_choice{
+    display: flex;
+    align-items: center;
+    border-top: 3px solid #d08e0b;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+.service_page .button_choice button{
+    background-color: rgb(79, 130, 3);
+    color: white;
+    padding: 7px;
+    font-weight: 600;
+    border-radius: 5px;
+    border: none;
+    font-size: 17px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.service_page .button_choice button:hover{
+    opacity: 0.5;
+}
+.service_page .button_choice button svg{
+    fill: white !important;
+}
+.service_page .service_information{
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 3px solid rgb(79, 130, 3);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.service_page .service_information .main_information{
+    border-right: 3px solid rgb(79, 130, 3);
+    padding-right: 20px;
+}
+.service_page .service_information .price span{
+    padding-left: 20px;
+    color: #d08e0b;
+    font-weight: 600;
+    font-size: 20px;
+}
+.service_page .service_information h4{
+    margin: 0;
+    font-size: 24px;
+}
+.service_page .service_information p{
+    margin-bottom: 10px;
+}
+.service_page .service_information b{
+    color: #d08e0b;
+    font-size: 18px;
+}
+.service_page .none_click{
+    pointer-events: none;
+    opacity: 0.5;
+}
+.service_page .none_click span{
+    padding-left: 10px;
+}

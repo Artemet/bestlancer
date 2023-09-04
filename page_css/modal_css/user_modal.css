@@ -1,0 +1,176 @@
+/* user_modal */
+.change_profile{
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    border: 3px solid rgb(79, 130, 3);
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 50px;
+}
+.change_profile .close{
+    position: absolute;
+    right: 0;
+}
+.change_profile .close svg{
+    font-size: 30px;
+    margin-right: 20px;
+    transition: 0.5s;
+}
+.change_profile .close svg:hover{
+    transform: rotate(180deg);
+}
+.change_profile h2{
+    margin-top: 0;
+    border-bottom: 3px solid rgb(79, 130, 3);
+    padding-bottom: 19px;
+}
+.change_profile .img_change .file_part{
+    display: flex;
+    align-items: center;
+}
+.change_profile .img_change .file_part button{
+    background: none;
+    padding: 0;
+    border: none;
+}
+.change_profile .img_change img{
+    border-radius: 10px;
+    border: 3px solid #d08e0b;
+    margin-right: 10px;
+    height: 120px;
+    width: 120px;
+}
+.change_profile svg{
+    font-size: 23px;
+    transition: 0.5s;
+    margin-bottom: 20px;
+    fill: rgb(79, 130, 3) !important;
+}
+.change_profile input.choose_file{
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    width: 20px !important;
+}
+.change_profile svg.file_choice{
+    position: relative;
+}
+.change_profile .account_information{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid rgb(79, 130, 3);
+}
+.change_profile .account_information div{
+    display: grid;
+}
+.change_profile input{
+    width: 176px !important;
+}
+.change_profile select{
+    margin-top: 10px;
+    outline: none;
+    width: 176px;
+    padding: 5px;
+    border: 3px solid #d08e0b;
+    border-radius: 5px;
+}
+.change_profile input.submit_button{
+    width: 125px !important;
+    padding: 5px;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 3px solid #d08e0b;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.5s;
+}
+.change_profile input.submit_button:hover{
+    color: #d08e0b;
+}
+.change_profile h3{
+    margin-bottom: 5px;
+}
+.change_profile form.change_information_form{
+    margin-top: 20px;
+    border-top: 3px solid rgb(79, 130, 3);
+}
+.change_profile .wrapper{
+    height: 228px;
+    overflow-x: hidden;
+    padding-right: 30px;
+}
+.change_profile .wrapper::-webkit-scrollbar{
+    background-color: white;
+    width: 3px;
+}
+.change_profile .wrapper::-webkit-scrollbar-thumb{
+    background-color: #d08e0b;
+}
+.change_profile form p.click{
+    width: 91px;
+}
+.change_profile form .click_none{
+    display: none;
+}
+.change_profile form .click_block{
+    display: block !important;
+}
+.change_profile form button.click{
+    display: none;
+}
+.change_profile form .click{
+    padding: 5px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(53, 52, 52);
+    border-radius: 5px;
+    border: 3px solid #d08e0b;
+    transition: 0.5s;
+}
+.change_profile form .click:hover{
+    color: #d08e0b;
+}
+.change_profile textarea{
+    resize: none !important;
+}
+.change_profile .country_wrapper{
+    position: relative;
+}
+.change_profile input.country_input{
+    cursor: pointer;
+    /* position: relative; */
+}
+.change_profile .country_sub{
+    background-color: rgb(79, 130, 3);
+    height: 120px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.5s;
+    width: 179px;
+    overflow: auto;
+    position: absolute;
+    top: 96px;
+    display: none !important;
+    opacity: 0;
+}
+.change_profile .country_sub_open{
+    display: grid !important;
+}
+.change_profile .country_sub p{
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.5s;
+    margin: 5px 0;
+}
+.change_profile .country_sub p:hover{
+    color: black;
+}

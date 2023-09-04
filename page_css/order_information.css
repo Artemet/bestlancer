@@ -1,0 +1,30 @@
+.order_information .page_choice{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+.order_information .page_choice div{
+    padding: 0 50px;
+}
+.order_information .page_choice a{
+    color: rgb(79, 130, 3);
+    font-weight: 600;
+    font-size: 23px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+.order_information .page_choice a:hover{
+    opacity: 0.5;
+}
+.order_information .page_choice a.active{
+    color: #d08e0b;
+}
+.order_information .page_choice a.active:hover{
+    opacity: 1;
+}
+.order_information .page_choice .under_line{
+    width: 0;
+    height: 3px;
+    background-color: #d08e0b;
+    margin: 15px auto;
+}

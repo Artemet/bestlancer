@@ -1,0 +1,160 @@
+/* freelance_tasks_style */
+.tasks_container{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 20px;
+}
+.tasks_container .make_order{
+    background-color: white;
+    width: 250px;
+    border-radius: 5px;
+}
+.tasks_container img.user_image{
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    border: 2px solid rgb(79, 130, 3);
+    margin-right: 10px;
+}
+.tasks_container .user_information{
+    display: flex;
+    align-items: center;
+}
+.tasks_container .user_information p{
+    color: #d08e0b;
+    margin: 0;
+}
+.tasks_container .user_information a:hover{
+    text-decoration: underline rgb(79, 130, 3);
+}
+.tasks_container .make_order .wrapper{
+    padding: 10px;
+}
+.tasks_container .make_order b.filter_title{
+    font-size: 18px;
+}
+.tasks_container .make_order .link_part{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    line-height: 30px;
+    border-bottom: 2px solid gray;
+    display: grid;
+}
+.tasks_container .make_order .link_part p{
+    color: #d08e0b;
+    cursor: pointer;
+    transition: 0.5s;
+    margin: 0;
+    width: fit-content;
+}
+.tasks_container  a.none_sign{
+    pointer-events: none;
+    opacity: 0.5;
+}
+.tasks_container  a.order_page_link{
+    color: black;
+}
+.tasks_container .make_order .link_part p:hover{
+    color: rgb(79, 130, 3);
+}
+.tasks_container .make_order .link_part p.click{
+    color: rgb(79, 130, 3);
+}
+.tasks_container button{
+    background-color: rgb(79, 130, 3);
+    width: 100%;
+    color: white;
+    transition: 0.5s;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.tasks_container button:hover{
+    opacity: 0.5;
+}
+.tasks_container button.none_press{
+    opacity: 0.5;
+    cursor: no-drop;
+}
+.tasks_container .none_order_link{
+    pointer-events: none;
+}
+.tasks_container .order_button{
+    border-bottom: 2px solid lightgray;
+    margin-bottom: 20px;
+}
+.tasks_container .category p{
+    margin: 0;
+}
+.tasks_container .category b{
+    color: rgb(79, 130, 3);
+    cursor: pointer;
+}
+.tasks_container .payment{
+    display: flex;
+    align-items: center;
+}
+.tasks_container .payment p{
+    padding-right: 10px;
+}
+.tasks_container p.price{
+    padding: 0 30px;
+    width: 50px;
+    font-size: 20px;
+    color: rgb(79, 130, 3);
+}
+.tasks_container .payment svg{
+    font-size: 25px;
+}
+.tasks_container .payment svg.payed_true{
+    fill: #2fb215 !important;
+}
+.tasks_container .payment svg.payed_false{
+    fill: red !important;
+}
+.tasks_container .order_part{
+    border-right: 2px solid #d08e0b;
+    padding-right: 10px;
+    width: 95%;
+}
+.tasks_container .order_part h3{
+    cursor: pointer;
+}
+.orders a{
+    text-decoration: none;
+}
+.orders .order{
+    padding: 10px;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid #d08e0b;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+.orders .order:hover{
+    border: 2px solid rgb(79, 130, 3);   
+}
+.tasks_container .orders{
+    position: relative;
+}
+.tasks_container p.no_orders{
+    font-size: 18px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    padding-left: 190px;
+    text-align: center;
+    display: none;
+}
+.orders .order a.more_tz_link{
+    color: rgb(79, 130, 3);
+    padding-left: 5px;
+}

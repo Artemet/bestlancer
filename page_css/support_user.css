@@ -1,0 +1,37 @@
+/* user_support_style */
+.support_container .right_in{
+    width: 400px;
+    padding: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 3px solid #d08e0b;
+    color: white;
+    background-color: rgb(53, 52, 52);
+}
+.support_container textarea{
+    resize: vertical;
+}
+.support_container .right_in::placeholder{
+    color: white;
+}
+.support_container form p{
+    color: rgb(79, 130, 3);
+    font-size: 20px;
+}
+.support_container button{
+    margin-top: 20px;
+    transition: 0.5s;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: rgb(79, 130, 3);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+.support_container button:hover{
+    color: #d08e0b;
+}
+.support_container .none_right{
+    opacity: 0.5;
+    pointer-events: none;
+}

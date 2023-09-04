@@ -1,0 +1,29 @@
+/* my_orders_style */
+.my_orders .order{
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    border-bottom: 3px solid rgb(79, 130, 3);
+}
+.my_orders .price p{
+    color: #d08e0b;
+    font-weight: 600;
+    font-size: 23px;
+}
+.my_orders .order a{
+    text-decoration: none;
+    color: black;
+}
+.my_orders .order h3{
+    font-size: 23px;
+    width: fit-content;
+}
+.my_orders .order p{
+    padding: 10px 0;
+    border-top: 3px solid #d08e0b;
+    border-bottom: 3px solid #d08e0b;
+}
+.my_orders .order span{
+    color: #d08e0b;
+    font-weight: 600;
+    font-size: 23px;
+}
