@@ -1,0 +1,63 @@
+/* other_modal_style */
+.other_modal{
+    transition: 0.5s;
+}
+.other_container{
+    background-color: white;
+    padding: 0 20px;
+    width: 399px;
+    height: 100%;
+    position: absolute;
+    right: -100vw;
+    transition: 0.5s;
+}
+.other_container_open{
+    right: 0;
+}
+.other_container svg{
+    transition: 0.5s;
+    cursor: pointer;
+}
+.other_container svg:hover{
+    fill: rgb(79, 130, 3) !important;
+}
+.other_container h2{
+    margin: 0;
+}
+.other_container .header_wrapper{
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 3px solid rgb(79, 130, 3);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.other_container .header_wrapper svg{
+    font-size: 20px;
+}
+.other_container a{
+    color: #d08e0b;
+    text-decoration: none;
+    transition: 0.5s;
+}
+.other_container a:hover{
+    opacity: 0.5;
+}
+.other_container .link_choice{
+    display: grid;
+    grid-gap: 10px;
+}
+.other_container .go_out{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 3px solid  rgb(51, 51, 51);
+}
+.other_container .go_out a{
+    color: rgb(79, 130, 3);
+}
+.other_container .help{
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 120px;
+}

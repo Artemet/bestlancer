@@ -1,0 +1,21 @@
+/* header_line_medias */
+@media only screen and (max-width: 1100px){
+    .header_line .header_part_one div{
+        padding-right: 20px;
+    }
+}
+@media only screen and (max-width: 1032px){
+    .header_line .mobile_menu{
+        display: block;
+        padding-right: 40px;
+    }
+    .header_line .header_part_two{
+        display: none;
+    }
+    .header_line .links{
+        display: none;
+    }
+    .header_line .line_wrapper{
+        grid-template-columns: 1fr 1fr auto;
+    }
+}

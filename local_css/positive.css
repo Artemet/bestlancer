@@ -1,0 +1,16 @@
+.positive{
+    margin-bottom: 20px;
+}
+.positive h2 u{
+    color: #d08e0b;
+}
+.positive a{
+    color: rgb(79, 130, 3);
+}
+.positive_text{
+    text-align: center;
+}
+.positive_text b{
+    padding: 10px;
+    font-size: 25px;
+}
