@@ -29,6 +29,5 @@ function category_menu(){
             get_category_input.value = item.innerHTML;
         });
     });
-    get_categorys[0].click();
 }
 category_menu();

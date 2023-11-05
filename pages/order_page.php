@@ -1,86 +1,87 @@
 <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-    session_start();
-    $user_order = FALSE;
-    include "../bd_send/database_connect.php";
-    include "../layouts/header.php";
-    echo "<link rel='stylesheet' href='../page_css/order_page.css'>";
-    include "../layouts/modal/change_information.php";
+session_start();
+$user_order = FALSE;
+include "../bd_send/database_connect.php";
+include "../layouts/header.php";
+if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
+    $order_id = $_GET['order_id'];
+    $sql = "SELECT * FROM orders WHERE id = $order_id";
+    $query = mysqli_query($bd_connect, $sql);
+    $order = mysqli_fetch_assoc($query);
 
-    if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
-        $order_id = $_GET['order_id'];
-        $sql = "SELECT * FROM orders WHERE id = $order_id";
-        $query = mysqli_query($bd_connect, $sql);
-        $order = mysqli_fetch_assoc($query);
-
-        if ($order) {
-            $pageTitle = $order['order_name'];
-        } else {
-            echo "<link rel='stylesheet' href='../local_css/error.css'>";
-            echo "<title>Заказ не найден</title>";
-            include "../bd_send/warnings/rong_order.php";
-            exit;
-        }
+    if ($order) {
+        $pageTitle = $order['order_name'];
     } else {
+        echo "<link rel='stylesheet' href='../local_css/error.css'>";
+        echo "<title>Заказ не найден</title>";
+        include "../bd_send/warnings/rong_order.php";
         exit;
     }
-    echo "<title>$pageTitle</title>";
-
-    $row = mysqli_fetch_assoc($query);
-    include "../layouts/header_line.php";
+} else {
+    header("Location: home.php");
+    exit;
+}
+echo "<link rel='stylesheet' href='../page_css/order_page.css'>";
+echo "<title>$pageTitle</title>";
+include "../layouts/modal/change_information.php";
+$row = mysqli_fetch_assoc($query);
+include "../layouts/header_line.php";
 ?>
 <div class="order_page container">
     <div class="header">
         <div class="header_title">
             <div class="header_wrapper">
                 <?php
-                    //icon_connect
-                    $query = mysqli_query($bd_connect, $sql);
-                    $row = mysqli_fetch_assoc($query);
-                    $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                    $nik = $row['nik'];
-                    $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                    $icon_resolt = mysqli_query($connection, $icon_query);
-                    $icon_row = mysqli_fetch_assoc($icon_resolt);
-                    $user_icon = $icon_row['icon_path'];
-                    mysqli_close($connection);
+                //icon_connect
+                $query = mysqli_query($bd_connect, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $nik = $row['nik'];
+                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
+                $icon_resolt = mysqli_query($bd_connect, $icon_query);
+                $icon_row = mysqli_fetch_assoc($icon_resolt);
+                $user_icon = $icon_row['icon_path'];
                 ?>
                 <div class="user_information">
-                    <div><img src="../bd_send/user/user_icons/<?=$user_icon?>" alt="" draggable="false"></div>
+                    <div><img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false"></div>
                     <div>
-                    <?php
-                        $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                        <?php
                         $nik = $order['nik'];
                         $query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                        $result = mysqli_query($connection, $query);
+                        $result = mysqli_query($bd_connect, $query);
                         if ($result && mysqli_num_rows($result) > 0) {
                             $row = mysqli_fetch_assoc($result);
                         }
-                        echo '<a href="user_page.php?user_id='.$row['id'].'">'. $order['nik'] .'</a>';
-                        mysqli_close($connection);
-                    ?>
+                        echo '<a href="user_page.php?user_id=' . $row['id'] . '">' . $order['nik'] . '</a>';
+                        ?>
                     </div>
                 </div>
                 <?php
+                if (isset($_SESSION["nik"])) {
                     $nik = $_SESSION["nik"];
-                    $order_name = $order['order_name'];
-                    $sql = "SELECT * FROM orders_responses";
-                    $query = mysqli_query($bd_connect, $sql);
-                    if ($order['nik'] === $nik){
+                }
+                $order_name = $order['order_name'];
+                $sql = "SELECT * FROM orders_responses";
+                $query = mysqli_query($bd_connect, $sql);
+                if (isset($_SESSION["nik"])) {
+                    if ($order['nik'] === $nik) {
                         $user_order = TRUE;
-                    } else{
+                    } else {
                         $user_order = FALSE;
                     }
-                    if ($user_order === FALSE){
+                }
+                if ($user_order === FALSE) {
+                    if (isset($_SESSION["nik"]) && $_SESSION["role"] == "seller") {
                         echo '<div class="button_choice">
                                 <div>
-                                    <a href="make_application.php?order_id='.$order_id.'"><button>Добавить заявку</button></a>
+                                    <a href="make_application.php?order_id=' . $order_id . '"><button>Добавить заявку</button></a>
                                 </div>
-                                <div><a href=""><button>Тарифный план</button></a></div>
-                        </div>';
+                                <div><a href="rates.php"><button>Тарифный план</button></a></div>
+                            </div>';
                     }
+                }
                 ?>
             </div>
             <h2>
@@ -92,7 +93,8 @@
         </p>
         <?php if (!empty($order['file_path'])): ?>
             <div class="files">
-                <a href="../bd_send/order/order_files/<?= $order['file_path'] ?>" title="<?= $order['file_path'] ?>" download>Скачать документ</a>
+                <a href="../bd_send/order/order_files/<?= $order['file_path'] ?>" title="<?= $order['file_path'] ?>"
+                    download>Скачать документ</a>
             </div>
         <?php endif; ?>
         <div class="price">
@@ -107,30 +109,41 @@
     <div class="line" style="width: 80%"></div>
     <div class="users_applications">
         <div class="application_number_wrapper">
-            <div><h2>Заяки фрилансеров</h2></div>
+            <div>
+                <h2>Заяки фрилансеров</h2>
+            </div>
             <div class="application_number"><span>0</span></div>
         </div>
         <div class="applications">
             <?php
-                while ($row = mysqli_fetch_assoc($query)) {
-                    $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                    $nik = $row['nik'];
-                    $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                    $id_result = mysqli_query($connection, $id_query);
-                    $id_row = mysqli_fetch_assoc($id_result);
-                    $user_id = $id_row['id'];
-                    //user_icon
-                    $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                    $icon_resolt = mysqli_query($connection, $icon_query);
-                    $icon_row = mysqli_fetch_assoc($icon_resolt);
-                    $user_icon = $icon_row['icon_path'];
-                    mysqli_close($connection);
-                    if ($row['order_name'] === $order_name) {
-                        if ($user_order === TRUE) {
-                            echo '
+            while ($row = mysqli_fetch_assoc($query)) {
+                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                $nik = $row['nik'];
+                $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
+                $id_result = mysqli_query($connection, $id_query);
+                $id_row = mysqli_fetch_assoc($id_result);
+                $user_id = $id_row['id'];
+                //user_icon
+                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
+                $icon_resolt = mysqli_query($connection, $icon_query);
+                $icon_row = mysqli_fetch_assoc($icon_resolt);
+                $user_icon = $icon_row['icon_path'];
+                mysqli_close($connection);
+                $web_payment = "";
+                $user_message = $row["user_message"];
+                if (empty($user_message)) {
+                    $user_message = "<b class='no_message'>Нет сообщения</b>";
+                }
+                if ($row['order_name'] === $order_name) {
+                    $payment_text = $row["payment_choice"];
+                    if (!empty($row["payment_choice"])) {
+                        $web_payment = "| $payment_text";
+                    }
+                    if ($user_order === TRUE) {
+                        echo '
                                 <div class="application user_order">
                                     <div class="application_part">
-                                        <div><img src="../bd_send/user/user_icons/'. $user_icon .'" alt="" draggable="false"></div>
+                                        <div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div>
                                         <div>
                                             <a href="user_page.php?user_id=' . $user_id . '">' . $row["nik"] . '</a>
                                         </div>
@@ -142,44 +155,48 @@
                                         </div>
                                     </div>
                                     <div class="sub_information">
-                                        <div class="part_one">
-                                            <div><p>' . $row["user_message"] . '</p></div>
+                                        <div class="part_one part">
+                                            <div><p>' . $user_message . '</p></div>
                                             <div><span>' . $row["price"] . '$</span></div>
                                         </div>
-                                        <div class="part_two">
-                                            <div><p>' . $row["time"] . ' дня</p></div>
-                                            <div><p>' . $row["payment_option"] . '</p></div>
+                                        <div class="part_two part">
+                                            <div><p>' . $row["time"] . ' суток</p></div>
+                                            <div><p>' . $row["payment_option"] . '' . $web_payment . '</p></div>
                                             <div class="button_option">
                                                 <button>Назначить исполнителем</button>
-                                                <button>Связаться с исполнителем</button>
+                                                <a href="user_page.php?user_id=' . $user_id . '"><button>Посмотреть профиль</button></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>';
-                        } else {
-
-                            echo '
+                    } else {
+                        echo '
                                 <div class="application">
                                     <div class="application_part">
-                                        <div><img src="../bd_send/user/user_icons/'. $user_icon .'" alt="" draggable="false"></div>
+                                        <div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div>
                                         <div>
                                             <a href="user_page.php?user_id=' . $user_id . '">' . $row["nik"] . '</a>
                                         </div>
                                     </div>
                                 </div>';
-                        }
                     }
                 }
+            }
             ?>
         </div>
     </div>
 </div>
+<?php
+include "../layouts/footer.php";
+?>
 <script src="../page_js/order/account_check.js"></script>
 <script src="../page_js/order/order_price_check.js"></script>
 <script src="../page_js/order/application_number.js"></script>
 <?php
-    if ($user_order === TRUE){
-        echo '<script src="../page_js/order/application_menu.js"></script>';
-    }
-    include "../layouts/footer.php";
+if ($user_order === TRUE) {
+    echo '<script src="../page_js/order/application_menu.js"></script>';
+}
 ?>
+</body>
+
+</html>

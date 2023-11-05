@@ -39,3 +39,19 @@ function application_value(){
     });
 }
 application_value();
+//value_save
+function value_save(){
+    const get_inputs = document.querySelectorAll(".application_page .right_in");
+    const get_order_id = document.querySelector("p.order_id_number");
+    const id_convert = parseInt(get_order_id.innerHTML.trim(), 10);
+    console.log(id_convert);
+    if (id_convert === id_convert){
+        if (localStorage.getItem("order_text")) {
+            get_inputs[2].value = localStorage.getItem("order_text");
+        }
+        get_inputs[2].addEventListener("input", function () {
+            localStorage.setItem("order_text", get_inputs[2].value);
+        });
+    }
+}
+value_save();

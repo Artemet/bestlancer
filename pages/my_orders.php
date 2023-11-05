@@ -1,11 +1,11 @@
 <?php
-    session_start();
-    include "../bd_send/database_connect.php";
-    include "../layouts/header.php";
-    echo "<link rel='stylesheet' href='../page_css/order_information.css'>";
-    echo "<link rel='stylesheet' href='../page_css/my_orders.css'>";
-    echo "<title>Мои заказы</title>";
-    include "../layouts/header_line.php";
+session_start();
+include "../bd_send/database_connect.php";
+include "../layouts/header.php";
+echo "<link rel='stylesheet' href='../page_css/order_information.css'>";
+echo "<link rel='stylesheet' href='../page_css/my_orders.css'>";
+echo "<title>Мои заказы</title>";
+include "../layouts/header_line.php";
 ?>
 <div class="my_orders order_information container">
     <div class="page_choice">
@@ -23,11 +23,13 @@
             <h2>Мои заказы</h2>
         </div>
         <div class="orders">
-        <?php
+            <?php
             $user_nik = $_SESSION["nik"];
+            $order_temp = 0;
             $sql = "SELECT * FROM orders WHERE nik = '$user_nik'";
             $query = mysqli_query($bd_connect, $sql);
             while ($row = mysqli_fetch_assoc($query)) {
+                $order_temp++;
                 $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                 $order_id = $row['id'];
                 echo '<div class="order">
@@ -46,10 +48,16 @@
                 echo '</div>
                         </div>';
             }
-        ?>
+            if ($order_temp == 0) {
+                echo "<p>Нет заказов</p>";
+            }
+            ?>
         </div>
     </div>
 </div>
 <?php
-    include "../layouts/footer.php";
+include "../layouts/footer.php";
 ?>
+</body>
+
+</html>

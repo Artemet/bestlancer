@@ -21,6 +21,9 @@ function repitation_scroll(){
         const get_reoetition_number_block = document.querySelectorAll(".repitation_container .main_reoitation .number");
         const get_reoetition_number = document.querySelectorAll(".repitation_container .main_reoitation span");
         const get_reoetition_number_b = document.querySelectorAll(".repitation_container .main_reoitation b");
+        get_reoetition_number_b.forEach(element => {
+            element.textContent = element.textContent.replace(/\s/g, '');
+        });
         let resolt_numbers = [get_reoetition_number_b[0].innerHTML, get_reoetition_number_b[1].innerHTML, get_reoetition_number_b[2].innerHTML];
         // setTimeout( () => {
         //     get_reoetition_number_b.forEach( (item) => {

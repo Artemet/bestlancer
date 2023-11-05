@@ -1,15 +1,16 @@
 <?php
-    session_start();
-    include "../layouts/header.php";
-    echo "<title>Bestlancer</title>";
+session_start();
+include "../bd_send/database_connect.php";
+include "../layouts/header.php";
 ?>
 <link rel="stylesheet" href="../page_css/home.css">
 <link rel="stylesheet" href="../page_css/media/home_media.css">
 <link rel="stylesheet" href="../page_css/modal_css/star_modal.css">
 <link rel="stylesheet" href="../local_css/media/star_modal_media.css">
 <?php
-    include "../layouts/modal/star_option.php";
-    include "../layouts/header_line.php";
+echo "<title>Bestlancer</title>";
+include "../layouts/modal/star_option.php";
+include "../layouts/header_line.php";
 ?>
 <div class="freelance_container container">
     <div class="title_part">
@@ -17,39 +18,59 @@
             <h2>Фриланс Биржа</h2>
             <div class="start_system">
                 <?php
-                    if (isset($_SESSION["nik"])){
-                        for ($i = 1; $i < 6; $i++) {
-                            echo '<div class="star"><svg class="' . $i . '" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
-                        }
-                    } else {
-                        for ($i = 1; $i < 6; $i++) {
-                            echo '<div class="star" onclick="none_user_sing()"><svg class="none_registor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
+                if (isset($_SESSION["nik"])) {
+                    $user_email = $_SESSION["email"];
+                    $email_contain = false;
+                    $email_sql = "SELECT `email` FROM `reviews`";
+                    $email_query = mysqli_query($bd_connect, $email_sql);
+                    while ($email_row = mysqli_fetch_assoc($email_query)) {
+                        if (stripos($email_row['email'], $user_email) !== false) {
+                            $email_contain = true;
                         }
                     }
+                    for ($i = 1; $i < 6; $i++) {
+                        if ($email_contain == false) {
+                            echo '<div class="star"><svg class="' . $i . '" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
+                        } elseif ($email_contain == true) {
+                            $user_star = "SELECT `star` FROM `reviews` WHERE `email` = '$user_email'";
+                            $star_query = mysqli_query($bd_connect, $user_star);
+                            $star_row = mysqli_fetch_assoc($star_query);
+                            if ($i <= $star_row['star']) {
+                                echo '<div class="star" onclick="alert(`Спасибо за отзыв на Bestlancer!`);"><svg class="fill none_click ' . $i . '" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
+                            } else {
+                                echo '<div class="star" onclick="alert(`Спасибо за отзыв на Bestlancer!`);"><svg class="none_click ' . $i . '" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
+                            }
+                        }
+                    }
+                } else {
+                    for ($i = 1; $i < 6; $i++) {
+                        echo '<div class="star" onclick="none_user_sing()"><svg class="none" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#acafb4}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>';
+                    }
+                }
                 ?>
             </div>
             <div class="text_container">
                 <?php
-                    if (!isset($_SESSION["nik"])){
-                        echo "";
-                    } else{
-                        echo '<a href="../pages/make_order.php">Разместите ваш заказ</a>
+                if (!isset($_SESSION["nik"])) {
+                    echo "";
+                } else {
+                    echo '<a href="../pages/make_order.php">Разместите ваш заказ</a>
                                 <span class="link_part">-</span>';
-                    }
+                }
                 ?>
                 <p class="link_part">Работайте с лучшими фрилансерами</p>
             </div>
             <form action="../bd_send/task_text_bd.php" id="task_send_form" method="post">
                 <div>
                     <textarea name="task_text" onclick="sub_reaction()" placeholder="Опишите что вы хотите сделать"
-                        id="" cols="30" rows="10"></textarea>
+                        cols="30" rows="10"></textarea>
                     <div class="textarea_sub">
                         <?php
-                            if (isset($_SESSION["nik"])){
-                                $user_email = $_SESSION["email"];
-                            } else{
-                                $user_email = "";
-                            }
+                        if (isset($_SESSION["nik"])) {
+                            $user_email = $_SESSION["email"];
+                        } else {
+                            $user_email = "";
+                        }
                         ?>
                         <input type="text" value="<?= $user_email ?>" name="task_email"
                             placeholder="Напишите вас email">
@@ -86,7 +107,7 @@
                 <div>
                     <div>
                         <span>2</span>
-                        <h3>Делайте покупки с уверенностью</h3>
+                        <h3>Поручайте заказы с уверенностью</h3>
                     </div>
                     <p>Всегда заранее узнавайте цены и сроки. Ваш платеж не будет разблокирован, пока вы не одобрите
                         работу.</p>
@@ -112,42 +133,47 @@
             <h2>Наша репутация</h2>
         </div>
         <?php
-            include "../bd_send/database_connect.php";
-            //orders_number
-            $sql_orders = "SELECT * FROM orders ORDER BY id DESC LIMIT 1";
-            $order_query = mysqli_query($bd_connect, $sql_orders);
-            $order_row = mysqli_fetch_assoc($order_query);
-            $last_order = $order_row['id'];
-            //review_number
-            $sql_review = "SELECT * FROM reviews ORDER BY id DESC LIMIT 1";
-            $review_query = mysqli_query($bd_connect, $sql_review);
-            $review_row = mysqli_fetch_assoc($review_query);
-            $last_review = $review_row['id'];
-            //account_number
-            $sql_accounts = "SELECT * FROM user_registoring ORDER BY id DESC LIMIT 1";
-            $account_query = mysqli_query($bd_connect, $sql_accounts);
-            $accoun_row = mysqli_fetch_assoc($account_query);
-            $last_account = $accoun_row['id'];
+        //orders_number
+        $sql_orders = "SELECT * FROM orders ORDER BY id DESC LIMIT 1";
+        $order_query = mysqli_query($bd_connect, $sql_orders);
+        $order_row = mysqli_fetch_assoc($order_query);
+        $last_order = $order_row['id'];
+        //review_number
+        $sql_review = "SELECT * FROM reviews ORDER BY id DESC LIMIT 1";
+        $review_query = mysqli_query($bd_connect, $sql_review);
+        $review_row = mysqli_fetch_assoc($review_query);
+        $last_review = $review_row['id'];
+        //account_number
+        $sql_accounts = "SELECT * FROM user_registoring ORDER BY id DESC LIMIT 1";
+        $account_query = mysqli_query($bd_connect, $sql_accounts);
+        $accoun_row = mysqli_fetch_assoc($account_query);
+        $last_account = $accoun_row['id'];
         ?>
         <div class="main_reoitation">
             <div class="repitation">
                 <div class="number">
                     <span>0</span>
-                    <b><?= $last_account ?></b>
+                    <b>
+                        <?= $last_account ?>
+                    </b>
                 </div>
                 <p>Зарегестрированных аккаунтов</p>
             </div>
             <div class="repitation">
                 <div class="number">
                     <span>0</span>
-                    <b><?= $last_review ?></b>
+                    <b>
+                        <?= $last_review ?>
+                    </b>
                 </div>
                 <p>Положительных отзывов</p>
             </div>
             <div class="repitation">
                 <div class="number">
                     <span>0</span>
-                    <b><?= $last_order ?></b>
+                    <b>
+                        <?= $last_order ?>
+                    </b>
                 </div>
                 <p>Заказов на бирже</p>
             </div>
@@ -164,112 +190,118 @@
                 <span onclick="click_right(this)">&#8250;</span>
             </div>
             <div class="slide">
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/location.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
+                <div class="slide_part">
+                    <div class="work">
                         <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                            <img src="../res/cup.jpg" class="work_img" alt="">
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynM</a>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="img">
+                            <img src="../res/web.jpg" class="work_img" alt="">
+                        </div>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynA</a>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="img">
+                            <img src="../res/web.jpg" class="work_img" alt="">
+                        </div>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynM</a>
+                        </div>
                     </div>
                 </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/cup.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
+                <div class="slide_part">
+                    <div class="work">
                         <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                            <img src="../res/cup.jpg" class="work_img" alt="">
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynM</a>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="img">
+                            <img src="../res/web.jpg" class="work_img" alt="">
+                        </div>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynA</a>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="img">
+                            <img src="../res/web.jpg" class="work_img" alt="">
+                        </div>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynM</a>
+                        </div>
                     </div>
                 </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/web.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
+                <div class="slide_part">
+                    <div class="work">
                         <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                            <img src="../res/cup.jpg" class="work_img" alt="">
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynB</a>
+                        </div>
                     </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/cup.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
+                    <div class="work">
                         <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                            <img src="../res/web.jpg" class="work_img" alt="">
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynM</a>
+                        </div>
                     </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/web.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
+                    <div class="work">
                         <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                            <img src="../res/location.jpg" class="work_img" alt="">
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynA</a>
-                    </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/web.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
-                        <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
+                        <div class="worker_information">
+                            <div class="img">
+                                <img src="../res/freelancer_logo.jpg" alt="">
+                            </div>
+                            <p>Freelancer: </p>
+                            <a href="">ValentynC</a>
                         </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
-                    </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/cup.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
-                        <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
-                        </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynB</a>
-                    </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/web.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
-                        <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
-                        </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynM</a>
-                    </div>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="../res/location.jpg" class="work_img" alt="">
-                    </div>
-                    <div class="worker_information">
-                        <div class="img">
-                            <img src="../res/freelancer_logo.jpg" alt="">
-                        </div>
-                        <p>Freelancer: </p>
-                        <a href="">ValentynC</a>
                     </div>
                 </div>
             </div>
@@ -279,35 +311,51 @@
     <div class="catalog_container">
         <h2>Выберите вашу категорию</h2>
         <div class="categorys">
-            <div class="category category_it">
-                <h4>Разработка и IT</h4>
-            </div>
-            <div class="category category_art">
-                <h4>Дизайн</h4>
-            </div>
-            <div class="category category_network">
-                <h4>Соцсети и реклама</h4>
-            </div>
-            <div class="category category_seo">
-                <h4>SEO и трафик</h4>
-            </div>
-            <div class="category category_stanza">
-                <h4>Тексты и переводы</h4>
-            </div>
-            <div class="category category_bisnes">
-                <h4>Бизнес и жизнь</h4>
-            </div>
-            <div class="category category_studio">
-                <h4>Аудио, видео монтирование</h4>
-            </div>
-            <div class="category category_study">
-                <h4>Учеба и репетиторство</h4>
-            </div>
+            <a href="tasks.php?filter=2">
+                <div class="category category_it">
+                    <h4>Разработка и IT</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=1">
+                <div class="category category_art">
+                    <h4>Дизайн</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=5">
+                <div class="category category_network">
+                    <h4>Соцсети и реклама</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=4">
+                <div class="category category_seo">
+                    <h4>SEO и трафик</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=3">
+                <div class="category category_stanza">
+                    <h4>Тексты и переводы</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=7">
+                <div class="category category_bisnes">
+                    <h4>Бизнес и жизнь</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=6">
+                <div class="category category_studio">
+                    <h4>Аудио, видео монтирование</h4>
+                </div>
+            </a>
+            <a href="tasks.php?filter=8">
+                <div class="category category_study">
+                    <h4>Учеба и репетиторство</h4>
+                </div>
+            </a>
         </div>
     </div>
     <div class="line"></div>
     <div class="about_us">
-        <h2>О Нас (<a href="about_company.php">BestLanser</a>)</h2>
+        <h2>О Нас (<a href="about_company.php">BestLancer</a>)</h2>
         <div class="about">
             <p class="about_text">Добро пожаловать на BestLancer - лучшую фриланс-биржу для воплощения ваших проектных
                 идей в реальность!</p>
@@ -315,7 +363,7 @@
                 талантливых и опытных <br> фрилансеров со всего мира. Мы стремимся создать комфортную и продуктивную
                 платформу, где заказчики могут <br> получить высококачественные услуги, а фрилансеры могут найти
                 интересные проекты и развиваться профессионально.</p>
-            <h3>Вот почему вы должны выбрать <a href="about_company.php">BestLanser</a>:</h3>
+            <h3>Вот почему вы должны выбрать <a href="about_company.php">BestLancer</a>:</h3>
             <div class="why_question">
                 <div class="anser">
                     <div><span>1</span></div>
@@ -389,7 +437,7 @@
         <div class="header_about">
             <h2>
                 <div class="bestlancer_text">
-                    <p>BEST</p>LANSER
+                    <p>BEST</p>LANCER
                 </div> Профессиональные услуги
             </h2>
             <p class="under_header">Доводить дело до конца еще никогда не было так просто.</p>
@@ -397,44 +445,53 @@
         <div class="about">
             <div>
                 <p>
-                    <b>Хотите сэкономить время и деньги без ущерба для качества?</b>
-                    Вот для чего мы здесь.
-                    Мы создали Kwork, чтобы помочь таким независимым и ориентированным на результат предпринимателям,
-                    как вы, найти талантливых фрилансеров для всех нужд вашего бизнеса.
-                    На Kwork тысячи талантливых фрилансеров соревнуются за ваш бизнес, размещая свои услуги в Каталоге.
-                    Эти услуги продаются как удобные товары навынос в реальном магазине. На нашей платформе нет
-                    запутанных и дорогостоящих почасовых ставок.
-                    Также больше не нужно торговаться по цене и срокам. Цены, сроки и включенные услуги оговариваются
-                    заранее, что экономит ваше время, деньги и энергию.
-                    Вы можете с уверенностью покупать услуги фрилансера на Kwork. Если что-то пойдет не так, вы защищены
-                    нашей <b>100% гарантией возврата денег , единственной в своем роде Программой защиты покупателей</b>
-                    и невероятной службой поддержки.
-                    Зачем ждать? Сделай все сегодня!
+                    <b>Хотите получить огромное удовольствие и качественную работу?</b>
+                    Вот для чего мы здесь. Мы представляем вам Bestlancer - новую фриланс-биржу, созданную, чтобы помочь
+                    независимым и ориентированным на результат предпринимателям, как вы, найти талантливых фрилансеров
+                    для всех нужд вашего бизнеса.
+
+                    На Bestlancer вы найдете опытных специалистов, готовых предоставить свои услуги в нашем каталоге.
+                    Эти услуги представлены как удобные товары в магазине, и у нас нет запутанных и дорогостоящих
+                    почасовых ставок. Мы стремимся сделать процесс найма фрилансеров максимально простым и прозрачным
+                    для вас.
+
+                    Забудьте о необходимости торговаться по цене и срокам. На Bestlancer вы можете с уверенностью
+                    выбирать фрилансеров, зная, что все условия сотрудничества оговариваются четко. И если возникнут
+                    вопросы или затруднения, наша служба поддержки всегда готова вам помочь.
+
+                    Зачем ждать? Начните сотрудничество с Bestlancer уже сегодня и достигайте новых высот в развитии
+                    своего бизнеса!
                 </p>
             </div>
             <div>
                 <p>
-                    <b>У вас уникальная работа или вы слишком заняты, чтобы искать фрилансеров?</b>
-                <p>Разместите запрос покупателя в специально созданном разделе «Обмен»!
-                    Просто предоставьте описание, время доставки и бюджет. Опытные фрилансеры Kwork отправят
-                    индивидуальные предложения, адаптированные к вашей задаче. Лучше всего подходит для сложных или
-                    крупных проектов.
-                    Качество предложений на Kwork уникально. Благодаря запатентованной функции нашей платформы вам не
-                    нужно просматривать море общих предложений, которые вы могли бы получить на других платформах для
-                    фрилансеров. Поскольку профессионалы Kwork вознаграждаются за то, что они вкладывают в каждое
-                    предложение особую мысль и усилия, вы можете выбирать из лучших вариантов .
-                    У вас есть проект, который нужно отметить? Разместите заявку сегодня!</p>
+                    Мы предоставляем четкие цены, сроки и детали услуги заранее, что позволяет вам экономить время,
+                    деньги и энергию. На нашей платформе нет необходимости торговаться по цене и срокам. Вы можете с
+                    уверенностью выбирать фрилансеров на Bestlancer, зная, что все условия сотрудничества оговариваются
+                    четко.
+
+                    Кроме того, наша цель - сделать ваш бизнес более эффективным и успешным. Мы предоставляем надежную
+                    службу поддержки, готовую помочь вам в любое время. Наша платформа призвана упростить процесс найма
+                    фрилансеров и помочь вам добиться желаемых результатов без лишних хлопот.
+
+                    Начните сотрудничество с Bestlancer и достигайте успеха в своем бизнесе! С
+                    Bestlancer вы получаете доступ к талантливым специалистам и инструментам, которые помогут вам расти
+                    и развиваться. Мы готовы поддержать вас на каждом этапе вашего проекта и сделать вашу работу более
+                    продуктивной и прибыльной.
                 </p>
             </div>
         </div>
     </div>
 </div>
+<?php
+include "../layouts/footer.php";
+?>
 <script src="../page_js/home/textarea_check.js"></script>
 <script src="../page_js/home/input_sub.js"></script>
 <script src="../page_js/home/scroll_home.js"></script>
 <script src="../page_js/home/slider_home.js"></script>
 <script src="../page_js/home/user_order_check.js"></script>
 <script src="../page_js/home/star_system.js"></script>
-<?php
-include "../layouts/footer.php";
-?>
+</body>
+
+</html>
