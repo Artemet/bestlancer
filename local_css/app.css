@@ -24,6 +24,8 @@ h2 div.bestlancer_text{
     display: flex;
     align-items: center;
     padding-right: 10px;
+    pointer-events: none;
+    user-select: none;
     font-weight: 700;
 }
 h2 .bestlancer_text p{
@@ -48,6 +50,7 @@ h2 .bestlancer_text p{
 /* textarea_font */
 textarea{
     font-family: 'Geologica', sans-serif;
+    min-height: 33px;
 }
 /* warning_text */
 u.warning{
@@ -60,15 +63,42 @@ b.input_name{
     font-weight: 500;
     color: #d08e0b;
 }
-.right_in{
+input.right_in{
+    /* height: 33px; */
+}
+.right_in {
     transition: 0.5s;
     margin-top: 10px;
     padding: 5px;
     outline: none;
-    width: 96.6%;
+    width: 100%;
     border: 3px solid #d08e0b;
     color: rgb(79, 130, 3);
     font-weight: 600;
     border-radius: 5px;
     letter-spacing: 0.5px;
+    box-sizing: border-box;
+}
+/* pencil */
+.change_icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border: 2px solid black;
+}
+.change_icon svg{
+    fill: rgb(79, 130, 3) !important;
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    margin: auto;
 }

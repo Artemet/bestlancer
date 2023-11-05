@@ -124,6 +124,9 @@
 .order_page .user_order .arrow svg.animation{
     transform: rotate(180deg);
 }
+.order_page b.no_message{
+    color: #d08e0b;
+}
 .order_page .user_order .part_one{
     display: grid;
     grid-template-columns: 1fr auto;
@@ -132,13 +135,19 @@
 }
 .order_page .user_order .part_one p{
     font-size: 18px;
+    user-select: none;
     border-right: 2px solid rgb(79, 130, 3);
     border-bottom: 2px solid #d08e0b;
     margin-bottom: 9px;
     padding-bottom: 9px;
+    padding-right: 10px;
+}
+.order_page .user_order .part_one p:hover{
+    user-select: inherit;
 }
 .order_page .user_order .part_one span{
     color: #d08e0b;
+    user-select: none;
     font-weight: 600;
     font-size: 25px;
     padding-left: 20px;
@@ -151,7 +160,7 @@
 }
 .order_page .user_order .part_two p{
     color: rgb(79, 130, 3);
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
 }
 .order_page .user_order .sub_information{
@@ -161,9 +170,6 @@
     background-color: rgba(211, 211, 211, 0.206);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-}
-.order_page .user_order .sub_information_animation{
-    height: 17vh;
 }
 .order_page .user_order .button_option{
     display: grid;
@@ -181,6 +187,7 @@
     transition: 0.5s;
     padding: 5px;
     font-size: 15px;
+    width: 100%;
 }
 .order_page .user_order .button_option button:hover{
     opacity: 0.7;

@@ -6,24 +6,137 @@
     outline: none;
     padding: 5px;
     font-size: 17px;
+    box-sizing: border-box;
     color: rgb(79, 130, 3);
     margin: 10px 0;
     border: 2px solid #d08e0b;
     border-radius: 5px;
 }
+.make_order_container .option_choice{
+    display: flex;
+    margin-top: 10px;
+    background-color: lightgray;
+    width: fit-content;
+    border-radius: 10px;
+}
+.make_order_container .option_choice svg{
+    fill: rgb(79, 130, 3) !important;
+    padding-right: 10px;
+    font-size: 23px;
+}
+.make_order_container .option{
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+    align-items: center;
+    cursor: pointer;
+    width: 247.315px;
+    transition: 0.5s;
+}
+.make_order_container .hover_active:hover{
+    background-color: #d08e0b;
+    opacity: 0.5;
+}
+.make_order_container .option_one{
+    border-right: 2px solid gray;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.make_order_container .option_two{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.make_order_container .option_active{
+    background-color: #d08e0b;
+}
 .make_order_container textarea{
     resize: vertical;
+}
+.make_order_container input.payment_option{
+    display: none;
 }
 .make_order_container .form_part{
     display: grid;
 }
-.make_order_container .email_input{
+.make_order_container .category_header{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.make_order_container .category_header .restart{
+    padding-top: 10px;
+    display: none;
+}
+.make_order_container .category_header .restart_active{
+    display: block;
+}
+.make_order_container .category_header .restart svg{
+    font-size: 25px;
+    cursor: pointer;
+    fill: rgb(79, 130, 3) !important;
+    transition: 0.5s;
+}
+.make_order_container .category_header .restart svg:hover{
     opacity: 0.5;
+}
+.make_order_container .category_part{
+    position: relative;
+}
+.make_order_container .category_part .inputs{
+    display: block;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+.make_order_container .category_part input{
+    width: 100%;
 }
 .make_order_container .checkbox_block{
     display: flex;
     margin-right: 50px;
     align-items: center;
+}
+.make_order_container .type_sub{
+    display: none; 
+    border: 2px solid #d08e0b;
+    background-color: rgb(51, 51, 51);
+    padding: 0;
+    position: relative;
+    border-radius: 5px;
+    transition: 0.5s; 
+}
+.make_order_container .type_sub.active{
+    display: block;
+}
+.make_order_container .type_sub svg{
+    font-size: 25px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    transition: 0.5s;
+}
+.make_order_container .type_sub svg:hover{
+    fill: rgb(79, 130, 3) !important;
+    transform: rotate(-90deg);
+}
+.make_order_container .type_sub p{
+    color: white;
+    width: fit-content;
+    user-select: none;
+    transition: 0.5s;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.make_order_container .type_sub p:hover{
+    color: #d08e0b;
+}
+.make_order_container .type_sub .last_option{
+    border-top: 2px solid rgb(79, 130, 3);
 }
 .make_order_container .checkbox_block input{
     margin-right: 10px;
@@ -70,14 +183,10 @@
     position: relative;
     border-radius: 5px;
     transition: 0.5s;
-    overflow: hidden;
-    height: 0;
     display: none;
-    opacity: 0;
 }
 .make_order_container .category_choice_animation{
-    height: 758px;
-    opacity: 1;
+    display: block;
 }
 .make_order_container .category_choice svg{
     font-size: 25px;
@@ -88,6 +197,13 @@
     margin: 10px;
     transition: 0.5s;
 }
+.make_order_container .category_choice svg.rubbish{
+    right: 40px;
+    display: none;
+}
+.make_order_container .category_choice svg.rubbish:hover{
+    transform: rotate(0deg);
+}
 .make_order_container .category_choice svg:hover{
     fill: rgb(79, 130, 3) !important;
     transform: rotate(-90deg);
@@ -96,6 +212,7 @@
 .make_order_container .category_choice p{
     color: white;
     width: fit-content;
+    user-select: none;
     transition: 0.5s;
     padding: 5px;
     cursor: pointer;

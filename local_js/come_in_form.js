@@ -1,7 +1,7 @@
 //form_js
 const get_body = document.querySelector("body");
 const get_buttons = document.querySelector(".header_line .header_part_two");
-const get_user_container = document.querySelectorAll(".user_container");
+const get_user_container = document.querySelectorAll(".user_account");
 const get_inputs = document.querySelectorAll(".user_container form input");
 //open_containers
 function open_form_one(){

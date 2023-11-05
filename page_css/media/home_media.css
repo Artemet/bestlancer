@@ -57,6 +57,14 @@
         grid-template-columns: 1fr;
         padding-left: 50px;
     }
+    .freelance_container .movement_number .movement{
+        border-left: 2px solid #d08e0b;
+        padding: 0 10px;
+        margin: 20px 0;
+    }
+    .freelance_container .movement_number .movement .img{
+        display: none;
+    }
 }
 @media only screen and (max-width: 741px){
     .freelance_container .title_part textarea{
@@ -97,6 +105,9 @@
 @media only screen and (max-width: 490px){
     .work_subsequence .subsequence_container{
         grid-template-columns: 1fr;
+    }
+    .catalog_container .categorys a{
+        margin: auto;
     }
     .work_subsequence .subsequence_container .subsequence{
         border-right: none;

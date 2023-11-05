@@ -1,12 +1,21 @@
 /* user_media */
 @media only screen and (max-width: 1415px){
-    .user_account .service_container{
+    .user_account .card_container{
         grid-template-columns: 1fr 1fr 1fr;
+    }
+    .service_container{
+        grid-template-columns: 1fr 1fr 1fr !important;
     }
 }
 @media only screen and (max-width: 1091px){
-    .user_account .service_container{
+    .user_account .card_container{
         grid-template-columns: 1fr 1fr;
+    }
+    .user_account .menu_include a{
+        margin: auto;
+    }
+    .service_container{
+        grid-template-columns: 1fr 1fr !important;
     }
     .user_account .service{
         margin: auto;
@@ -32,9 +41,6 @@
     .user_account .user_work{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-    }
-    .user_information{
-        display: flex;
     }
     .user_information .account_redactor{
         display: none;
@@ -74,18 +80,26 @@
         height: 150px;
     }
 }
+@media only screen and (max-width: 761px){
+    .user_information .button_choice{
+        display: none;
+    }
+    .user_account .mobile_choice{
+        display: block;
+    }
+}
 @media only screen and (max-width: 745px){
-    .user_account .service_container{
+    .user_account .card_container{
         grid-template-columns: 1fr;
+    }
+    .service_container{
+        grid-template-columns: 1fr !important;
     }
     .user_account .about_user p{
         font-size: 15px;
     }
 }
 @media only screen and (max-width: 580px){
-    .user_information{
-        grid-template-columns: 1fr;
-    }
     .user_account .account_redactor button{
         justify-content: center;
     }

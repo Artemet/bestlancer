@@ -22,7 +22,6 @@
     width: 320px;
     display: flex;
     align-items: center;
-    /* transition: 0.5s; */
     cursor: pointer;
 }
 .messanger_users .message_user:hover{
@@ -105,7 +104,7 @@
     margin-right: 10px;
 }
 .user_chat .chat{
-    height: 290px;
+    height: 425px;
     overflow: auto;
 }
 .user_chat .chat::-webkit-scrollbar {

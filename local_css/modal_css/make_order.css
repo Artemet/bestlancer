@@ -61,6 +61,13 @@
     padding-right: 30px;
     height: 324px;
 }
+.personal_order_container .value_information::-webkit-scrollbar{
+    background-color: white;
+    width: 3px;
+}
+.personal_order_container .value_information::-webkit-scrollbar-thumb{
+    background-color: rgb(79, 130, 3);
+}
 .personal_order_container u.user_nik{
     color: rgb(79, 130, 3);
 }

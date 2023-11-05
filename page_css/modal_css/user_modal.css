@@ -98,7 +98,6 @@
 }
 .change_profile form.change_information_form{
     margin-top: 20px;
-    border-top: 3px solid rgb(79, 130, 3);
 }
 .change_profile .wrapper{
     height: 228px;
@@ -114,6 +113,15 @@
 }
 .change_profile form p.click{
     width: 91px;
+}
+.change_profile .price_input{
+    display: flex !important;
+    align-items: baseline;
+}
+.change_profile .price_input span{
+    padding-left: 5px;
+    font-size: 20px;
+    color: rgb(79, 130, 3);
 }
 .change_profile form .click_none{
     display: none;
@@ -146,7 +154,6 @@
 }
 .change_profile input.country_input{
     cursor: pointer;
-    /* position: relative; */
 }
 .change_profile .country_sub{
     background-color: rgb(79, 130, 3);

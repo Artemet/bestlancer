@@ -4,9 +4,13 @@
     grid-template-columns: auto 1fr;
     grid-gap: 20px;
 }
+.tasks_container .tasks{
+    z-index: 100;
+    position: relative;
+}
 .tasks_container .make_order{
     background-color: white;
-    width: 250px;
+    width: 280px;
     border-radius: 5px;
 }
 .tasks_container img.user_image{
@@ -16,6 +20,59 @@
     border: 2px solid rgb(79, 130, 3);
     margin-right: 10px;
 }
+.tasks_container .icon_options svg{
+    font-size: 20px;
+    fill: rgb(79, 130, 3) !important;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.tasks_container .icon_options svg:hover{
+    opacity: 0.5;
+}
+.tasks_container .icon_options .order_filter svg.active{
+    opacity: 0.5;
+}
+.tasks_container .icon_options .icon{
+    width: fit-content;
+    padding-right: 10px;
+}
+.tasks_container p.type{
+    display: none;
+}
+.tasks_container .order_filter{
+    position: relative;
+}
+.tasks_container .order_filter .type_sub{
+    background-color: lightgray;
+    position: absolute;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.5s;
+    opacity: 0;
+    display: none;
+}
+.tasks_container .order_filter .type_sub_active{
+    opacity: 1;
+}
+.tasks_container .order_filter .type_sub .thirst_option{
+    border-bottom: 2px solid #d08e0b;
+    padding-bottom: 5px;
+}
+.tasks_container .order_filter .type_sub a{
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+}
+.tasks_container .order_filter .type_sub a:hover{
+    opacity: 0.5;
+}
+.tasks_container .order_filter .type_sub a.acive{
+    color: rgb(79, 130, 3);
+}
+.tasks_container .icon_options{
+    padding-bottom: 5px;
+    display: flex;
+}
 .tasks_container .user_information{
     display: flex;
     align-items: center;
@@ -23,6 +80,9 @@
 .tasks_container .user_information p{
     color: #d08e0b;
     margin: 0;
+}
+.tasks_container .tasks a.filter_none{
+    color: rgb(79, 130, 3);
 }
 .tasks_container .user_information a:hover{
     text-decoration: underline rgb(79, 130, 3);
@@ -32,13 +92,29 @@
 }
 .tasks_container .make_order b.filter_title{
     font-size: 18px;
+    user-select: none;
+}
+.tasks_container input.filter_save{
+    display: none;
+}
+.tasks_container .medium_category_number{
+    display: none;
 }
 .tasks_container .make_order .link_part{
     padding-top: 10px;
     padding-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 30px;
     border-bottom: 2px solid gray;
     display: grid;
+    grid-gap: 10px;
+}
+.tasks_container .make_order .link_part div{
+    width: fit-content;
+    line-height: 23px;
+}
+.tasks_container .make_order .link_part a{
+    text-decoration: none;
 }
 .tasks_container .make_order .link_part p{
     color: #d08e0b;
@@ -59,6 +135,18 @@
 }
 .tasks_container .make_order .link_part p.click{
     color: rgb(79, 130, 3);
+}
+.tasks_container .make_order .link_sub{
+    display: none;
+    padding-left: 8px;
+    border-left: 2px solid rgb(79, 130, 3);
+}
+.tasks_container .make_order .link_sub a{
+    font-size: 14px;
+    color: black;
+    margin-top: 5px;
+    width: fit-content;
+    margin-bottom: 5px;
 }
 .tasks_container button{
     background-color: rgb(79, 130, 3);
@@ -91,7 +179,7 @@
 }
 .tasks_container .category b{
     color: rgb(79, 130, 3);
-    cursor: pointer;
+    user-select: none;
 }
 .tasks_container .payment{
     display: flex;
@@ -99,6 +187,22 @@
 }
 .tasks_container .payment p{
     padding-right: 10px;
+}
+.tasks_container p.category_number{
+    display: none;
+}
+.tasks_container .final_filter_sub{
+    padding-left: 8px;
+    margin-left: 8px;
+    border-left: 2px solid #d08e0b;
+    /* display: grid; */
+    display: none;
+}
+.tasks_container .final_filter_sub a{
+    color: gray !important;
+}
+.tasks_container .final_filter_sub a.active{
+    color: rgb(79, 130, 3) !important;
 }
 .tasks_container p.price{
     padding: 0 30px;
@@ -116,6 +220,7 @@
     fill: red !important;
 }
 .tasks_container .order_part{
+    position: relative;
     border-right: 2px solid #d08e0b;
     padding-right: 10px;
     width: 95%;
@@ -129,6 +234,7 @@
 .orders .order{
     padding: 10px;
     color: black;
+    position: relative;
     background-color: white;
     border-radius: 5px;
     border: 2px solid #d08e0b;
@@ -140,6 +246,73 @@
 }
 .orders .order:hover{
     border: 2px solid rgb(79, 130, 3);   
+}
+.orders .my_order{
+    background-color: #d08e0b1f;
+}
+.orders .pagination{
+    display: flex;
+    justify-content: center;
+}
+.orders .pagination b{
+    padding-top: 18px;
+}
+.orders .pagination .page_link_wrapper{
+    position: relative;
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(79, 130, 3);
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.orders .pagination .page_link_wrapper:hover{
+    opacity: 0.5;
+}
+.orders .pagination a{
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.orders .pagination a.active{
+    color: #d08e0b;
+}
+.orders .new_cover{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 14px;
+    padding: 5px;
+    background-color: rgb(79, 130, 3);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+.orders .new_cover p{
+    margin: 0;
+    font-size: 12px;
+    color: white;
+}
+.orders .order .date p{
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 10px;
+    color: gray;
+}
+.orders .order .application_number{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+.orders .order .application_number p{
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 10px;
+    color: gray;
 }
 .tasks_container .orders{
     position: relative;
@@ -157,4 +330,5 @@
 .orders .order a.more_tz_link{
     color: rgb(79, 130, 3);
     padding-left: 5px;
+    cursor: pointer;
 }

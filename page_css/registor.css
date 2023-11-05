@@ -1,0 +1,218 @@
+/* registor_style */
+.question{
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid lightgrey;
+    background-color: white;
+    width: 800px;
+    margin: auto;
+    transition: 0.5s;
+}
+.question h2{
+    text-align: center;
+}
+.registor_container .main_registor_question{
+    opacity: 0;
+}
+.registor_container p.registor_part_number{
+    display: none;
+}
+.registor_container .role_options{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.registor_container .role_option{
+    position: relative;
+    padding: 20px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid lightgrey;
+    transition: 0.5s;
+    opacity: 0;
+    cursor: pointer;
+}
+.registor_container .role_option:hover{
+    border: 2px solid rgb(79, 130, 3);
+}
+.registor_container .role_option_animation{
+    opacity: 1;
+}
+.registor_container .role_option_click{
+    border: 2px solid #d08e0b;
+}
+.registor_container .role_option div{
+    user-select: none;
+}
+.registor_container .role_option img{
+    height: 50px;
+}
+.registor_container .role_option .circle{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid lightgray;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+}
+.registor_container .role_option .in_circle{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #d08e0b;
+    margin: 5px;
+    opacity: 0;
+    transition: 0.5s;
+}
+.registor_container .role_option .in_circle_animation{
+    opacity: 1;
+}
+.registor_container textarea{
+    resize: vertical;
+}
+.registor_container .price_input{
+    display: flex;
+    align-items: center;
+}
+.registor_container .price_input div{
+    margin-top: 10px;
+}
+.registor_container .price_input span{
+    padding-left: 5px;
+    color: rgb(79, 130, 3);
+    font-size: 20px;
+}
+.registor_container .button{
+    margin-top: 20px;
+    text-align: center;
+    height: 50px;
+}
+.registor_container .button button{
+    font-size: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 10px;
+    width: 100px;
+    border: none;
+    opacity: 0;
+    transition: 0.5s;
+    border-radius: 50px;
+    color: white;
+    background-color: rgb(79, 130, 3);
+}
+.registor_container .post_button{
+    width: fit-content;
+    margin: auto;
+}
+.registor_container .post_button button{
+    font-size: 15px;
+    margin-top: 23px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 10px;
+    width: 300px;
+    border: none;
+    transition: 0.5s;
+    border-radius: 50px;
+    pointer-events: none;
+    opacity: 0.5;
+    color: white;
+    background-color: rgb(79, 130, 3);
+}
+.registor_container .post_button button.active_click{
+    opacity: 1;
+    pointer-events: all;
+}
+.registor_container .country .menu{
+    color: white;
+    margin-top: 10px;
+    overflow-x: auto;
+    height: 0;
+    transition: 0.5s;
+    background-color: rgb(79, 130, 3);
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.registor_container .country .menu_animation{
+    height: 260px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.registor_container .country .menu::-webkit-scrollbar{
+    width: 3px;
+    background-color: #d08e0b;
+}
+.registor_container .country .menu::-webkit-scrollbar-thumb{
+    background-color: black;
+}
+.registor_container .country .menu p{
+    margin-top: 0;
+    width: fit-content;
+    transition: 0.5s;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.registor_container .country .menu p.color_white{
+    color: white;
+}
+.registor_container .country .menu p.color_black{
+    color: black;
+}
+.registor_container .country .menu p:hover{
+    color: black;
+}
+.registor_container .post_button button:hover{
+    opacity: 0.7 !important;
+}
+.registor_container .post_button button.click{
+    opacity: 1;
+    pointer-events: all;
+}
+.registor_container .button button:hover{
+    opacity: 0.7 !important;
+}
+.registor_container .button button.none_click{
+    pointer-events: none;
+    user-select: none;
+}
+.registor_container .button button.animation{
+    font-size: 18px;
+    width: 300px;
+    opacity: 0.5;
+}
+.registor_container .main_registor_question .line_block{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+.registor_container .main_registor_question h3{
+    margin: 0;
+    font-size: 15px;
+}
+.registor_container .input_part{
+    padding-top: 10px;
+}
+.registor_container .checkbox_part{
+    padding-top: 10px;
+    margin-top: 23px;
+    border-top: 2px solid rgb(79, 130, 3);
+    border-bottom: 2px solid rgb(79, 130, 3);
+    padding-bottom: 10px;
+}
+.registor_container .main_registor_question .checkbox_choice{
+    display: flex;
+    align-items: center;
+}
+.registor_container .checkbox_choice input{
+    margin-right: 10px;
+}
+.registor_container .checkbox_choice p{
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}

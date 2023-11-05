@@ -18,6 +18,9 @@
     border: 2px solid rgb(79, 130, 3);
     margin-right: 10px;
 }
+.my_responses .response_sub div.display{
+    display: none;
+}
 .my_responses .users_order a{
     text-decoration: none;
     font-size: 20px;
@@ -53,6 +56,21 @@
 }
 .my_responses .top_part h3{
     font-size: 23px;
+}
+.my_responses .response_sub .input_wrapper{
+    position: relative;
+}
+.my_responses .response_sub .input_wrapper .icon{
+    position: absolute;
+    right: -20px;
+    top: 15px;
+}
+.my_responses .response_sub .input_wrapper #icon_2{
+    right: -25px;
+}
+.my_responses .response_sub .input_wrapper svg{
+    fill: rgb(79, 130, 3) !important;
+    font-size: 20px;
 }
 .my_responses .change_order_button button{
     border-radius: 50%;

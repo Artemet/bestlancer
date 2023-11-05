@@ -1,6 +1,14 @@
 /* user_portfolio */
 .user_account{
+    border-radius: 10px;
     background-color: white;
+}
+.user_account .mobile_choice{
+    display: none;
+    padding: 10px;
+}
+.user_account .mobile_choice button{
+    width: 100% !important;
 }
 .user_information{
     background-color: white;
@@ -10,9 +18,89 @@
     border-bottom: 3px solid rgb(79, 130, 3);
     display: flex;
 }
+.user_account .project_covers .project{
+    width: 320px;
+    height: 332px;
+    position: relative;
+    border-radius: 20px;
+    background-color: white;
+    transition: 0.5s;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    margin-bottom: 50px;
+}
+.user_account p.no_project_text{
+    margin: 0;
+    padding: 0 !important;
+}
+.user_account .card_container .user_information{
+    background: none;
+    align-items: center;
+    color: rgb(79, 130, 3);
+    border: none;
+}
+.user_account p.date{
+    font-size: 12px;
+    color: gray;
+    margin: 0;
+    user-select: none;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+.user_account a.add_project_link{
+    color: black;
+}
+.user_account .add_project{
+    position: relative;
+    height: 282px;
+    pointer-events: none;
+    margin-bottom: 0 !important;
+}
+.user_account .add_project .plus{
+    position: absolute;
+    top: 130px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 60px;
+    width: 60px;
+    border: 2px solid #d08e0b;
+    border-radius: 50%;
+}
+.user_account .add_project .plus b{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    text-align: center;
+    font-size: 30px;
+}
+.user_account .project_covers{
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.user_account .project img{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 213px;
+    width: 100%;
+}
+.user_account .card_container .user_information img{
+    height: 35px;
+    width: 35px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+}
 .user_information .time{
     color: rgb(79, 130, 3);
     text-decoration: underline;
+}
+.user_information .buyer{
+    display: block !important;
+}
+.user_information .buyer div{
+    margin-bottom: 3px;
 }
 .user_information .information{
     display: grid;
@@ -174,8 +262,12 @@
     border-radius: 50px;
     margin-right: 15px;
 }
+.user_account .menu_include .project_add span{
+    background-color: #d08e0b;
+}
 .user_account .menu_include a{
     text-decoration: none;
+    width: fit-content;
 }
 .user_account .menu_block{
     border-bottom: 3px solid rgb(53, 52, 52);
@@ -190,10 +282,9 @@
 }
 .user_account .sub_menu{
     z-index: 1;
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     right: 0;
-    height: 100%;
     width: 100%;
     overflow: hidden;
     transition: 0.5s;

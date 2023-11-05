@@ -3,9 +3,6 @@
     .user_container{
         top: 87px;
     }
-    .header_line .header_part_two{
-        display: none !important;
-    }
 }
 @media only screen and (max-width: 550px){
     .user_container .come_in{

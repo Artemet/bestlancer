@@ -11,6 +11,9 @@
     border: 2px solid #d08e0b;
     margin-right: 10px;
 }
+.service_page .like_active svg{
+    fill: tomato !important;
+}
 .service_page .user_wrapper{
     display: grid;
     grid-template-columns: 1fr auto;

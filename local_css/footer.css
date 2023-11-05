@@ -8,6 +8,7 @@
     height: 23px;
     padding-bottom: 25px;
     font-size: 30px;
+    user-select: none;
 }
 .footer_container .email{
     padding-bottom: 35px;
@@ -46,6 +47,7 @@
 .footer_container .footer_links .links a{
     text-decoration: none;
     color: rgb(79, 130, 3);
+    width: fit-content;
     transition: 0.5s;
 }
 .footer_container .footer_links .links a:hover{
