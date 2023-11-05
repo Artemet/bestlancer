@@ -17,7 +17,7 @@
         $file_name = $file['name'];
         $pathFile = __DIR__.'/personal_order_files/'.$file_name;
         if (!move_uploaded_file($file['tmp_name'], $pathFile)) {
-            echo 'Ошибка';
+            header("Location: ../positive/positive_order_send.php");
         } else{
             header("Location: ../positive/positive_order_send.php");
         }
