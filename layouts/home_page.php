@@ -12,7 +12,7 @@
 <div class="header_line">
     <div class="line_wrapper">
         <div class="header_part header_part_one">
-            <div><h1><a href="../bd_send/user_sing_in.php"><p>best</p>lanser</a></h1></div>
+            <div><h1><a href="../bd_send/user_sing_in.php"><p>best</p>lancer</a></h1></div>
             <div class="links">
                 <?php
                     $link_temp = -1;
@@ -321,11 +321,11 @@
     </div>
     <div class="line"></div>
     <div class="about_us">
-        <h2>О Нас (<a href="">BestLanser</a>)</h2>
+        <h2>О Нас (<a href="">BestLancer</a>)</h2>
         <div class="about">
             <p class="about_text">Добро пожаловать на BestLancer - лучшую фриланс-биржу для воплощения ваших проектных идей в реальность!</p>
             <p class="about_text">У нас вы найдете идеальное место для размещения ваших заказов и привлечения талантливых и опытных <br> фрилансеров со всего мира. Мы стремимся создать комфортную и продуктивную платформу, где заказчики могут <br> получить высококачественные услуги, а фрилансеры могут найти интересные проекты и развиваться профессионально.</p>
-            <h3>Вот почему вы должны выбрать <a href="">BestLanser</a>:</h3>
+            <h3>Вот почему вы должны выбрать <a href="">BestLancer</a>:</h3>
             <div class="why_question">
                 <div class="anser">
                     <div><span>1</span></div>
@@ -397,7 +397,7 @@
     <div class="line"></div>
     <div class="bestlancer_about">
         <div class="header_about">
-            <h2><div class="bestlancer_text"><p>BEST</p>LANSER</div> Профессиональные услуги</h2>
+            <h2><div class="bestlancer_text"><p>BEST</p>LANCER</div> Профессиональные услуги</h2>
             <p class="under_header">Доводить дело до конца еще никогда не было так просто.</p>
         </div>
         <div class="about">
@@ -424,10 +424,12 @@
         </div>
     </div>
 </div>
+<?php
+    include "../layouts/footer.php";
+?>
 <script src="../page_js/home/textarea_check.js"></script>
 <script src="../page_js/home/input_sub.js"></script>
 <script src="../page_js/home/scroll_home.js"></script>
 <script src="../page_js/home/slider_home.js"></script>
-<?php
-    include "../layouts/footer.php";
-?>
+</body>
+</html>

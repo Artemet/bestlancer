@@ -6,10 +6,10 @@
         <div>
             <h2>Изменение профиля</h2>
         </div>
-        <div class="img_change">
-            <form action="../bd_send/user/user_photo.php" method="POST" enctype="multipart/form-data">
+        <form action="../bd_send/user/user_information.php" class="change_information_form" id="userForm" method="post" enctype="multipart/form-data">
+            <div class="img_change">
                 <?php
-                    include '../bd_send/user/icon_db.php';
+                include '../bd_send/user/icon_db.php';
                 ?>
                 <div>
                 <div class="file_part">
@@ -18,7 +18,7 @@
                 <div class="img">
                     <img src="../bd_send/user/user_icons/<?= $_SESSION["icon_path"] ?>" draggable="false">
                 </div>
-
+                
                     <div>
                         <div>
                             <input type="file" name="user_icon" class="choose_file" accept=".jpg,.png,.jpeg">
@@ -30,10 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="submit" title="Загрузить выбранную автатарку" class="submit_button" value="Загрузить">
-            </form>
-        </div>
-        <form action="../bd_send/user/user_information.php" class="change_information_form" id="userForm" method="post">
+            </div>
             <div class="wrapper">
                 <div class="account_information">
                     <div class="country_wrapper">
@@ -263,16 +260,25 @@
                         <u class="warning"></u>
                         <input type="number" value="<?= $_SESSION["age"] ?>" name="age" class="age right_in" placeholder="Ваш возраст">
                     </div>
-                    <div>
-                        <h3>Ставка</h3>
-                        <u class="warning"></u>
-                        <input type="number" name="hour_price" value="<?= $_SESSION["price"] ?>" class="right_in" placeholder="Ваша часовая ставка">
-                    </div>
-                    <div>
-                        <h3>Начало работы</h3>
-                        <u class="warning"></u>
-                        <input type="time" name="start_time" value="<?= $_SESSION["work_time"] ?>" class="right_in" placeholder="Время началы работы">
-                    </div>
+                    <?php
+                    if ($_SESSION["role"] == "seller"):
+                        ?>
+                                        <div>
+                                            <h3>Ставка</h3>
+                                            <u class="warning"></u>
+                                            <div class="price_input">
+                                                <input type="number" name="hour_price" value="<?= $_SESSION["price"] ?>" class="right_in" placeholder="Ваша часовая ставка">
+                                                <span>$</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3>Начало работы</h3>
+                                            <u class="warning"></u>
+                                            <input type="time" name="start_time" value="<?= $_SESSION["work_time"] ?>" class="right_in" placeholder="Время началы работы">
+                                        </div>
+                                        <?php
+                    endif;
+                    ?>
                 </div>
                 <div>
                     <h3>Обо мне</h3>

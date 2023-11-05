@@ -1,3 +1,3 @@
-<div class="arrow_up" title="Подняться вверх страницы">
+<div class="arrow_up">
     <span>⏏</span>
 </div>

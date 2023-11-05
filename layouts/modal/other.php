@@ -9,7 +9,7 @@
             <div><a href="">Реклама</a></div>
             <div><a href="../pages/basket.php">Корзина</a></div>
             <div><a href="">Верефикация</a></div>
-            <div><a href="">Настройки</a></div>
+            <div><a href="../pages/settings.php">Настройки</a></div>
         </div>
         <div class="go_out">
             <a href="../bd_send/user/sing_out.php">Выход</a>
