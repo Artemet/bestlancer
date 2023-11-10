@@ -90,7 +90,7 @@
                     } else {
                         $user_nik = $_SESSION["nik"];
                     }
-                    $query = "SHOW TABLES LIKE 'personal_orders%'";
+                    $query = "SHOW TABLES LIKE 'notifications%'";
                     $result = mysqli_query($bd_connect, $query);
                     $none_notification = false;
                     if ($result) {
@@ -108,17 +108,27 @@
                     //user_notification
                     $notification_temp = 0;
                     $notification_num = null;
+                    $message_num = null;
                     $notification_sql = "SELECT * FROM `user_notification` WHERE `nik` = '$user_nik'";
                     $notification_query = mysqli_query($bd_connect, $notification_sql);
                     while ($notification_resolt = mysqli_fetch_assoc($notification_query)) {
                         $notification_temp++;
+                        $message_num = (int) $notification_resolt['messages'];
                         $notification_num = (int) $notification_resolt['bell'];
                     }
                     ?>
                     <div class="messages notification" title="Чаты">
-                        <!-- <div class="notification_number">
-                            <span>3</span>
-                        </div> -->
+                        <?php
+                        if ($message_num !== 0 && $message_num !== null):
+                            ?>
+                            <div class="notification_number">
+                                <span>
+                                    <?= $message_num ?>
+                                </span>
+                            </div>
+                            <?php
+                        endif;
+                        ?>
                         <a href="../pages/messages.php">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
