@@ -197,8 +197,8 @@ include "../layouts/modal/corect_order.php";
                                         Верстка
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=39" class="medium_category">Верстка по макету</a>
-                                        <a href="?final_category=40" class="medium_category">Доработка и адаптация
+                                        <a href="?final_category=39">Верстка по макету</a>
+                                        <a href="?final_category=40">Доработка и адаптация
                                             верстки</a>
                                     </div>
                                 </div>
@@ -206,75 +206,74 @@ include "../layouts/modal/corect_order.php";
                                         Десктоп программирование
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=41" class="medium_category">Программы на заказ</a>
-                                        <a href="?final_category=42" class="medium_category">Макросы для Office</a>
-                                        <a href="?final_category=43" class="medium_category">1С</a>
-                                        <a href="?final_category=44" class="medium_category">Готовые программы</a>
+                                        <a href="?final_category=41">Программы на заказ</a>
+                                        <a href="?final_category=42">Макросы для Office</a>
+                                        <a href="?final_category=43">1С</a>
+                                        <a href="?final_category=44">Готовые программы</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=12" class="medium_category">
                                         Доработка и настройка сайта
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=45" class="medium_category">Доработка сайта</a>
-                                        <a href="?final_category=46" class="medium_category">Исправление ошибок</a>
-                                        <a href="?final_category=47" class="medium_category">Защита и лечение сайта</a>
-                                        <a href="?final_category=48" class="medium_category">Настройка сайта</a>
-                                        <a href="?final_category=49" class="medium_category">Плагины и темы</a>
-                                        <a href="?final_category=50" class="medium_category">Ускорение сайта</a>
+                                        <a href="?final_category=45">Доработка сайта</a>
+                                        <a href="?final_category=46">Исправление ошибок</a>
+                                        <a href="?final_category=47">Защита и лечение сайта</a>
+                                        <a href="?final_category=48">Настройка сайта</a>
+                                        <a href="?final_category=49">Плагины и темы</a>
+                                        <a href="?final_category=50">Ускорение сайта</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=13" class="medium_category">
                                         Игры
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=51" class="medium_category">Разработка игр</a>
-                                        <a href="?final_category=52" class="medium_category">Готовые игры</a>
-                                        <a href="?final_category=53" class="medium_category">Игровой сервер</a>
+                                        <a href="?final_category=51">Разработка игр</a>
+                                        <a href="?final_category=52">Готовые игры</a>
+                                        <a href="?final_category=53">Игровой сервер</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=14" class="medium_category">
                                         Мобильные приложения
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=54" class="medium_category">iOS</a>
-                                        <a href="?final_category=55" class="medium_category">Android</a>
+                                        <a href="?final_category=54">iOS</a>
+                                        <a href="?final_category=55">Android</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=15" class="medium_category">
                                         Сервера и хостинг
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=56"
-                                            class="medium_category">Администрированиесервера</a>
-                                        <a href="?final_category=57" class="medium_category">Домены</a>
-                                        <a href="?final_category=58" class="medium_category">Хостинг</a>
+                                        <a href="?final_category=56">Администрированиесервера</a>
+                                        <a href="?final_category=57">Домены</a>
+                                        <a href="?final_category=58">Хостинг</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=16" class="medium_category">
                                         Скрипты и боты
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=59" class="medium_category">Парсеры</a>
-                                        <a href="?final_category=60" class="medium_category">Чат-боты</a>
-                                        <a href="?final_category=61" class="medium_category">Скрипты</a>
+                                        <a href="?final_category=59">Парсеры</a>
+                                        <a href="?final_category=60">Чат-боты</a>
+                                        <a href="?final_category=61">Скрипты</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=17" class="medium_category">
                                         Создание сайта
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=62" class="medium_category">Новый сайт</a>
-                                        <a href="?final_category=63" class="medium_category">Копия сайта</a>
+                                        <a href="?final_category=62">Новый сайт</a>
+                                        <a href="?final_category=63">Копия сайта</a>
                                     </div>
                                 </div>
                                 <div><a href="?medium_category=18" class="medium_category">
                                         Юзабилити, тесты и помощь
                                     </a>
                                     <div class="final_filter_sub">
-                                        <a href="?final_category=64" class="medium_category">Юзабилити-аудит</a>
-                                        <a href="?final_category=65" class="medium_category">Тестирование на ошибки</a>
-                                        <a href="?final_category=66" class="medium_category">Компьютерная и IT
+                                        <a href="?final_category=64">Юзабилити-аудит</a>
+                                        <a href="?final_category=65">Тестирование на ошибки</a>
+                                        <a href="?final_category=66">Компьютерная и IT
                                             помощь</a>
                                     </div>
                                 </div>

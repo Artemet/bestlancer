@@ -3,6 +3,9 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
+if (isset($_SESSION["nik"])) {
+    $nik = $_SESSION["nik"];
+}
 $user_order = FALSE;
 include "../bd_send/database_connect.php";
 include "../layouts/header.php";
@@ -11,7 +14,9 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     $sql = "SELECT * FROM orders WHERE id = $order_id";
     $query = mysqli_query($bd_connect, $sql);
     $order = mysqli_fetch_assoc($query);
-
+    if ($order["nik"] === $nik) {
+        echo "<link rel='stylesheet' href='../page_css/modal_css/invite_application.css'>";
+    }
     if ($order) {
         $pageTitle = $order['order_name'];
     } else {
@@ -24,13 +29,21 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     header("Location: home.php");
     exit;
 }
+
 echo "<link rel='stylesheet' href='../page_css/order_page.css'>";
+echo "<link rel='stylesheet' href='../page_css/media/order_page_media.css'>";
 echo "<title>$pageTitle</title>";
 include "../layouts/modal/change_information.php";
+if ($order["nik"] === $nik) {
+    include "../layouts/modal/invite_application.php";
+}
 $row = mysqli_fetch_assoc($query);
 include "../layouts/header_line.php";
 ?>
 <div class="order_page container">
+    <p class="order_id">
+        <?= $order_id ?>
+    </p>
     <div class="header">
         <div class="header_title">
             <div class="header_wrapper">
@@ -59,23 +72,33 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
                 <?php
-                if (isset($_SESSION["nik"])) {
-                    $nik = $_SESSION["nik"];
-                }
                 $order_name = $order['order_name'];
-                $sql = "SELECT * FROM orders_responses";
+                $sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id'";
                 $query = mysqli_query($bd_connect, $sql);
                 if (isset($_SESSION["nik"])) {
-                    if ($order['nik'] === $nik) {
+                    if ($order['nik'] === $_SESSION["nik"]) {
                         $user_order = TRUE;
                     } else {
                         $user_order = FALSE;
                     }
                 }
+
+                $user_responses = 0;
+                $response_class = null;
+                $response_nik = $_SESSION["nik"];
+                $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = $order_id AND nik = '$response_nik'";
+                $existingApplicationQuery = mysqli_query($bd_connect, $existingApplicationSql);
+                while ($existingApplication = mysqli_fetch_assoc($existingApplicationQuery)) {
+                    $user_responses++;
+                }
+                if ($user_responses >= 1) {
+                    $response_class = "ready_application";
+                }
+
                 if ($user_order === FALSE) {
                     if (isset($_SESSION["nik"]) && $_SESSION["role"] == "seller") {
                         echo '<div class="button_choice">
-                                <div>
+                                <div class="' . $response_class . '">
                                     <a href="make_application.php?order_id=' . $order_id . '"><button>Добавить заявку</button></a>
                                 </div>
                                 <div><a href="rates.php"><button>Тарифный план</button></a></div>
@@ -110,8 +133,26 @@ include "../layouts/header_line.php";
     <div class="users_applications">
         <div class="application_number_wrapper">
             <div>
-                <h2>Заяки фрилансеров</h2>
+                <h2>Заявки фрилансеров</h2>
             </div>
+            <?php
+            if (isset($_SESSION["nik"])):
+                if ($order['nik'] === $_SESSION["nik"]):
+                    ?>
+                    <div class="add_person" title="Пригласить в заказ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                        </svg>
+                    </div>
+                    <?php
+                endif;
+            endif;
+            if ($user_responses >= 1) {
+                echo "<a href='my_responses.php'>Мои заявки</a>";
+            }
+            ?>
             <div class="application_number"><span>0</span></div>
         </div>
         <div class="applications">
@@ -136,11 +177,15 @@ include "../layouts/header_line.php";
                 }
                 if ($row['order_name'] === $order_name) {
                     $payment_text = $row["payment_choice"];
+                    $application_nik = $row["nik"];
+                    $user_nik_sql = "SELECT `name` FROM `user_registoring` WHERE `nik` = '$application_nik'";
+                    $user_nik_query = mysqli_query($bd_connect, $user_nik_sql);
                     if (!empty($row["payment_choice"])) {
                         $web_payment = "| $payment_text";
                     }
                     if ($user_order === TRUE) {
                         echo '
+
                                 <div class="application user_order">
                                     <div class="application_part">
                                         <div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div>
@@ -157,7 +202,7 @@ include "../layouts/header_line.php";
                                     <div class="sub_information">
                                         <div class="part_one part">
                                             <div><p>' . $user_message . '</p></div>
-                                            <div><span>' . $row["price"] . '$</span></div>
+                                            <div class="user_price"><span>' . $row["price"] . '$</span></div>
                                         </div>
                                         <div class="part_two part">
                                             <div><p>' . $row["time"] . ' суток</p></div>
@@ -170,15 +215,19 @@ include "../layouts/header_line.php";
                                     </div>
                                 </div>';
                     } else {
-                        echo '
-                                <div class="application">
-                                    <div class="application_part">
-                                        <div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div>
-                                        <div>
-                                            <a href="user_page.php?user_id=' . $user_id . '">' . $row["nik"] . '</a>
-                                        </div>
-                                    </div>
-                                </div>';
+                        $application_nik_assoc = $row['nik'];
+                        $invite_user_temp = 0;
+                        $invite_sql = "SELECT `type` FROM `notifications` WHERE `order_nik` = '$application_nik_assoc' AND `type` = 'invite'";
+                        $invite_query = mysqli_query($bd_connect, $invite_sql);
+                        while ($invite_resolt = mysqli_fetch_assoc($invite_query)) {
+                            $invite_user_temp++;
+                        }
+                        echo '<div class="application"><div class="application_part"><div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div><div>';
+                        if ($invite_user_temp >= 1) {
+                            echo '<div class="invite_text"><p>Приглашён в заказ</p></div>';
+                        }
+                        echo '<a href="user_page.php?user_id=' . $user_id . '">' . mysqli_fetch_assoc($user_nik_query)['name'] . '</a>';
+                        echo '</div></div></div>';
                     }
                 }
             }
@@ -192,9 +241,13 @@ include "../layouts/footer.php";
 <script src="../page_js/order/account_check.js"></script>
 <script src="../page_js/order/order_price_check.js"></script>
 <script src="../page_js/order/application_number.js"></script>
+<script src="../page_js/order/modal/invite_ajax.js"></script>
 <?php
 if ($user_order === TRUE) {
     echo '<script src="../page_js/order/application_menu.js"></script>';
+}
+if ($order["nik"] === $_SESSION["nik"]) {
+    echo '<script src="../page_js/order/modal/invite_application_modal.js"></script>';
 }
 ?>
 </body>

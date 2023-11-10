@@ -23,34 +23,35 @@ include "../layouts/header_line.php";
         <div class="header_title">
             <h2>Мои отклики</h2>
         </div>
-        <?php
-        $user_nik = $_SESSION["nik"];
-        $response_temp = 0;
-        $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik'";
-        $query = mysqli_query($bd_connect, $sql);
-        while ($row = mysqli_fetch_assoc($query)) {
-            //users_nik
-            $response_temp++;
-            $orderer_nik = $row['order_name'];
-            $order_sql = "SELECT * FROM orders WHERE order_name = '$orderer_nik'";
-            $order_niks = array();
-            $order_query = mysqli_query($bd_connect, $order_sql);
-            $order_row = mysqli_fetch_assoc($order_query);
-            $row_nik_content = $order_row['nik'];
-            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-            $nik = $row_nik_content;
-            //users_id
-            $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-            $id_result = mysqli_query($connection, $id_query);
-            $id_row = mysqli_fetch_assoc($id_result);
-            $user_id = $id_row['id'];
-            //users_icons
-            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-            $icon_resolt = mysqli_query($connection, $icon_query);
-            $icon_row = mysqli_fetch_assoc($icon_resolt);
-            $user_icon = $icon_row['icon_path'];
-            mysqli_close($connection);
-            echo '<div class="response">
+        <div class="response_container">
+            <?php
+            $user_nik = $_SESSION["nik"];
+            $response_temp = 0;
+            $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik'";
+            $query = mysqli_query($bd_connect, $sql);
+            while ($row = mysqli_fetch_assoc($query)) {
+                //users_nik
+                $response_temp++;
+                $orderer_nik = $row['order_name'];
+                $order_sql = "SELECT * FROM orders WHERE order_name = '$orderer_nik'";
+                $order_niks = array();
+                $order_query = mysqli_query($bd_connect, $order_sql);
+                $order_row = mysqli_fetch_assoc($order_query);
+                $row_nik_content = $order_row['nik'];
+                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                $nik = $row_nik_content;
+                //users_id
+                $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
+                $id_result = mysqli_query($connection, $id_query);
+                $id_row = mysqli_fetch_assoc($id_result);
+                $user_id = $id_row['id'];
+                //users_icons
+                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
+                $icon_resolt = mysqli_query($connection, $icon_query);
+                $icon_row = mysqli_fetch_assoc($icon_resolt);
+                $user_icon = $icon_row['icon_path'];
+                mysqli_close($connection);
+                echo '<div class="response">
                         <span class="response_id">' . $row['id'] . '</span>
                         <div class="top_part">
                             <div class="users_order">
@@ -70,12 +71,12 @@ include "../layouts/header_line.php";
                         </div>
                         <div class="response_sub">
                             <div>';
-            if (!empty($row['user_message'])) {
-                echo '<p class="comment">' . $row['user_message'] . '</p>';
-            } else {
-                echo '<p class="comment none_comment">Нет сообщения</p>';
-            }
-            echo '
+                if (!empty($row['user_message'])) {
+                    echo '<p class="comment">' . $row['user_message'] . '</p>';
+                } else {
+                    echo '<p class="comment none_comment">Нет сообщения</p>';
+                }
+                echo '
                     
                     </div>
                         <div>
@@ -84,11 +85,12 @@ include "../layouts/header_line.php";
                         </div>
                     </div>
                 </div>';
-        }
-        if ($response_temp == 0) {
-            echo '<p>Нет откликов</p>';
-        }
-        ?>
+            }
+            if ($response_temp == 0) {
+                echo '<p>Нет откликов</p>';
+            }
+            ?>
+        </div>
     </div>
 </div>
 <?php

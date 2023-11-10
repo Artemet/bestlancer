@@ -18,15 +18,15 @@ include "../layouts/header_line.php";
 <div class="container notification_container">
     <div class="header">
         <div class="header_title">
-            <h2>Мои увидомления</h2>
+            <h2>Мои уведомления</h2>
         </div>
         <div class="notifications">
             <?php
-            $sql = "SELECT * FROM personal_orders WHERE order_nik = '$user_nik'";
+            $sql = "SELECT * FROM notifications WHERE order_nik = '$user_nik'";
             $query = mysqli_query($bd_connect, $sql);
             $notificationBlocks = array();
 
-            while ($row = mysqli_fetch_assoc($query)) {
+            while ($row = mysqli_fetch_assoc($query)):
                 $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                 $order_id = $row['id'];
                 $nik = $row['nik'];
@@ -44,48 +44,72 @@ include "../layouts/header_line.php";
                 $user_icon = $icon_row['icon_path'];
 
                 mysqli_close($connection);
-
-                $notificationBlocks[] = '<div class="notification">
+                ?>
+                <div class="notification" id="<?= $row['id'] ?>">
                     <div class="top_part">
                         <div class="user_notification">
                             <div class="img">
-                                <img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false">
+                                <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false">
                             </div>
                             <div>
-                            <a href="user_page.php?user_id=' . $user_id . '">' . $row['nik'] . '</a>
+                                <a href="user_page.php?user_id=<?= $user_id ?>">
+                                    <?= $row['nik'] ?>
+                                </a>
                             </div>
                         </div>
                         <div>
-                            <h3>Личный заказ</h3>
+                            <?php
+                            if ($row['type'] == 'personal') {
+                                echo "<h3>Личный заказ</h3>";
+                            } else {
+                                echo "<h3>Приглашение в заказ</h3>";
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="main_notification">
                         <div>
                             <div>
-                                <h4>' . $row['order_name'] . '</h4>
+                                <h4>
+                                    <?= $row['order_name'] ?>
+                                </h4>
                             </div>
-                            <div>
-                                <p>' . $row['order_information'] . '</p>
-                            </div>
+                            <?php
+                            if ($row['type'] == 'personal'):
+                                ?>
+                                <div>
+                                    <p>
+                                        <?= $row['order_information'] ?>
+                                    </p>
+                                </div>
+                                <?php
+                            endif;
+                            ?>
                         </div>
                         <div class="order_files">
-                            <div><h4>Файлы</h4></div>
+                            <div>
+                                <h4>Файлы</h4>
+                            </div>
                             <div class="files">
-                                <a href="../bd_send/order/personal_order_files/' . $row['order_file'] . '" download>Скачать документ</a>
+                                <a href="../bd_send/order/personal_order_files/<?= $row['order_file'] ?>" download>Скачать
+                                    документ</a>
                             </div>
                         </div>
                         <div>
-                            <div><a href=""><button>Взять задачу</button></a></div>
-                            <div><a href="../bd_send/order/remove_personal_order.php?personal_order_id=' . $order_id . '"><button>Отказаться</button></a></div>
+                            <?php
+                            if ($row['type'] == 'personal') {
+                                echo '<div><a href=""><button>Взять задачу</button></a></div>';
+                            } else {
+                                echo '<div><a href="order_page.php?order_id=' . $row['order_information'] . '"><button>Посмотреть заказ</button></a></div>';
+                            }
+                            ?>
+                            <!-- ../bd_send/order/remove_personal_order.php?personal_order_id=<?= $order_id ?> -->
+                            <div><button class="remove_order">Отказаться</button></div>
                         </div>
                     </div>
-                </div>';
-            }
-            foreach (array_reverse($notificationBlocks) as $block) {
-                echo $block;
-            }
-            ?>
-            <?php
+                </div>
+                <?php
+            endwhile;
             $sql_response = "SELECT * FROM `orders_responses` WHERE orderer_nik = '$user_nik'";
             $query_response = mysqli_query($bd_connect, $sql_response);
             while ($row = mysqli_fetch_assoc($query_response)):
@@ -125,6 +149,26 @@ include "../layouts/header_line.php";
                 <?php
             endwhile;
             ?>
+            <script>
+                let refusal_temp = 0;
+                document.querySelectorAll("button.remove_order").forEach((item) => {
+                    item.addEventListener("click", function () {
+                        refusal_temp++;
+                        const get_item_id = item.closest(".notification").id;
+                        $.ajax({
+                            url: "../bd_send/order/remove_personal_order.php?personal_order_id=" + get_item_id,
+                        })
+                            .done(function () {
+                                item.closest(".notification").remove();
+                                if (refusal_temp === 1) {
+                                    setTimeout(() => {
+                                        alert("Вы успешно отказались от заказа!");
+                                    }, 500);
+                                }
+                            });
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>
