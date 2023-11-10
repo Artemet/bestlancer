@@ -87,6 +87,7 @@
     }
     .header_line .mobile_menu img{
         height: 40px;
+        padding-right: 10px;
     }
 }
 @media only screen and (max-width: 353px){

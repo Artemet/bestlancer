@@ -51,6 +51,7 @@ h2 .bestlancer_text p{
 textarea{
     font-family: 'Geologica', sans-serif;
     min-height: 33px;
+    resize: vertical;
 }
 /* warning_text */
 u.warning{
