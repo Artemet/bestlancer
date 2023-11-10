@@ -30,6 +30,13 @@ if (isset($_SESSION["nik"])) {
     }
     $sql = "INSERT INTO messages (`id`, `date`, `message_value`, `file_path`, `time`, `eye`, `nik`, `message_nik`) VALUES (NULL, '$formattedDate', '$message_value', '$file_name', '$message_time', 'NO', '$nik', '$message_nik')";
     $query = mysqli_query($bd_connect, $sql);
+
+    //notification
+    $moment_notification = "SELECT `messages` FROM `user_notification` WHERE `nik` = '$message_nik'";
+    $moment_notification_query = mysqli_query($bd_connect, $moment_notification);
+    $resolt_message_num = mysqli_real_escape_string($bd_connect, mysqli_fetch_assoc($moment_notification_query)['messages'] + 1);
+    $notification_sql = "UPDATE `user_notification` SET `messages` = $resolt_message_num WHERE `nik` = '$message_nik'";
+    $notification_query = mysqli_query($bd_connect, $notification_sql);
     header("Location: ../../pages/messages.php");
 } else {
     header("Location: ../../pages/home.php");

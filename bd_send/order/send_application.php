@@ -55,7 +55,7 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
         $old_notification_query = mysqli_query($bd_connect, $old_notification);
         $old_notification_resolt = mysqli_fetch_assoc($old_notification_query)['bell'] + 1;
         $old_notification_resolt = mysqli_real_escape_string($bd_connect, $old_notification_resolt);
-        $notification_sql = "UPDATE `user_notification` SET `bell` = '$old_notification_resolt'";
+        $notification_sql = "UPDATE `user_notification` SET `bell` = '$old_notification_resolt' WHERE `nik` = '$orderer_nik'";
     }
     $notification_query = mysqli_query($bd_connect, $notification_sql);
 } else {
