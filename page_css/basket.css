@@ -8,6 +8,9 @@
     grid-template-columns: 1fr auto;
     align-items: center;
 }
+.basket_product .product_id{
+    display: none;
+}
 .basket_product .cross{
     position: absolute;
     display: none;

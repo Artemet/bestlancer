@@ -46,6 +46,7 @@
 .service_page .service_image img{
     height: 500px;
     border-radius: 20px;
+    user-select: none;
 }
 .service_page .button_choice{
     display: flex;

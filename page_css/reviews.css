@@ -16,6 +16,10 @@
 .reviews_company .line{
     margin: 0 auto;
 }
+.reviews_company .reviews{
+    display: flex;
+    flex-direction: column-reverse;
+}
 .reviews_company .review{
     padding: 5px;
     position: relative;

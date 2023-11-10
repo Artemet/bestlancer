@@ -37,11 +37,12 @@ function task_category() {
     const get_order = document.querySelectorAll(".tasks_container .category b");
     const get_category_name = document.querySelectorAll(".tasks_container .make_order .link_part p");
     const get_medium_number = document.querySelector("p.medium_number").innerHTML;
-    const medium_number_convert = parseInt(get_medium_number, 10);
+    const medium_number_convert = parseInt(get_medium_number, 10) - 1;
     if (get_order.length >= 1){
       get_category_name.forEach( (item) => {
         if (item.innerHTML.includes(get_order[0].innerHTML.trim())){
           const parent = item.closest("div");
+          console.log(medium_number_convert);
           const get_sub = parent.querySelector(".link_sub");
           const get_medium_sub = document.querySelectorAll(".tasks_container .final_filter_sub")
           item.style.color = "rgb(79, 130, 3)";
@@ -96,4 +97,12 @@ function task_category() {
 }
 window.addEventListener("DOMContentLoaded", function (){
   task_category();
+  let href_temp = 0;
+    const get_links = document.querySelectorAll(".tasks_container .make_order .link_sub a.medium_category");
+    //console.log(get_links);
+    get_links.forEach((item) => {
+        href_temp++;
+        item.id = href_temp;
+        item.href = "?medium_category=" + item.id;
+    });
 });

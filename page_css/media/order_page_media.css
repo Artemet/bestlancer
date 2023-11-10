@@ -1,0 +1,32 @@
+/* order_page_media_style */
+@media only screen and (max-width: 757px){
+    .order_page .user_order .part_one{
+        grid-template-columns: 1fr;
+    }
+    .order_page .user_order .part_two{
+        border-top: 2px solid rgb(79, 130, 3);
+        padding: 10px 0;
+        margin: 0 10px;
+    }
+    .order_page .user_order .part_one p{
+        border-right: none;
+    }
+    .order_page .user_order .user_price{
+        margin: auto;
+    }
+    .order_page .user_order .part_one span{
+        padding-left: 0;
+    }
+}
+@media only screen and (max-width: 521px){
+    .order_page .user_order .part_two{
+        grid-template-columns: 1fr;
+    }
+    .order_page .user_order .button_option{
+        width: 100%;
+    }
+    .order_page .user_order .part_two p{
+        padding: 5px 0;
+        text-align: center;
+    }
+}

@@ -19,8 +19,7 @@
 }
 .my_orders .order p{
     padding: 10px 0;
-    border-top: 3px solid #d08e0b;
-    border-bottom: 3px solid #d08e0b;
+    margin: 0;
 }
 .my_orders .order span{
     color: #d08e0b;

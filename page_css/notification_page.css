@@ -32,7 +32,6 @@
 .notification_container .top_part{
     display: flex;
     align-items: center;
-    border-bottom: 2px solid #d08e0b;
 }
 .notification_container .top_part h3{
     font-size: 23px;
@@ -42,6 +41,7 @@
 }
 .notification_container .main_notification{
     display: grid;
+    grid-gap: 50px;
     grid-template-columns: 1fr 1fr auto;
 }
 .notification_container .order_files{

@@ -5,28 +5,29 @@
     outline: none;
     border-radius: 10px;
     border: 3px solid #d08e0b;
-    color: white;
-    background-color: rgb(53, 52, 52);
 }
 .support_container textarea{
     resize: vertical;
-}
-.support_container .right_in::placeholder{
-    color: white;
 }
 .support_container form p{
     color: rgb(79, 130, 3);
     font-size: 20px;
 }
+.support_container .button_choice{
+    margin-top: 35px;
+    padding-top: 35px;
+    border-top: 3px solid rgb(79, 130, 3);
+}
 .support_container button{
-    margin-top: 20px;
-    transition: 0.5s;
-    font-size: 18px;
-    border-radius: 10px;
-    background-color: rgb(79, 130, 3);
-    color: white;
-    padding: 10px;
+    padding: 5px;
+    font-size: 17px;
     cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(53, 52, 52);
+    border-radius: 5px;
+    border: 3px solid #d08e0b;
+    transition: 0.5s;
 }
 .support_container button:hover{
     color: #d08e0b;

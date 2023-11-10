@@ -170,11 +170,30 @@
         font-size: 12px;
     }
 }
+@media only screen and (max-width: 427px){
+    .user_account .project_covers .project{
+        width: 100%;
+    }
+    .service_container .service{
+        width: 100% !important;
+    }
+    .service_container .service .img{
+        width: 100% !important;
+    }
+}
 @media only screen and (max-width: 400px){
     .user_account .account_redactor button{
         align-items: center;
     }
     .user_account .about_user p{
         padding-right: 0;
+    }
+    .user_account .menu_include{
+        margin-bottom: 30px;
+    }
+}
+@media only screen and (max-width: 339px){
+    .container{
+        margin: 140px 10px;
     }
 }

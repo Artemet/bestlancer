@@ -3,6 +3,9 @@
     display: flex;
     align-items: center;
 }
+.order_page p.order_id{
+    display: none;
+}
 .order_page .user_information img{
     border: 2px solid #d08e0b;
     border-radius: 5px;
@@ -72,6 +75,7 @@
     padding: 20px;
 }
 .order_page .application{
+    position: relative;
     margin-bottom: 25px;
     padding-bottom: 25px;
     border-bottom: 2px solid rgb(79, 130, 3);
@@ -79,6 +83,34 @@
 .order_page .application .application_part{
     display: flex;
     align-items: center;
+}
+.order_page .invite_text{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+@keyframes colorChange {
+    0% {
+        color: #d08e0b;
+    }
+    10%{
+        color: rgb(51, 51, 51);
+    }
+    33% {
+        color: grey;
+    }
+    66% {
+        color: rgb(79, 130, 3);
+    }
+    100% {
+        color: #d08e0b;
+    }
+}
+
+.order_page .invite_text p {
+    margin: 0;
+    font-size: 14px;
+    animation: colorChange 15s linear 0s infinite;
 }
 .order_page .application img{
     height: 50px;
@@ -94,12 +126,24 @@
 }
 .order_page .application_number_wrapper{
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
+}
+.order_page .add_person{
+    margin-right: 10px;
+}
+.order_page .add_person svg{
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.order_page .add_person svg:hover{
+    fill: gray !important;
 }
 .order_page .application_number_wrapper a{
     color: #d08e0b;
     font-size: 20px;
+    padding-right: 20px;
 }
 .order_page .application_number_wrapper span{
     font-size: 22px;
