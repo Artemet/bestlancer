@@ -1,4 +1,7 @@
 /* service_page_style */
+.service_page{
+    position: relative;
+}
 .service_page .user_information{
     padding-top: 20px;
     display: flex;
@@ -25,6 +28,13 @@
 .service_page .icon_choice{
     padding-top: 20px;
     display: flex;
+}
+.service_page .icon_choice .report_icon{
+    transition: 0.5s;
+}
+.service_page .spam_active{
+    opacity: 0.5;
+    pointer-events: none;
 }
 .service_page .icon_choice svg{
     margin-left: 10px;

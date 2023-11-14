@@ -10,10 +10,19 @@
 }
 .my_responses .users_order{
     display: flex;
+    position: relative;
     align-items: center;
     padding-right: 20px;
     margin-right: 20px;
     border-right: 2px solid #d08e0b;
+}
+.my_responses .users_order p.max_price{
+    color: #d08e0b;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    font-size: 10px;
+    padding-left: 74px;
 }
 .my_responses .users_order img{
     height: 60px;

@@ -1,7 +1,6 @@
 /* user_portfolio */
 .user_account{
     border-radius: 10px;
-    background-color: white;
 }
 .user_account .mobile_choice{
     display: none;
@@ -274,7 +273,7 @@
 }
 .user_account .menu_include{
     position: relative;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
     transition: 0.5s;
 }
 .user_account .menu_include h2{
@@ -316,6 +315,10 @@
 }
 .user_account .button_choice button:hover{
     opacity: 0.7;
+}
+.user_account .button_choice button.user_block{
+    background-color: red;
+    color: white;
 }
 .user_account .button_choice div{
     text-align: right;
