@@ -95,4 +95,5 @@ if (stripos($previous_page, "add_project") !== false) {
     $stmt->close();
     $bd_connect->close();
 }
+header("Location: ../../pages/user.php");
 ?>

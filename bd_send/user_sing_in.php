@@ -3,10 +3,6 @@ session_start();
 
 include "database_connect.php";
 
-// $sing_information = [
-//     "nik" => $_POST["nik_name"],
-//     "password" => $_POST["password"]
-// ];
 if (isset($_SERVER['HTTP_REFERER'])) {
     $previous_page = $_SERVER['HTTP_REFERER'];
 }
@@ -55,6 +51,6 @@ if (mysqli_num_rows($result) > 0) {
     header("Location: $previous_page");
     exit();
 } else {
-    include "warnings/rong_sing_in.php";
+    header("Location: $previous_page");
 }
 ?>
