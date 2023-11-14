@@ -4,6 +4,7 @@ include "../database_connect.php";
 $like_repetition = 0;
 if (!isset($_SESSION["nik"])) {
     header("Location: ../../pages/home.php");
+    exit;
 }
 $user_nik = $_SESSION["nik"];
 if (isset($_GET['like_id']) && is_numeric($_GET['like_id'])) {
