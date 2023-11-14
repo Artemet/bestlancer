@@ -8,7 +8,7 @@
             <div><a href="../pages/news.php">Новости</a></div>
             <div><a href="">Реклама</a></div>
             <div><a href="../pages/basket.php">Корзина</a></div>
-            <div><a href="">Верефикация</a></div>
+            <div><a href="../pages/help.php">Помощь</a></div>
             <div><a href="../pages/settings.php">Настройки</a></div>
         </div>
         <div class="go_out">
