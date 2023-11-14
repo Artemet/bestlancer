@@ -1,6 +1,7 @@
 <?php
 session_start();
 $account_login = FALSE;
+$friend_find = false;
 include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/user.css'>";
@@ -32,17 +33,43 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         include "../bd_send/warnings/rong_user.php";
         exit();
     }
+    $user_nik = $user['nik'];
+    $my_nik = $_SESSION["nik"];
+    //friend_find
+    $friend_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
+    $friend_query = mysqli_query($bd_connect, $friend_sql);
+    while ($friend_resolt = mysqli_fetch_assoc($friend_query)){
+        $friend_find = true;
+    }
+    //user_status
+    if ($friend_find == true){
+        $status_sql = "SELECT `status` FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
+        $user_block_sql = "SELECT `main_block` FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
+        $status_query = mysqli_query($bd_connect, $status_sql);
+        $user_block_query = mysqli_query($bd_connect, $user_block_sql);
+        $status_resolt = mysqli_fetch_assoc($status_query)['status'];
+        $user_block_resolt = mysqli_fetch_assoc($user_block_query)['main_block'];
+    }
 } else {
     echo "<title>Пользователь не найден!</title>";
     exit();
 }
-$user_nik = $user['nik'];
 ?>
 <div class="container">
     <div class="user_account">
         <div class="user_information other_account">
             <div class="img">
-                <img src="../bd_send/user/user_icons/<?= $user['icon_path']; ?>" alt="" draggable="false">
+                <?php
+                if ($friend_find == true){
+                    if ($user_block_resolt == $user_nik){
+                        echo '<img src="../bd_send/user/user_icons/user.png" alt="" draggable="false">';
+                    } else{
+                        echo '<img src="../bd_send/user/user_icons/'.$user['icon_path'].'" alt="" draggable="false">';
+                    }
+                } else{
+                    echo '<img src="../bd_send/user/user_icons/'.$user['icon_path'].'" alt="" draggable="false">';
+                }
+                ?>
             </div>
             <?php
             $role_option = "seller";
@@ -76,12 +103,28 @@ $user_nik = $user['nik'];
                     mysqli_stmt_execute($status_query);
                     $result = mysqli_stmt_get_result($status_query);
                     $row = mysqli_fetch_assoc($result);
-                    if ($row['status'] == "online") {
-                        echo '<div class="circle online"></div>
-                    <p>в сети</p>';
-                    } else {
-                        echo '<div class="circle not_online"></div>
-                    <p>не в сети</p>';
+                    function status_html(){
+                        if ($row['status'] == "online") {
+                            echo '<div class="circle online"></div>
+                            <p>в сети</p>';
+                        } else {
+                            echo '<div class="circle not_online"></div>
+                            <p>не в сети</p>';
+                        }
+                    }
+                    if (isset($_SESSION["nik"])){
+                        if ($friend_find == true){
+                            if ($user_block_resolt == $user_nik){
+                                echo '<div class="circle not_online"></div>
+                                    <p>недоступен</p>';
+                            } else{
+                                status_html();
+                            }
+                        } else{
+                            status_html();
+                        }
+                    } else{
+                        status_html();
                     }
                     ?>
                 </div>
@@ -135,11 +178,54 @@ $user_nik = $user['nik'];
                 ?>
                 <div class="button_choice">
                     <?php
-                    if ($user['role'] == 'seller') {
-                        echo '<div><button class="personal_order">Предложить заказ</button></div>';
+                    if ($friend_find == true){
+                        if ($user_block_resolt !== $user_nik){
+                            if ($user['role'] == 'seller') {
+                                echo '<div><button class="personal_order">Предложить заказ</button></div>';
+                            }
+                        }
+                    } else{
+                        if ($user['role'] == 'seller') {
+                            echo '<div><button class="personal_order">Предложить заказ</button></div>';
+                        }
                     }
                     ?>
-                    <div><button class="chat_start">Связаться</button></div>
+                    <?php
+                    //block_button
+                    if ($friend_find == false){
+                        echo '<div><button class="chat_start" title="Связаться с '.$user_nik.'">Связаться</button></div>';
+                    } else{
+                        if ($user_block_resolt !== $user_nik){
+                            echo '<div><a href="messages.php"><button title="Открыть чат с '.$user_nik.'">Открыть чат</button></a></div>';
+                        }
+                    }
+                    if ($friend_find == true):
+                        //user_status
+                        $status_text = "Заблокировать";
+                        if ($status_resolt == "block"){
+                            $status_text = "Разблокировать";
+                        }
+                        if ($user_block_resolt == $_SESSION["nik"] || empty($user_block_resolt)):
+                    ?>
+                    <div><button class="user_block block_button" title="Заблокировать <?=$user_nik?>"><?=$status_text?></button></div>
+                    <script>
+                        $('button.block_button').on('click', function(){
+                            if (this.innerHTML === 'Заблокировать'){
+                                this.innerHTML = 'Разблокировать';
+                                setTimeout(() => {alert("Вы зaблокировали пользователя <?=$user_nik?>");}, 500);
+                            } else{
+                                this.innerHTML = 'Заблокировать';
+                                setTimeout(() => {alert("Вы разблокировали пользователя <?=$user_nik?>");}, 500);
+                            }
+                            $.ajax({
+                                url: "../bd_send/user/user_block.php?user_id=<?=$user_id?>",
+                            });
+                        });
+                    </script>
+                    <?php
+                        endif;
+                    endif;
+                    ?>
                 </div>
                 <?php
             endif;
@@ -147,8 +233,16 @@ $user_nik = $user['nik'];
         </div>
         <div class="button_choice mobile_choice">
             <?php
-            if ($user['role'] == 'seller') {
-                echo '<div><button class="personal_order">Предложить заказ</button></div>';
+            if ($friend_find == true){
+                if ($user_block_resolt == $user_nik){
+                    if ($user['role'] !== 'seller') {
+                        echo '<div><button class="personal_order">Предложить заказ</button></div>';
+                    }
+                }
+            } else{
+                if ($user['role'] == 'seller') {
+                    echo '<div><button class="personal_order">Предложить заказ</button></div>';
+                }
             }
             ?>
             <div><button class="chat_start">Связаться</button></div>

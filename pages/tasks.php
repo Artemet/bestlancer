@@ -6,6 +6,9 @@ $medium_filter_number = null;
 $final_filter_number = null;
 $filter_reset = null;
 $pagination_href = "tasks.php?";
+if (isset($_SESSION["nik"])){
+    $my_nik = $_SESSION["nik"];
+}
 if (isset($_GET['filter']) && is_numeric($_GET['filter'])) {
     $filter = $_GET['filter'];
     $filter_number = $filter;
@@ -789,6 +792,21 @@ include "../layouts/modal/corect_order.php";
                     $my_order = "my_order";
                 }
             }
+            //block_user_system
+            $block_nik = null;
+            $final_assoc = null;
+            if (!isset($_SESSION["nik"])){
+                $my_nik = "Guest";
+            }
+            $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$my_nik'";
+            $unblock_query = mysqli_query($bd_connect, $unblock_sql);
+            $unblock_resolt = mysqli_fetch_assoc($unblock_query);
+            if ($unblock_resolt['nik_one'] == $unblock_resolt['main_block']){
+                $final_assoc = $unblock_resolt['nik_two'];
+            } elseif ($unblock_resolt['nik_two'] == $unblock_resolt['main_block']){
+                $final_assoc = $unblock_resolt['nik_one'];
+            }
+            if ($final_assoc !== $row['nik']):
             ?>
             <div class="order <?= $my_order ?>">
                 <?php
@@ -876,6 +894,7 @@ include "../layouts/modal/corect_order.php";
                 </div>
             </div>
             <?php
+            endif;
         endforeach;
         ?>
         <div class="medium_category_number">

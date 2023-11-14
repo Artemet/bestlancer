@@ -152,7 +152,7 @@ include "../layouts/header_line.php";
         <div class="main_reoitation">
             <div class="repitation">
                 <div class="number">
-                    <span>0</span>
+                    <span class="active">0</span>
                     <b>
                         <?= $last_account ?>
                     </b>
@@ -161,7 +161,7 @@ include "../layouts/header_line.php";
             </div>
             <div class="repitation">
                 <div class="number">
-                    <span>0</span>
+                    <span class="active">0</span>
                     <b>
                         <?= $last_review ?>
                     </b>
@@ -170,7 +170,7 @@ include "../layouts/header_line.php";
             </div>
             <div class="repitation">
                 <div class="number">
-                    <span>0</span>
+                    <span class="active">0</span>
                     <b>
                         <?= $last_order ?>
                     </b>

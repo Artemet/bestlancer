@@ -83,16 +83,18 @@ include "../layouts/header_line.php";
                     }
                 }
 
-                $user_responses = 0;
-                $response_class = null;
-                $response_nik = $_SESSION["nik"];
-                $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = $order_id AND nik = '$response_nik'";
-                $existingApplicationQuery = mysqli_query($bd_connect, $existingApplicationSql);
-                while ($existingApplication = mysqli_fetch_assoc($existingApplicationQuery)) {
-                    $user_responses++;
-                }
-                if ($user_responses >= 1) {
-                    $response_class = "ready_application";
+                if (isset($_SESSION["nik"])){
+                    $user_responses = 0;
+                    $response_class = null;
+                    $response_nik = $_SESSION["nik"];
+                    $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = $order_id AND nik = '$response_nik'";
+                    $existingApplicationQuery = mysqli_query($bd_connect, $existingApplicationSql);
+                    while ($existingApplication = mysqli_fetch_assoc($existingApplicationQuery)) {
+                        $user_responses++;
+                    }
+                    if ($user_responses >= 1) {
+                        $response_class = "ready_application";
+                    }
                 }
 
                 if ($user_order === FALSE) {
@@ -149,8 +151,10 @@ include "../layouts/header_line.php";
                     <?php
                 endif;
             endif;
-            if ($user_responses >= 1) {
-                echo "<a href='my_responses.php'>Мои заявки</a>";
+            if (isset($_SESSION["nik"])){
+                if ($user_responses >= 1) {
+                    echo "<a href='my_responses.php'>Мои заявки</a>";
+                }
             }
             ?>
             <div class="application_number"><span>0</span></div>

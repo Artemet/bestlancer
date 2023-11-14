@@ -10,6 +10,10 @@ echo "<title>Услуги фрилансеров</title>";
 include "../layouts/header_line.php";
 ?>
 <div class="container">
+    <div class="service_search">
+        <div><input type="text" class="right_in" placeholder="Поиск"></div>
+        <div><button>Поиск</button></div>
+    </div>
     <div class="service_filter">
         <h4>Все услуги</h4>
         <div>
