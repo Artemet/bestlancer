@@ -8,6 +8,9 @@
     .user p.user_name{
         display: none;
     }
+    .user{
+        background: none !important;
+    }
 }
 @media only screen and (max-width: 1100px){
     .header_line .header_part_one div{
@@ -28,6 +31,9 @@
     .header_line .user p.user_name{
         display: block;
     }
+    .user:hover{
+        background-color: black !important;
+    }
     .header_line .line_wrapper{
         grid-template-columns: 1fr 1fr auto;
     }
@@ -38,6 +44,9 @@
 @media only screen and (max-width: 790px){
     .header_line .user p.user_name{
         display: none;
+    }
+    .user{
+        background: none !important;
     }
 }
 @media only screen and (max-width: 707px){

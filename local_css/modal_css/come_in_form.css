@@ -16,7 +16,7 @@
 .user_container .close_icon{
     position: absolute;
     right: 0;
-    padding: 10px 30px;
+    margin: 10px 30px;
     font-size: 40px;
     cursor: pointer;
 }
