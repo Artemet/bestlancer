@@ -838,6 +838,7 @@ include "../layouts/modal/corect_order.php";
             $my_order = null;
             $user_id = $order['user_id'];
             $user_icon = $order['user_icon'];
+            $user_nik = $order['nik'];
             $category_arr = array("Без категорий", "Дизайн", "Разработка и IT", "Тексты и переводы", "SEO и трафик", "Соцсети и реклама", "Аудио, видео, съемка", "Бизнес и жизнь", "Учеба и репетиторство");
             if (isset($_SESSION["nik"])) {
                 if ($_SESSION["id"] == $user_id) {
@@ -850,7 +851,7 @@ include "../layouts/modal/corect_order.php";
             if (!isset($_SESSION["nik"])) {
                 $my_nik = "Guest";
             }
-            $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$my_nik'";
+            $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$my_nik' OR `main_block` = '$user_nik'";
             $unblock_query = mysqli_query($bd_connect, $unblock_sql);
             $unblock_resolt = mysqli_fetch_assoc($unblock_query);
             if (!empty($unblock_resolt['main_block'])) {

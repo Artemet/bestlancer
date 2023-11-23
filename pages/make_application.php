@@ -9,7 +9,7 @@ echo "<link rel='stylesheet' href='../page_css/make_application.css'>";
 $nik = $_SESSION["nik"];
 if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     $order_id = $_GET['order_id'];
-    $sql = "SELECT * FROM orders WHERE id = $order_id";
+    $sql = "SELECT * FROM `orders` WHERE id = $order_id";
     $query = mysqli_query($bd_connect, $sql);
     $order = mysqli_fetch_assoc($query);
 
@@ -20,7 +20,7 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
         echo "<title>$user_nik: $order_name</title>";
 
         $user_responses = 0;
-        $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = $order_id AND nik = '$nik'";
+        $existingApplicationSql = "SELECT * FROM `orders_responses` WHERE `order_id` = $order_id AND `nik` = '$nik'";
         $existingApplicationQuery = mysqli_query($bd_connect, $existingApplicationSql);
         while ($existingApplication = mysqli_fetch_assoc($existingApplicationQuery)) {
             $user_responses++;

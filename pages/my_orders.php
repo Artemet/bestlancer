@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["nik"])){
+    header("Location: home.php");
+}
 include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/order_information.css'>";

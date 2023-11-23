@@ -213,11 +213,8 @@ include "../layouts/header_line.php";
                             $project_temp++;
                             $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                             ?>
-                            <a id="<?= $row['id'] ?>">
+                            <a href="project_page.php?project_id=<?= $row['id'] ?>" id="<?= $row['id'] ?>">
                                 <div class="project">
-                                    <?php
-                                    include "../layouts/change_pencil.php";
-                                    ?>
                                     <div class="img">
                                         <img src="../bd_send/user/project_cover/<?= $row["cover_href"] ?>" alt=""
                                             draggable="false">

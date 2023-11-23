@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["nik"])){
+    header("Location: home.php");
+}
 include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/order_information.css'>";
@@ -33,6 +36,7 @@ include "../layouts/header_line.php";
                 $query = mysqli_query($bd_connect, $sql);
                 //page
                 $responses_per_page = 8;
+
                 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
                 $offset = ($page - 1) * $responses_per_page;
@@ -130,6 +134,7 @@ include "../layouts/header_line.php";
                 $total_responses_query = mysqli_query($bd_connect, $total_responses_sql);
                 $total_responses = mysqli_fetch_assoc($total_responses_query)['total'];
                 $total_pages = ceil($total_responses / $responses_per_page);
+                if ($total_pages !== 1 && $total_pages >= 2):
                 ?>
                             <div class="pagination">
                                 <div class="arrow"><a href="?page=<?= $page - 1 ?>"><svg
@@ -154,6 +159,9 @@ include "../layouts/header_line.php";
                                                 d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
                                         </svg></a></div>
                             </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
                     </div>
                 </div>
