@@ -17,13 +17,35 @@
                     <?= $user['nik'] ?>
                 </u></h2>
         </div>
-        <form action="../bd_send/user/message_users.php?user_id=<?= $user_id ?>" method="post">
+        <!-- <form action="../bd_send/user/message_users.php?user_id=<?= $user_id ?>" method="post"> -->
             <div>
                 <h4>Сообщение</h4>
                 <textarea name="thirst_message" class="right_in" id="" cols="30" rows="10"
                     placeholder="Введите ваше сообщение"></textarea>
             </div>
             <button>Отправить</button>
-        </form>
+        <!-- </form> -->
+        <script>
+            $('.start_chat_container button').on('click', function () {
+                const message_value = $('.start_chat_container textarea').val();
+                $.ajax({
+                    method: "POST",
+                    url: "../bd_send/user/message_users.php?user_id=<?= $user_id ?>",
+                    data: { thirst_message: message_value }
+                })
+                    .done(function () {
+                        $('button.chat_start').html('Открыть чат');
+                        $('button.chat_start').addClass('chat_link');
+                        $('.start_chat_container')[0].style.opacity = 0;
+                        setTimeout( () => {
+                            $('.start_chat_container')[0].style.display = "none";
+                            alert("Вы успешно начали чат с <?=$user['nik']?>");
+                        }, 500);
+                        $('button.chat_start').on('click', function () {
+                            window.location.href = "messages.php";
+                        });
+                    });
+            });
+        </script>
     </div>
 </div>
