@@ -4,8 +4,8 @@ include "../database_connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["country"]) && isset($_POST["age"]) && isset($_SESSION["nik"])) {
-        if (!empty($_FILES['user_icon'])) {
-            $file = $_FILES['user_icon'];
+        if (!empty($_FILES['icon_choice'])) {
+            $file = $_FILES['icon_choice'];
             $file_name = $file['name'];
             if (empty($file_name)) {
                 $file_name = $_SESSION["icon_path"];
@@ -45,8 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: ../warnings/web_error.php");
             die('Ошибка выполнения запроса: ' . mysqli_error($bd_connect));
         }
-        header("Location: ../../index.php");
-        session_destroy();
+        header("Location: ../../pages/user.php");
         exit();
     }
 }
