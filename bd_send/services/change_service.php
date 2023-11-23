@@ -37,7 +37,7 @@ if (!empty($_FILES['file_name'])) {
 $service_name = $_POST["service_name"];
 $service_price = $_POST["service_price"];
 $service_context = $_POST["service_context"];
-if (empty($service_name) || empty($service_price) || empty($service_context)) {
+if (empty($service_name) || empty($service_price) || empty($service_context) || $service_price <= 4) {
     header("Location: ../../pages/service_page.php?service_id=$service_id");
     exit;
 }
