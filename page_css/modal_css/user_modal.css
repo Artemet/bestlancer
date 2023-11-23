@@ -15,6 +15,7 @@
 }
 .change_profile .close svg{
     font-size: 30px;
+    cursor: pointer;
     margin-right: 20px;
     transition: 0.5s;
 }

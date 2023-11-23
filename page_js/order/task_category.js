@@ -10,7 +10,6 @@ function task_category() {
       } else{
         if (item.closest(".final_filter_sub") === null){
           href_temp++;
-          //item.href = "?medium_category=" + href_temp;
         }
       }
     });
@@ -25,7 +24,7 @@ function task_category() {
           const get_sub = parent.querySelector(".link_sub");
           item.style.color = "rgb(79, 130, 3)";
           item.style.fontWeight = 700;
-          get_sub.style.display = "grid";
+          get_sub.style.height = "95" + "%";
         }
       });
     }
@@ -93,13 +92,11 @@ function task_category() {
       updateUI();
     });
   }
-  //save_category();  
 }
 window.addEventListener("DOMContentLoaded", function (){
   task_category();
   let href_temp = 0;
     const get_links = document.querySelectorAll(".tasks_container .make_order .link_sub a.medium_category");
-    //console.log(get_links);
     get_links.forEach((item) => {
         href_temp++;
         item.id = href_temp;

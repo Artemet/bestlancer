@@ -33,6 +33,24 @@
     border-bottom: 3px solid rgb(79, 130, 3);
     padding-bottom: 16px;
 }
+.order_page .back_page{
+    display: flex;
+    text-decoration: none;
+    width: fit-content;
+    color: #d08e0b;
+    padding-bottom: 5px;
+    transition: 0.5s;
+}
+.order_page .back_page:hover{
+    opacity: 0.7;
+}
+.order_page .back_page svg{
+    padding-top: 2px;
+    padding-right: 5px;
+}
+.order_page .back_page p{
+    margin: 0;
+}
 .order_page .price{
     color: #d08e0b;
     font-size: 21px;
@@ -167,6 +185,7 @@
 }
 .order_page .user_order .arrow svg.animation{
     transform: rotate(180deg);
+    fill: rgb(79, 130, 3) !important;
 }
 .order_page b.no_message{
     color: #d08e0b;

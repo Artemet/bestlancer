@@ -3,12 +3,28 @@
     position: relative;
     background-color: rgba(128, 128, 128, 0.202);
     height: 300px;
+    z-index: 1;
     border-radius: 10px;
     border: 2px solid rgb(79, 130, 3);
     transition: 0.5s;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 .project_add_container .cover_add:hover{
     background-color: rgba(128, 128, 128, 0.308);
+}
+.project_add_container .cover_add .background_cover{
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    opacity: 0.3;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
 }
 .project_add_container textarea{
     resize: vertical;
@@ -39,6 +55,7 @@
 }
 .project_add_container .cover_child{
     padding-top: 85px;
+    z-index: 100;
 }
 .project_add_container .cover_child p{
     padding-top: 60px;

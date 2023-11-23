@@ -1,5 +1,5 @@
 //tz_length
-const max_tz_length = 270;
+const max_tz_length = 230;
 let tz_text = [];
 let foreach_temp = 0;
 let show_temp = 0;

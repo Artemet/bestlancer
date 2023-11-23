@@ -4,10 +4,6 @@
     display: none;
     opacity: 0;
 }
-.notification_container .notifications{
-    display: flex;
-    flex-direction: column-reverse;
-}
 .notification_container .notification{
     margin-bottom: 25px;
     padding-bottom: 25px;

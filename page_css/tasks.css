@@ -29,6 +29,9 @@
 .tasks_container .icon_options svg:hover{
     opacity: 0.5;
 }
+.tasks_container .icon_options svg.active_save{
+    fill: #d08e0b !important;
+}
 .tasks_container .icon_options .order_filter svg.active{
     opacity: 0.5;
 }
@@ -83,6 +86,9 @@
 }
 .tasks_container .tasks a.filter_none{
     color: rgb(79, 130, 3);
+    transition: 0.5s;
+    opacity: 0;
+    visibility: collapse;
 }
 .tasks_container .user_information a:hover{
     text-decoration: underline rgb(79, 130, 3);
@@ -93,9 +99,6 @@
 .tasks_container .make_order b.filter_title{
     font-size: 18px;
     user-select: none;
-}
-.tasks_container input.filter_save{
-    display: none;
 }
 .tasks_container .medium_category_number{
     display: none;
@@ -136,9 +139,14 @@
 .tasks_container .make_order .link_part p.click{
     color: rgb(79, 130, 3);
 }
+.tasks_container .make_order .link_part p.active{
+    color: rgb(79, 130, 3);
+    font-weight: 700;
+}
 .tasks_container .make_order .link_sub{
-    display: none;
+    overflow: hidden;
     padding-left: 8px;
+    transition: 0.5s;
     border-left: 2px solid rgb(79, 130, 3);
 }
 .tasks_container .make_order .link_sub a{
@@ -230,6 +238,32 @@
 }
 .orders a{
     text-decoration: none;
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 260px;
+    right: 0;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+.overlay_active{
+    display: flex;
+}
+.overlay .loader{
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid rgb(79, 130, 3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 .orders .order{
     padding: 10px;

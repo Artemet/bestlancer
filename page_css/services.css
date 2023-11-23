@@ -27,6 +27,9 @@
     width: 120px;
     height: 100%;
 }
+.service_search button:hover{
+    color: #d08e0b;
+}
 .service_filter{
     background-color: white;
     border-radius: 20px;
