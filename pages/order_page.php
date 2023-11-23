@@ -242,7 +242,7 @@ include "../layouts/header_line.php";
                     } else {
                         $application_nik_assoc = $row['nik'];
                         $invite_user_temp = 0;
-                        $invite_sql = "SELECT `type` FROM `notifications` WHERE `order_nik` = '$application_nik_assoc' AND `type` = 'invite'";
+                        $invite_sql = "SELECT `type` FROM `notifications` WHERE `order_nik` = '$application_nik_assoc' AND `type` = 'invite' AND `order_information` = '$order_id'";
                         $invite_query = mysqli_query($bd_connect, $invite_sql);
                         while ($invite_resolt = mysqli_fetch_assoc($invite_query)) {
                             $invite_user_temp++;
