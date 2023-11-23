@@ -27,7 +27,7 @@
             <div class="page_links">
                 <h3>О сервисе</h3>
                 <div class="links">
-                    <a href="../pages/about_company.php">О компании</a>
+                    <a href="../pages/about_company.php">О бирже</a>
                     <a href="">Контакты</a>
                     <a href="../pages/reviews.php">Отзывы</a>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="links">
                     <a href="../pages/rates.php">Тарифы</a>
                     <a href="../pages/services.php">Услуги</a>
-                    <a href="../pages/tasks.php">Фриланс заказы</a>
+                    <a href="<?= $project_filter_resolt ?>">Фриланс заказы</a>
                 </div>
             </div>
             <div class="page_links">

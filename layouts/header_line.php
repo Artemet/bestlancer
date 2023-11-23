@@ -4,8 +4,17 @@
     <?php
     include "modal/registor.php";
     include "modal/sing_in.php";
+    include "../bd_send/database_connect.php";
+    $project_filter_resolt = "tasks.php";
     if (isset($_SESSION["nik"])) {
         include "modal/other.php";
+        $my_nik = $_SESSION["nik"];
+        $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = '$my_nik'";
+        $project_filter_query = mysqli_query($bd_connect, $project_filter);
+        $project_filter_resolt = mysqli_fetch_assoc($project_filter_query)['filter'];
+        if (empty($project_filter_resolt)) {
+            $project_filter_resolt = "tasks.php";
+        }
     }
     include "modal/modal_up.php";
     ?>
@@ -22,7 +31,7 @@
                     <?php
                     $link_temp = -1;
                     $links_text = array("Заказы", "Фрилансеры", "Услуги", "Форум", "Новости");
-                    $links_href = array("../pages/tasks.php", "#", "../pages/services.php", "#", "../pages/news.php");
+                    $links_href = array("$project_filter_resolt", "#", "../pages/services.php", "#", "../pages/news.php");
                     foreach ($links_text as $link) {
                         $link_temp++;
                         echo "<a href='$links_href[$link_temp]'>$link</a>";

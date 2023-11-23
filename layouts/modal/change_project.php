@@ -24,9 +24,9 @@
                     <p>Ваша обложка:</p>
                     <div class="cover"
                         style="background-image: url('../bd_send/user/project_cover/<?= $project_cover['cover_href']; ?>');">
-                        <div class="fon"></div>
-                        <input type="text" name="old_file" readonly value="<?= $project_cover['cover_href'] ?>"
-                            style="display: none;">
+                        <div class="fon" id="selectedIcon"></div>
+                        <input type="text" id="icon_choice" name="old_file" readonly
+                            value="<?= $project_cover['cover_href'] ?>" style="display: none;">
                         <input type="file" name="file_name" class="file_choice">
                         <div class="plus"><span>+</span></div>
                     </div>
