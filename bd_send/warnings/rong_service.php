@@ -8,7 +8,8 @@
             <h2>Услуга не найдена!</h2>
         </div>
         <div class="text">
-            <b class="error_text">Данная услуга заблокирована либо не существует на <a href="../../pages/home.php">BESTLANCER</a></b>
+            <b class="error_text">Данная услуга заблокирована либо не существует на <a
+                    href="../../pages/home.php">BESTLANCER</a></b>
         </div>
     </div>
 </div>
