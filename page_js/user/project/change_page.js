@@ -11,6 +11,7 @@ function change_page(){
             item.closest("a").classList.remove("none_active");
         });
     }
+
     document.addEventListener("DOMContentLoaded", function () {
         const get_content = document.querySelector(".content");
         const get_links = document.querySelectorAll(".pagination a");
@@ -27,6 +28,21 @@ function change_page(){
                     const new_content = doc.querySelector(".content");
                     if (new_content) {
                         get_content.innerHTML = new_content.innerHTML;
+                        //arrow_check
+                        const get_active_page = document.querySelectorAll(".my_responses .pagination b")[0];
+                        const get_page_number = document.querySelector(".my_responses .pagination b.page_number");
+                        const page_resolt = parseInt(get_active_page.innerHTML.trim(), 10);
+                        const end_page_resolt = parseInt(get_page_number.innerHTML.trim(), 10);
+                        if (page_resolt === 1){
+                            document.querySelectorAll(".arrow a")[0].classList.add("none_active");
+                        } else if (page_resolt === end_page_resolt){
+                            document.querySelectorAll(".arrow a")[1].classList.add("none_active");
+                        } else{
+                            document.querySelectorAll(".arrow a").forEach( (item) => {
+                                item.classList.remove("none_active");
+                            });
+                        }
+
                         history.pushState({}, '', url);
                         setupEventListeners();
                     } else {
@@ -73,6 +89,5 @@ function change_page(){
             });
         });
     });
-    
 }
 change_page();
