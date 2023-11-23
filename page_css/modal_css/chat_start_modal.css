@@ -41,7 +41,7 @@
     resize: none !important;
     color: black;
 }
-.start_chat_container form button{
+.start_chat_container button{
     margin-top: 15px;
     cursor: pointer;
     background-color: rgb(51, 51, 51);
@@ -52,6 +52,6 @@
     padding: 5px;
     font-size: 20px;
 }
-.start_chat_container form button:hover{
+.start_chat_container button:hover{
     opacity: 0.7;
 }
