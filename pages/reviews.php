@@ -3,7 +3,7 @@ session_start();
 include "../layouts/header.php";
 include "../bd_send/database_connect.php";
 echo "<link rel='stylesheet' href='../page_css/reviews.css'>";
-echo "<title>Отзывы о компании Bestlancer</title>";
+echo "<title>Отзывы о бирже Bestlancer</title>";
 include "../layouts/header_line.php";
 ?>
 <div class="reviews_company container">
@@ -27,34 +27,61 @@ include "../layouts/header_line.php";
         }
         $hasMatchingEmail = false;
 
-        while ($row = mysqli_fetch_assoc($query)) {
-            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+        while ($row = mysqli_fetch_assoc($query)):
             $email = $row['email'];
+            //user_info
+            $info_sql = "SELECT * FROM `user_registoring` WHERE `email` = '$email'";
+            $info_query = mysqli_query($bd_connect, $info_sql);
+            //info_resolt
+            $info_resolt = mysqli_fetch_assoc($info_query);
+
+            $review_class = null;
+            if (isset($_SESSION["nik"])) {
+                if ($_SESSION["email"] == $email) {
+                    $review_class = "my_review";
+                }
+            }
             $date = $row['date'];
             $emailsCount[$email] = isset($emailsCount[$email]) ? $emailsCount[$email] + 1 : 1;
 
-            if ($emailsCount[$email] <= 1) {
-                echo '
-                    <div class="review">
-                        <div class="review_user">
-                            <p class="email">' . $email . '</p>
+            if ($emailsCount[$email] <= 1):
+                ?>
+                <div class="review <?= $review_class ?>">
+                    <div class="review_user">
+                        <div class="user_icon">
+                            <img src="../bd_send/user/user_icons/<?= $info_resolt['icon_path'] ?>" alt="" draggable="false">
                         </div>
-                        <div class="line" style="width:100%;"></div>
-                        <div class="review_part">
-                            <p>' . $row['review'] . '</p>
+                        <div>
+                            <p class="name">
+                                <?= $info_resolt['name'] ?>
+                                <?= $info_resolt['family'] ?>
+                            </p>
                         </div>
-                        <div class="line" style="width:100%; background: rgb(79, 130, 3);"></div>
-                        <div class="star_number">
-                            <p><span>' . $row['star'] . '</span> звезд(а)</p>
-                        </div>
-                        <div class="time"><p>' . $date . '</p></div>
-                    </div>';
-
+                    </div>
+                    <div class="line" style="width:100%;"></div>
+                    <div class="review_part">
+                        <p>
+                            <?= $row['review'] ?>
+                        </p>
+                    </div>
+                    <div class="line" style="width:100%; background: rgb(79, 130, 3);"></div>
+                    <div class="star_number">
+                        <p><span>
+                                <?= $row['star'] ?>
+                            </span> звезд(а)</p>
+                    </div>
+                    <div class="time">
+                        <p>
+                            <?= $date ?>
+                        </p>
+                    </div>
+                </div>
+                <?php
                 if ($email === $loggedInEmail) {
                     $hasMatchingEmail = true;
                 }
-            }
-        }
+            endif;
+        endwhile;
 
         if ($hasMatchingEmail && $emailsCount[$loggedInEmail] > 1) {
             echo '<div class="length_warning length_warning_close">

@@ -166,7 +166,7 @@ include "../layouts/header_line.php";
                         <?= $last_review ?>
                     </b>
                 </div>
-                <p>Положительных отзывов</p>
+                <p>Отзывов на бирже</p>
             </div>
             <div class="repitation">
                 <div class="number">

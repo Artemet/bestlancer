@@ -3,14 +3,25 @@ session_start();
 include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/service_page.css'>";
-echo "<link rel='stylesheet' href='../page_css/modal_css/service_report.css'>";
 if (isset($_GET['service_id']) && is_numeric($_GET['service_id'])) {
     $service_id = $_GET['service_id'];
     $sql = "SELECT * FROM services WHERE id = $service_id";
     $query = mysqli_query($bd_connect, $sql);
     $service = mysqli_fetch_assoc($query);
+    if (isset($_SESSION["nik"])) {
+        if ($_SESSION["nik"] == $service['nik']) {
+            echo "<link rel='stylesheet' href='../page_css/modal_css/change_service.css'>";
+        } else {
+            echo "<link rel='stylesheet' href='../page_css/modal_css/service_report.css'>";
+        }
+    }
     if ($service) {
         echo "<title>" . $service['name'] . "</title>";
+        if (isset($_SESSION["nik"])) {
+            if ($_SESSION["nik"] == $service['nik']) {
+                include "../layouts/modal/change_service.php";
+            }
+        }
     } else {
         header("Location: ../bd_send/warnings/rong_service.php");
     }
@@ -41,8 +52,10 @@ include "../layouts/header_line.php";
                     <?= $service['name'] ?>
                 </h2>
                 <?php
-                if ($_SESSION["nik"] == $nik){
-                    include "../layouts/change_pencil.php";
+                if (isset($_SESSION["nik"])) {
+                    if ($_SESSION["nik"] == $nik) {
+                        include "../layouts/change_pencil.php";
+                    }
                 }
                 ?>
             </div>
@@ -84,16 +97,16 @@ include "../layouts/header_line.php";
                 //report_icon
                 $spam_temp = 0;
                 $spam_class = null;
-                $spam_check = "SELECT `service_id` FROM `service_report` WHERE `nik` = '$user_nik'";
-                $spam_query = mysqli_query($bd_connect, $spam_check);
-                while ($spam_resolt = mysqli_fetch_assoc($spam_query)){
-                    $spam_temp++;
-                }
-                if ($spam_temp >= 1){
-                    $spam_class = "spam_active";
-                }
 
                 if (isset($_SESSION["nik"])) {
+                    $spam_check = "SELECT `service_id` FROM `service_report` WHERE `nik` = '$user_nik' AND `service_id` = '$service_id'";
+                    $spam_query = mysqli_query($bd_connect, $spam_check);
+                    while ($spam_resolt = mysqli_fetch_assoc($spam_query)) {
+                        $spam_temp++;
+                    }
+                    if ($spam_temp >= 1) {
+                        $spam_class = "spam_active";
+                    }
                     if ($_SESSION["nik"] != $service["nik"]) {
                         if (!isset($_SESSION["nik"])) {
                             echo '<div class="icon_choice" onclick="none_user_sing()">
@@ -196,12 +209,12 @@ include "../layouts/footer.php";
             get_hart_block.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>';
         }
     }
-    document.querySelector(".like svg").addEventListener("click", function () {
+    document.querySelector(".like").addEventListener("click", function () {
         click_heart();
     });
 
     $(document).ready(function () {
-        $(".like svg").on("click", function () {
+        $(".like").on("click", function () {
             $.ajax({
                 url: "../bd_send/services/like_service.php?like_id=<?= $service_id ?>",
             });
@@ -209,7 +222,7 @@ include "../layouts/footer.php";
     });
 </script>
 <?php
-if ($_SESSION["nik"] == $nik){
+if ($_SESSION["nik"] == $nik) {
     echo '<script src="../page_js/service/change_service_modal.js"></script>';
 }
 ?>

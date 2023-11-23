@@ -18,12 +18,13 @@ include "../layouts/header_line.php";
             <h2>Добавте проект</h2>
         </div>
         <form action="../bd_send/user/project_add.php" method="post" enctype="multipart/form-data">
-            <div class="cover_add">
+            <div class="cover_add" id="selectedIcon">
                 <div class="cover_child" id="midle_value">
                     <div class="plus"><span>+</span></div>
                     <p>Выбирите изображение</p>
                 </div>
-                <div class="input_wrapper"><input type="file" name="file_name" class="file_choice"
+                <div class="background_cover"></div>
+                <div class="input_wrapper"><input type="file" id="icon_choice" name="file_name" class="file_choice"
                         accept="image/png, image/jpeg, image/jpg"></div>
             </div>
             <div class="inputs_part">

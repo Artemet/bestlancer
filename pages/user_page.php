@@ -34,25 +34,28 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         exit();
     }
     $user_nik = $user['nik'];
-    $my_nik = $_SESSION["nik"];
-    //friend_find
-    $friend_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
-    $friend_query = mysqli_query($bd_connect, $friend_sql);
-    while ($friend_resolt = mysqli_fetch_assoc($friend_query)){
-        $friend_find = true;
-    }
-    //user_status
-    if ($friend_find == true){
-        $status_sql = "SELECT `status` FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
-        $user_block_sql = "SELECT `main_block` FROM `messenger_users` WHERE `nik_one` = '$my_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
-        $status_query = mysqli_query($bd_connect, $status_sql);
-        $user_block_query = mysqli_query($bd_connect, $user_block_sql);
-        $status_resolt = mysqli_fetch_assoc($status_query)['status'];
-        $user_block_resolt = mysqli_fetch_assoc($user_block_query)['main_block'];
+    $user_block_resolt = null;
+    if (isset($_SESSION['nik'])) {
+        $my_nik = $_SESSION["nik"];
+        //friend_find
+        $friend_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
+        $friend_query = mysqli_query($bd_connect, $friend_sql);
+        while ($friend_resolt = mysqli_fetch_assoc($friend_query)) {
+            $friend_find = true;
+        }
+        //user_status
+        if ($friend_find == true) {
+            $status_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
+            $user_block_sql = "SELECT `main_block` FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
+            $status_query = mysqli_query($bd_connect, $status_sql);
+            $user_block_query = mysqli_query($bd_connect, $user_block_sql);
+            $status_resolt = mysqli_fetch_assoc($status_query)['status'];
+            $user_block_resolt = mysqli_fetch_assoc($user_block_query)['main_block'];
+        }
     }
 } else {
     echo "<title>Пользователь не найден!</title>";
-    exit();
+    exit;
 }
 ?>
 <div class="container">
@@ -60,14 +63,14 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         <div class="user_information other_account">
             <div class="img">
                 <?php
-                if ($friend_find == true){
-                    if ($user_block_resolt == $user_nik){
+                if ($friend_find == true) {
+                    if ($user_block_resolt == $user_nik) {
                         echo '<img src="../bd_send/user/user_icons/user.png" alt="" draggable="false">';
-                    } else{
-                        echo '<img src="../bd_send/user/user_icons/'.$user['icon_path'].'" alt="" draggable="false">';
+                    } else {
+                        echo '<img src="../bd_send/user/user_icons/' . $user['icon_path'] . '" alt="" draggable="false">';
                     }
-                } else{
-                    echo '<img src="../bd_send/user/user_icons/'.$user['icon_path'].'" alt="" draggable="false">';
+                } else {
+                    echo '<img src="../bd_send/user/user_icons/' . $user['icon_path'] . '" alt="" draggable="false">';
                 }
                 ?>
             </div>
@@ -103,28 +106,37 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     mysqli_stmt_execute($status_query);
                     $result = mysqli_stmt_get_result($status_query);
                     $row = mysqli_fetch_assoc($result);
-                    function status_html(){
-                        if ($row['status'] == "online") {
+                    if (isset($_SESSION["nik"])) {
+                        if ($friend_find == true) {
+                            if ($user_block_resolt == $user_nik) {
+                                echo '<div class="circle not_online"></div>
+                                    <p>недоступен</p>';
+                            } else {
+                                if ($user['status'] == "online") {
+                                    echo '<div class="circle online"></div>
+                                    <p>в сети</p>';
+                                } else {
+                                    echo '<div class="circle not_online"></div>
+                                    <p>не в сети</p>';
+                                }
+                            }
+                        } else {
+                            if ($user['status'] == "online") {
+                                echo '<div class="circle online"></div>
+                                <p>в сети</p>';
+                            } else {
+                                echo '<div class="circle not_online"></div>
+                                <p>не в сети</p>';
+                            }
+                        }
+                    } else {
+                        if ($user['status'] == "online") {
                             echo '<div class="circle online"></div>
                             <p>в сети</p>';
                         } else {
                             echo '<div class="circle not_online"></div>
                             <p>не в сети</p>';
                         }
-                    }
-                    if (isset($_SESSION["nik"])){
-                        if ($friend_find == true){
-                            if ($user_block_resolt == $user_nik){
-                                echo '<div class="circle not_online"></div>
-                                    <p>недоступен</p>';
-                            } else{
-                                status_html();
-                            }
-                        } else{
-                            status_html();
-                        }
-                    } else{
-                        status_html();
                     }
                     ?>
                 </div>
@@ -178,13 +190,13 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                 ?>
                 <div class="button_choice">
                     <?php
-                    if ($friend_find == true){
-                        if ($user_block_resolt !== $user_nik){
+                    if ($friend_find == true) {
+                        if ($user_block_resolt !== $user_nik) {
                             if ($user['role'] == 'seller') {
                                 echo '<div><button class="personal_order">Предложить заказ</button></div>';
                             }
                         }
-                    } else{
+                    } else {
                         if ($user['role'] == 'seller') {
                             echo '<div><button class="personal_order">Предложить заказ</button></div>';
                         }
@@ -192,37 +204,39 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     ?>
                     <?php
                     //block_button
-                    if ($friend_find == false){
-                        echo '<div><button class="chat_start" title="Связаться с '.$user_nik.'">Связаться</button></div>';
-                    } else{
-                        if ($user_block_resolt !== $user_nik){
-                            echo '<div><a href="messages.php"><button title="Открыть чат с '.$user_nik.'">Открыть чат</button></a></div>';
+                    if ($friend_find == false) {
+                        echo '<div><button class="chat_start" title="Связаться с ' . $user_nik . '">Связаться</button></div>';
+                    } else {
+                        if ($user_block_resolt !== $user_nik) {
+                            echo '<div><a href="messages.php"><button title="Открыть чат с ' . $user_nik . '">Открыть чат</button></a></div>';
                         }
                     }
                     if ($friend_find == true):
                         //user_status
                         $status_text = "Заблокировать";
-                        if ($status_resolt == "block"){
+                        if ($status_resolt == "block") {
                             $status_text = "Разблокировать";
                         }
                         if ($user_block_resolt == $_SESSION["nik"] || empty($user_block_resolt)):
-                    ?>
-                    <div><button class="user_block block_button" title="Заблокировать <?=$user_nik?>"><?=$status_text?></button></div>
-                    <script>
-                        $('button.block_button').on('click', function(){
-                            if (this.innerHTML === 'Заблокировать'){
-                                this.innerHTML = 'Разблокировать';
-                                setTimeout(() => {alert("Вы зaблокировали пользователя <?=$user_nik?>");}, 500);
-                            } else{
-                                this.innerHTML = 'Заблокировать';
-                                setTimeout(() => {alert("Вы разблокировали пользователя <?=$user_nik?>");}, 500);
-                            }
-                            $.ajax({
-                                url: "../bd_send/user/user_block.php?user_id=<?=$user_id?>",
-                            });
-                        });
-                    </script>
-                    <?php
+                            ?>
+                            <div><button class="user_block block_button" title="Заблокировать <?= $user_nik ?>">
+                                    <?= $status_text ?>
+                                </button></div>
+                            <script>
+                                $('button.block_button').on('click', function () {
+                                    if (this.innerHTML.trim() === 'Заблокировать') {
+                                        this.innerHTML = 'Разблокировать';
+                                        setTimeout(() => { alert("Вы зaблокировали пользователя <?= $user_nik ?>"); }, 500);
+                                    } else {
+                                        this.innerHTML = 'Заблокировать';
+                                        setTimeout(() => { alert("Вы разблокировали пользователя <?= $user_nik ?>"); }, 500);
+                                    }
+                                    $.ajax({
+                                        url: "../bd_send/user/user_block.php?user_id=<?= $user_id ?>",
+                                    });
+                                });
+                            </script>
+                            <?php
                         endif;
                     endif;
                     ?>
@@ -233,13 +247,13 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         </div>
         <div class="button_choice mobile_choice">
             <?php
-            if ($friend_find == true){
-                if ($user_block_resolt == $user_nik){
+            if ($friend_find == true) {
+                if ($user_block_resolt == $user_nik) {
                     if ($user['role'] !== 'seller') {
                         echo '<div><button class="personal_order">Предложить заказ</button></div>';
                     }
                 }
-            } else{
+            } else {
                 if ($user['role'] == 'seller') {
                     echo '<div><button class="personal_order">Предложить заказ</button></div>';
                 }
@@ -279,112 +293,113 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                 </p>
             </div>
         </div>
-        <div class="user_skills menu_include user_block">
-            <div class="menu_block">
-                <div>
-                    <h2>Мои умения</h2>
+        <?php
+        if ($user_block_resolt !== $user_nik):
+            ?>
+            <div class="user_skills menu_include user_block">
+                <div class="menu_block">
+                    <div>
+                        <h2>Мои умения</h2>
+                    </div>
+                    <div><img src="../res/burger_menu2.png" alt="" draggable="false" class="burger_menu"></div>
                 </div>
-                <div><img src="../res/burger_menu2.png" alt="" draggable="false" class="burger_menu"></div>
-            </div>
-            <div class="skill_wrapper sub_menu">
-                <div class="include">
-                    <p class="skill_text">
-                        <?php
-                        $skills = explode(" ", $user['skills']);
-                        foreach ($skills as $skill) {
-                            echo "<span>$skill</span> ";
-                        }
-                        ?>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="user_projects menu_include user_block">
-            <div class="menu_block">
-                <div>
-                    <h2>Мои проекты</h2>
-                </div>
-            </div>
-            <div class="projects_wrapper sub_menu">
-                <div class="include">
-                    <div class="project_covers card_container">
-                        <?php
-                        $cover_temp = 0;
-                        $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
-                        $cover_query = mysqli_query($bd_connect, $cover_sql);
-                        while ($row = mysqli_fetch_assoc($cover_query)):
-                            $cover_temp++;
-                            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                            ?>
-                            <a href='project_page.php?project_id=<?= $row['id'] ?>'>
-                                <div class="project">
-                                    <div class="img">
-                                        <img src="../bd_send/user/project_cover/<?= $row["cover_href"] ?>" alt=""
-                                            draggable="false">
-                                    </div>
-                                    <div>
-                                        <div class="user_information">
-                                            <div>
-                                                <img src="../bd_send/user/user_icons/<?= $user['icon_path']; ?>" alt=""
-                                                    draggable="false">
-                                            </div>
-                                            <b class="user_name">
-                                                <?= $row["nik"] ?>
-                                            </b>
-                                        </div>
-                                    </div>
-                                    <p class="date">
-                                        <?= $row["date"] ?>
-                                    </p>
-                                </div>
-                            </a>
+                <div class="skill_wrapper sub_menu">
+                    <div class="include">
+                        <p class="skill_text">
                             <?php
-                        endwhile;
-                        if ($cover_temp === 0) {
-                            echo "<p class='no_project_text'>Нет проектов</p>";
-                        }
-                        ?>
+                            $skills = explode(" ", $user['skills']);
+                            foreach ($skills as $skill) {
+                                echo "<span>$skill</span> ";
+                            }
+                            ?>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="user_services user_block">
-            <?php
-            $nik = $user['nik'];
+            <div class="user_projects menu_include user_block">
+                <div class="menu_block">
+                    <div>
+                        <h2>Мои проекты</h2>
+                    </div>
+                </div>
+                <div class="projects_wrapper sub_menu">
+                    <div class="include">
+                        <div class="project_covers card_container">
+                            <?php
+                            $cover_temp = 0;
+                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
+                            $cover_query = mysqli_query($bd_connect, $cover_sql);
+                            while ($row = mysqli_fetch_assoc($cover_query)):
+                                $cover_temp++;
+                                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                                ?>
+                                <a href='project_page.php?project_id=<?= $row['id'] ?>'>
+                                    <div class="project">
+                                        <div class="img">
+                                            <img src="../bd_send/user/project_cover/<?= $row["cover_href"] ?>" alt=""
+                                                draggable="false">
+                                        </div>
+                                        <div>
+                                            <div class="user_information">
+                                                <div>
+                                                    <img src="../bd_send/user/user_icons/<?= $user['icon_path']; ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <b class="user_name">
+                                                    <?= $row["nik"] ?>
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <p class="date">
+                                            <?= $row["date"] ?>
+                                        </p>
+                                    </div>
+                                </a>
+                                <?php
+                            endwhile;
+                            if ($cover_temp === 0) {
+                                echo "<p class='no_project_text'>Нет проектов</p>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user_services user_block">
+                <?php
+                $nik = $user['nik'];
 
-            $bd_connect = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                $bd_connect = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
 
-            if (!$bd_connect) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+                if (!$bd_connect) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
 
-            $sql = "SELECT * FROM services WHERE nik = '$nik'";
-            $query = mysqli_query($bd_connect, $sql);
+                $sql = "SELECT * FROM services WHERE nik = '$nik'";
+                $query = mysqli_query($bd_connect, $sql);
 
-            if (!$query) {
-                die("Query failed: " . mysqli_error($bd_connect));
-            }
+                if (!$query) {
+                    die("Query failed: " . mysqli_error($bd_connect));
+                }
 
-            if (mysqli_num_rows($query) > 0) {
-                echo '<div>
+                if (mysqli_num_rows($query) > 0) {
+                    echo '<div>
                         <h2>Мои услуги</h2>
                     </div>';
-                echo '<div class="service_container">';
-                while ($row = mysqli_fetch_assoc($query)) {
-                    $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                    $service_nik = $row['nik'];
-                    $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
-                    $icon_result = mysqli_query($connection, $icon_query);
+                    echo '<div class="service_container">';
+                    while ($row = mysqli_fetch_assoc($query)) {
+                        $service_nik = $row['nik'];
+                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
+                        $icon_result = mysqli_query($bd_connect, $icon_query);
 
-                    if (!$icon_result) {
-                        die("Query failed: " . mysqli_error($connection));
-                    }
+                        if (!$icon_result) {
+                            die("Query failed: " . mysqli_error($bd_connect));
+                        }
 
-                    $icon_row = mysqli_fetch_assoc($icon_result);
-                    $user_icon = $icon_row['icon_path'];
-                    mysqli_close($connection);
+                        $icon_row = mysqli_fetch_assoc($icon_result);
+                        $user_icon = $icon_row['icon_path'];
 
-                    echo '
+                        echo '
                         <div class="service">
                             <a href="service_page.php?service_id=' . $row['id'] . '">
                                 <div class="img">
@@ -407,14 +422,17 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                                 </div>
                             </a>
                         </div>';
+                    }
+                    echo '</div>';
+                } else {
+                    echo '';
                 }
-                echo '</div>';
-            } else {
-                echo '';
-            }
-            mysqli_close($bd_connect);
-            ?>
-        </div>
+                mysqli_close($bd_connect);
+                ?>
+            </div>
+            <?php
+        endif;
+        ?>
     </div>
 </div>
 <?php

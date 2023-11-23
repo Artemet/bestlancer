@@ -265,8 +265,6 @@ include "../layouts/header_line.php";
                 <?php
                 $nik = $_SESSION['nik'];
 
-                $bd_connect = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-
                 if (!$bd_connect) {
                     die("Connection failed: " . mysqli_connect_error());
                 }
@@ -336,6 +334,7 @@ include "../layouts/footer.php";
 <script src="../page_js/user/time_script.js"></script>
 <script src="../page_js/user/modal_information.js"></script>
 <script src="../page_js/user/project/project_page.js"></script>
+<script src="../page_js/user/icon_store.js"></script>
 </body>
 
 </html>

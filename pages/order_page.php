@@ -46,6 +46,27 @@ include "../layouts/header_line.php";
     </p>
     <div class="header">
         <div class="header_title">
+            <?php
+            if (isset($_SERVER['HTTP_REFERER'])):
+                $previous_page = $_SERVER['HTTP_REFERER'];
+                if (strpos($previous_page, 'tasks') !== false):
+                    ?>
+                    <a href="<?= $previous_page ?>" class="back_page">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path
+                                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p>Назад</p>
+                        </div>
+                    </a>
+                    <?php
+                endif;
+            endif;
+            ?>
             <div class="header_wrapper">
                 <?php
                 //icon_connect
@@ -83,7 +104,7 @@ include "../layouts/header_line.php";
                     }
                 }
 
-                if (isset($_SESSION["nik"])){
+                if (isset($_SESSION["nik"])) {
                     $user_responses = 0;
                     $response_class = null;
                     $response_nik = $_SESSION["nik"];
@@ -151,7 +172,7 @@ include "../layouts/header_line.php";
                     <?php
                 endif;
             endif;
-            if (isset($_SESSION["nik"])){
+            if (isset($_SESSION["nik"])) {
                 if ($user_responses >= 1) {
                     echo "<a href='my_responses.php'>Мои заявки</a>";
                 }

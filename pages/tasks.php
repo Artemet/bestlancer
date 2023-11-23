@@ -6,7 +6,7 @@ $medium_filter_number = null;
 $final_filter_number = null;
 $filter_reset = null;
 $pagination_href = "tasks.php?";
-if (isset($_SESSION["nik"])){
+if (isset($_SESSION["nik"])) {
     $my_nik = $_SESSION["nik"];
 }
 if (isset($_GET['filter']) && is_numeric($_GET['filter'])) {
@@ -62,7 +62,7 @@ include "../layouts/modal/corect_order.php";
                     }
                 }
                 ?>
-                <div>
+                <div class="links_wrapper">
                     <div class="icon_options">
                         <div class="icon order_filter">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
@@ -71,24 +71,81 @@ include "../layouts/modal/corect_order.php";
                                     d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
                             </svg>
                             <div class="type_sub">
-                                <div class="thirst_option"><a href="<?= $pagination_href ?>type=orders">Заказы</a></div>
-                                <div><a href="<?= $pagination_href ?>type=vacancies">Вакансии</a></div>
+                                <div class="thirst_option type_option none_use"><a
+                                        href="<?= $pagination_href ?>type=orders">Заказы</a></div>
+                                <div class="type_option none_use"><a
+                                        href="<?= $pagination_href ?>type=vacancies">Вакансии</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="icon" title="Сохранить фильтор">
-                            <input type="text" class="filter_save" readonly>
-                            <div class="icon_svg">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                    viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                    <path
-                                        d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z" />
-                                </svg>
+                        <?php
+                        if (isset($_SESSION["nik"])):
+                            ?>
+                            <div class="icon save_filter">
+                                <div class="icon_svg">
+                                    <?php
+                                    $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = '$my_nik'";
+                                    $project_filter_query = mysqli_query($bd_connect, $project_filter);
+                                    $project_filter_resolt = mysqli_fetch_assoc($project_filter_query)['filter'];
+                                    if (empty($project_filter_resolt)):
+                                        ?>
+                                        <div title="Сохранить" class="none_use">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="none_save" title="Сохранить"
+                                                height="1em"
+                                                viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                <path
+                                                    d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z" />
+                                            </svg>
+                                        </div>
+                                        <?php
+                                    endif;
+                                    if (!empty($project_filter_resolt)):
+                                        ?>
+                                        <div title="Убрать сохранение" class="none_use">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="save active_save" height="1em"
+                                                viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                <path
+                                                    d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" />
+                                            </svg>
+                                        </div>
+                                        <?php
+                                    endif;
+                                    ?>
+                                </div>
                             </div>
+                            <script>
+                                $('.save_filter').on('click', function () {
+                                    $.ajax({
+                                        url: '../bd_send/order/save_page.php',
+                                    })
+                                        .done(function () {
+                                            if ($('.save_filter svg').hasClass("none_save")) {
+                                                $('.save_filter').html('<div class="icon_svg"><div title="Убрать сохранение" class="none_use"><svg xmlns="http://www.w3.org/2000/svg" class="save" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" /></svg></div></div>');
+                                            } else {
+                                                $('.save_filter').html('<div class="icon_svg"><div title="Сохранить" class="none_use"><svg xmlns="http://www.w3.org/2000/svg" class="active_save none_save" title="Сохранить" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z" /></svg></div></div>');
+                                            }
+                                            const get_save_icon = $('.save_filter svg');
+                                            get_save_icon.toggleClass("active_save");
+                                        });
+                                });
+                            </script>
+                            <?php
+                        endif;
+                        ?>
+                        <div class="icon reaload_icon">
+                            <?php
+                            $curant_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                            ?>
+                            <a href="<?= $curant_link ?>"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                    viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                    <path
+                                        d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z" />
+                                </svg></a>
                         </div>
                     </div>
                     <b class='filter_title'>Все заказы</b>
                     <div class="link_part">
-                        <div><a href="tasks.php?filter=1">
+                        <div><a href="tasks.php?filter=1" class="main_category">
                                 <p>Дизайн</p>
                             </a>
                             <div class="link_sub">
@@ -192,7 +249,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=2">
+                        <div><a href="tasks.php?filter=2" class="main_category">
                                 <p>Разработка и IT</p>
                             </a>
                             <div class="link_sub">
@@ -282,7 +339,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=3">
+                        <div><a href="tasks.php?filter=3" class="main_category">
                                 <p>Тексты и переводы</p>
                             </a>
                             <div class="link_sub">
@@ -349,7 +406,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=4">
+                        <div><a href="tasks.php?filter=4" class="main_category">
                                 <p>SEO и трафик</p>
                             </a>
                             <div class="link_sub">
@@ -419,7 +476,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=5">
+                        <div><a href="tasks.php?filter=5" class="main_category">
                                 <p>Соцсети и реклама</p>
                             </a>
                             <div class="link_sub">
@@ -484,7 +541,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=6">
+                        <div><a href="tasks.php?filter=6" class="main_category">
                                 <p>Аудио, видео, съемка</p>
                             </a>
                             <div class="link_sub">
@@ -551,7 +608,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=7">
+                        <div><a href="tasks.php?filter=7" class="main_category">
                                 <p>Бизнес и жизнь</p>
                             </a>
                             <div class="link_sub">
@@ -636,7 +693,7 @@ include "../layouts/modal/corect_order.php";
                                 </div>
                             </div>
                         </div>
-                        <div><a href="tasks.php?filter=8">
+                        <div><a href="tasks.php?filter=8" class="main_category">
                                 <p>Учеба и репетиторство</p>
                             </a>
                             <div class="link_sub">
@@ -674,15 +731,7 @@ include "../layouts/modal/corect_order.php";
                             </div>
                         </div>
                     </div>
-                    <?php
-                    if ($filter_number != NULL) {
-                        $filter_reset = "<a href='tasks.php' class='filter_none'>Сбросить фильтор</a>";
-                    }
-                    if (isset($_GET["type"])) {
-                        $filter_reset = "<a href='tasks.php' class='filter_none'>Сбросить фильтор</a>";
-                    }
-                    echo $filter_reset;
-                    ?>
+                    <a href='tasks.php' class='filter_none'>Сбросить фильтор</a>
                 </div>
             </div>
         </div>
@@ -694,7 +743,10 @@ include "../layouts/modal/corect_order.php";
         echo "<p class='type_option type'>$type</p>";
     }
     ?>
-    <div class="orders">
+    <div class="overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="orders content">
         <?php
         $ordersPerPage = 18;
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -795,105 +847,107 @@ include "../layouts/modal/corect_order.php";
             //block_user_system
             $block_nik = null;
             $final_assoc = null;
-            if (!isset($_SESSION["nik"])){
+            if (!isset($_SESSION["nik"])) {
                 $my_nik = "Guest";
             }
             $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$my_nik'";
             $unblock_query = mysqli_query($bd_connect, $unblock_sql);
             $unblock_resolt = mysqli_fetch_assoc($unblock_query);
-            if ($unblock_resolt['nik_one'] == $unblock_resolt['main_block']){
-                $final_assoc = $unblock_resolt['nik_two'];
-            } elseif ($unblock_resolt['nik_two'] == $unblock_resolt['main_block']){
-                $final_assoc = $unblock_resolt['nik_one'];
+            if (!empty($unblock_resolt['main_block'])) {
+                if ($unblock_resolt['nik_one'] == $unblock_resolt['main_block']) {
+                    $final_assoc = $unblock_resolt['nik_two'];
+                } elseif ($unblock_resolt['nik_two'] == $unblock_resolt['main_block']) {
+                    $final_assoc = $unblock_resolt['nik_one'];
+                }
             }
             if ($final_assoc !== $row['nik']):
-            ?>
-            <div class="order <?= $my_order ?>">
-                <?php
-                if (isset($_GET['type'])) {
-                    $order_final_type = $row['type'];
-                    echo "<p class='type'>$order_final_type</p>";
-                }
-                if ($row['date'] == $date):
-                    ?>
-                    <div class="new_cover">
-                        <p>НОВЫЙ</p>
-                    </div>
-                    <?php
-                endif;
                 ?>
-                <div class="order_part">
-                    <a href="order_page.php?order_id=<?= $row['id'] ?>" class="order_page_link">
-                        <h3>
-                            <?= $row["order_name"] ?>
-                        </h3>
-                    </a>
-                    <p class="user_order_tz task_tag">
-                        <?= $row['order_information'] ?>
-                    </p>
-                    <div class="user_information task_tag">
-                        <img src="../bd_send/user/user_icons/<?= $user_icon ?>" class="user_image" draggable="false">
-                        <a href="user_page.php?user_id=<?= $user_id ?>" target="_blank">
-                            <p>
-                                <?= $row['nik'] ?>
-                            </p>
-                        </a>
-                    </div>
-                    <div class="payment task_tag">
-                        <p>Оплата:</p>
-                        <svg class="payed_false" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
-                            <style>
-                                svg {
-                                    fill: #d08e0b
-                                }
-                            </style>
-                            <path
-                                d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s-32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s-12.5 32.8 0-45.3L237.3 256 342.6 150.6z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="category task_tag">
-                        <p>Категория: <b>
-                                <?= $category_arr[$row['main_category']] ?>
-                            </b></p>
-                    </div>
-                </div>
-                <div class="price_part">
+                <div class="order <?= $my_order ?>">
                     <?php
-                    if ($row['order_price'] != 0):
-                        ?>
-                        <p class="price">
-                            <?= $row['order_price'] ?>$
-                        </p>
-                        <?php
-                    endif;
-                    ?>
-                </div>
-                <div class="date">
-                    <p>
-                        <?= $row['date'] ?>
-                    </p>
-                </div>
-                <div class="application_number">
-                    <?php
-                    $application_number = 0;
-                    $order_id = $row["id"];
-                    $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id'";
-                    $application_query = mysqli_query($bd_connect, $application_sql);
-                    while ($application_resolt = mysqli_fetch_assoc($application_query)) {
-                        $application_number++;
+                    if (isset($_GET['type'])) {
+                        $order_final_type = $row['type'];
+                        echo "<p class='type'>$order_final_type</p>";
                     }
-                    if ($application_number !== 0):
+                    if ($row['date'] == $date):
                         ?>
-                        <p>Заявок:
-                            <?= $application_number ?>
-                        </p>
+                        <div class="new_cover">
+                            <p>НОВЫЙ</p>
+                        </div>
                         <?php
                     endif;
                     ?>
+                    <div class="order_part">
+                        <a href="order_page.php?order_id=<?= $row['id'] ?>" class="order_page_link">
+                            <h3>
+                                <?= $row["order_name"] ?>
+                            </h3>
+                        </a>
+                        <p class="user_order_tz task_tag">
+                            <?= $row['order_information'] ?>
+                        </p>
+                        <div class="user_information task_tag">
+                            <img src="../bd_send/user/user_icons/<?= $user_icon ?>" class="user_image" draggable="false">
+                            <a href="user_page.php?user_id=<?= $user_id ?>" target="_blank">
+                                <p>
+                                    <?= $row['nik'] ?>
+                                </p>
+                            </a>
+                        </div>
+                        <div class="payment task_tag">
+                            <p>Оплата:</p>
+                            <svg class="payed_false" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+                                <style>
+                                    svg {
+                                        fill: #d08e0b
+                                    }
+                                </style>
+                                <path
+                                    d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s-32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s-12.5 32.8 0-45.3L237.3 256 342.6 150.6z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="category task_tag">
+                            <p>Категория: <b>
+                                    <?= $category_arr[$row['main_category']] ?>
+                                </b></p>
+                        </div>
+                    </div>
+                    <div class="price_part">
+                        <?php
+                        if ($row['order_price'] != 0):
+                            ?>
+                            <p class="price">
+                                <?= $row['order_price'] ?>$
+                            </p>
+                            <?php
+                        endif;
+                        ?>
+                    </div>
+                    <div class="date">
+                        <p>
+                            <?= $row['date'] ?>
+                        </p>
+                    </div>
+                    <div class="application_number">
+                        <?php
+                        $application_number = 0;
+                        $order_id = $row["id"];
+                        $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id'";
+                        $application_query = mysqli_query($bd_connect, $application_sql);
+                        while ($application_resolt = mysqli_fetch_assoc($application_query)) {
+                            $application_number++;
+                        }
+                        if ($application_number !== 0):
+                            ?>
+                            <p>Заявок:
+                                <?= $application_number ?>
+                            </p>
+                            <?php
+                        endif;
+                        ?>
+                    </div>
                 </div>
-            </div>
-            <?php
+                <?php
             endif;
         endforeach;
         ?>
