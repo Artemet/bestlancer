@@ -1,8 +1,8 @@
 //country_menu
 function registor_country_menu(){
     const get_input = document.querySelector(".registor_container .country .right_in");
-    const get_registor_number = document.querySelector(".registor_container p.registor_part_number").innerHTML;
-    const registor_number = parseInt(get_registor_number, 10);
+    //const get_registor_number = document.querySelector(".registor_container p.registor_part_number").innerHTML;
+    const registor_number = 2;
     //open_menu
     if (registor_number === 2){
         get_input.addEventListener("click", function (){

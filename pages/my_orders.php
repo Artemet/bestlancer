@@ -76,6 +76,7 @@ include "../layouts/header_line.php";
                 $count_row = mysqli_fetch_assoc($count_query);
                 $total_orders = $count_row['total'];
                 $total_pages = ceil($total_orders / $orders_per_page);
+                if ($total_pages >= 2):
                 ?>
                         <div class="pagination">
                             <div class="arrow left_arrow"><a href="?page=<?= $page - 1 ?>"><svg
@@ -100,6 +101,9 @@ include "../layouts/header_line.php";
                                             d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
                                     </svg></a></div>
                         </div>
+                        <?php
+                            endif;
+                        ?>
                     </div>
 
                 </div>

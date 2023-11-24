@@ -4,10 +4,6 @@ if (isset($_SESSION["nik"])) {
     header("Location: home.php");
     exit;
 }
-$registor_part = $_GET['registor_part'];
-if ($registor_part == 0 || $registor_part >= 4) {
-    header("Location: home.php");
-}
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/registor.css'>";
 echo "<title>Создание Аккаунта - Bestlancer</title>";
@@ -16,7 +12,9 @@ include "../layouts/header_line.php";
 <div class="registor_container container">
     <div class="resolt_input">
         <form action="">
-            <input type="text" readonly>
+            <div>
+                <input type="text" name="role" readonly>
+            </div>
             <input type="text" readonly>
             <input type="text" readonly>
             <input type="text" readonly>
@@ -28,10 +26,9 @@ include "../layouts/header_line.php";
         </form>
     </div>
     <?php
-    echo "<p class='registor_part_number'>$registor_part</p>";
-    if ($registor_part == 1):
-        ?>
-        <div class="registor_question question active">
+    //echo "<p class='registor_part_number'>$registor_part</p>";
+    ?>
+        <div class="registor_question question">
             <h2>Присоединяйтесь в качестве клиента <br> или фрилансера</h2>
             <div class="role_options">
                 <div class="role_option" id="0">
@@ -57,10 +54,6 @@ include "../layouts/header_line.php";
                 <button class="none_click">Продолжить</button>
             </div>
         </div>
-        <?php
-    endif;
-    if ($registor_part == 2):
-        ?>
         <div class="main_registor_question thirst_part question">
             <h2>Регестрация аккаунта</h2>
             <div class="main_registration">
@@ -761,10 +754,6 @@ include "../layouts/header_line.php";
 
             </div>
         </div>
-        <?php
-    endif;
-    if ($registor_part == 3):
-        ?>
         <div class="main_registor_question second_part question">
             <h2>Продолжение регистрации</h2>
             <div class="main_registration">
@@ -802,13 +791,7 @@ include "../layouts/header_line.php";
                 </form>
             </div>
         </div>
-        <?php
-    endif;
-    ?>
 </div>
-<?php
-include "../layouts/footer.php";
-?>
 <script src="../page_js/registor/registor_script.js"></script>
 <script src="../page_js/registor/value_check.js"></script>
 <script src="../page_js/registor/country_menu.js"></script>
