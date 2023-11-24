@@ -1,7 +1,7 @@
 //change_page
 function change_page(){
-    const get_arrows = document.querySelectorAll(".my_responses .pagination svg"); 
-    const get_pages = document.querySelectorAll(".my_responses .pagination b.page_number");
+    const get_arrows = document.querySelectorAll(".pagination svg"); 
+    const get_pages = document.querySelectorAll(".pagination b.page_number");
     if (get_pages[0].innerHTML.trim() === get_pages[1].innerHTML.trim()){
         get_arrows[1].closest("a").classList.add("none_active");
     } else if (parseInt(get_pages[0].innerHTML.trim(), 10) === 1){
@@ -29,10 +29,11 @@ function change_page(){
                     if (new_content) {
                         get_content.innerHTML = new_content.innerHTML;
                         //arrow_check
-                        const get_active_page = document.querySelectorAll(".my_responses .pagination b")[0];
-                        const get_page_number = document.querySelector(".my_responses .pagination b.page_number");
+                        const get_active_page = document.querySelectorAll(".pagination b")[0];
+                        const get_page_number = document.querySelector(".pagination b.page_number");
+                        const get_end_page = document.querySelector(".pagination b.end_page");
                         const page_resolt = parseInt(get_active_page.innerHTML.trim(), 10);
-                        const end_page_resolt = parseInt(get_page_number.innerHTML.trim(), 10);
+                        const end_page_resolt = parseInt(get_end_page.innerHTML.trim(), 10);
                         if (page_resolt === 1){
                             document.querySelectorAll(".arrow a")[0].classList.add("none_active");
                         } else if (page_resolt === end_page_resolt){
@@ -67,11 +68,12 @@ function change_page(){
     
         get_links.forEach((item) => {
             item.addEventListener('click', (e) => {
-                const get_line = document.querySelector(".my_responses .loading_line");
+                const get_line = document.querySelector(".loading_line");
                 e.preventDefault();
                 const url = e.currentTarget.getAttribute('href');
                 load_page(url);
-                if (document.querySelectorAll(".my_responses .pagination b")[0].innerHTML.trim() === "1"){
+                if (item.parentNode.className.includes("right_arrow")){
+                    console.log(0);
                     get_line.style.width = 100 + "%";
                     if (parseInt(item.id, 10) === 0){
                         setTimeout( () => {
@@ -84,6 +86,9 @@ function change_page(){
                     }
                     setTimeout( () => {
                         get_line.style.width = 0;
+                        setTimeout( () => {
+                            get_line.style.left = 0;
+                        }, 500);
                     }, 500);
                 }
             });
