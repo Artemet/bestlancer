@@ -5,8 +5,15 @@
     border: 2px solid lightgrey;
     background-color: white;
     width: 800px;
+    opacity: 0;
     margin: auto;
     transition: 0.5s;
+}
+.question_active{
+    display: block !important;
+}
+.question_none{
+    display: none !important;
 }
 .question h2{
     text-align: center;
@@ -183,6 +190,10 @@
     font-size: 18px;
     width: 300px;
     opacity: 0.5;
+}
+.registor_container button.button_active{
+    pointer-events: all;
+    opacity: 1;
 }
 .registor_container .main_registor_question .line_block{
     display: grid;
