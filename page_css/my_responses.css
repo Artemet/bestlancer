@@ -21,7 +21,6 @@
 }
 .my_responses .loading_line{
     height: 3px;
-    width: 70px;
     background-color: #d08e0b;
     position: absolute;
     bottom: 0;

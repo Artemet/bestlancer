@@ -4,6 +4,20 @@
     margin-bottom: 32px;
     border-bottom: 3px solid rgb(79, 130, 3);
 }
+.order_information .header{
+    position: relative;
+}
+.order_information .header_title{
+    position: relative;
+}
+.my_orders .loading_line{
+    height: 3px;
+    background-color: #d08e0b;
+    position: absolute;
+    bottom: 0;
+    transition: 0.5s;
+    width: 0;
+}
 .my_orders .price p{
     color: #d08e0b;
     font-weight: 600;
@@ -24,4 +38,46 @@
     color: #d08e0b;
     font-weight: 600;
     font-size: 23px;
+}
+.my_orders .pagination{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 49.8px;
+    margin-right: 20px;
+    display: flex;
+}
+.my_orders .pagination .number_part{
+    display: flex;
+}
+.my_orders .pagination a{
+    transition: 0.5s;
+}
+.my_orders .loading_line{
+    height: 3px;
+    width: 70px;
+    background-color: #d08e0b;
+    position: absolute;
+    bottom: 0;
+    transition: 0.5s;
+    width: 0;
+}
+.my_orders .pagination a.none_active{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.my_orders .pagination b{
+    padding: 0 3px;
+}
+.my_orders .pagination .slash{
+    color: rgb(79, 130, 3);
+}
+.my_orders .pagination svg{
+    margin-top: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: 0.5s;
+}
+.my_orders .pagination svg:hover{
+    fill: rgb(79, 130, 3) !important;
 }
