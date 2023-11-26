@@ -1,6 +1,13 @@
 <?php
 session_start();
 include "../database_connect.php";
+//chat_id
+if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
+    $chat_id = $_GET["chat_id"];
+} else {
+    header("Location: ../../pages/home.php");
+    exit;
+}
 if (isset($_SESSION["nik"])) {
     $nik = $_SESSION["nik"];
     //date
@@ -18,17 +25,26 @@ if (isset($_SESSION["nik"])) {
         move_uploaded_file($file['tmp_name'], $pathFile);
     }
     $message_value = $_POST["message_value"];
-    $message_nik = $_POST["message_nik"];
-    $message_nik = str_replace(" ", "", $message_nik);
+    $message_nik = null;
+    //get_user
+    $get_user_sql = "SELECT * FROM `messenger_users` WHERE `chat_id` = '$chat_id'";
+    $get_user_query = mysqli_query($bd_connect, $get_user_sql);
+    $get_user_resolt = mysqli_fetch_assoc($get_user_query);
+    if ($get_user_resolt["nik_one"] == $nik) {
+        $message_nik = $get_user_resolt["nik_two"];
+    } else {
+        $message_nik = $get_user_resolt["nik_one"];
+    }
+
     if (empty($message_value)) {
         header("Location: ../../pages/messages.php");
-        exit();
+        exit;
     }
-    if ($nik === $message_nik) {
-        header("Location: ../../pages/home.php");
-        exit();
-    }
-    $sql = "INSERT INTO messages (`id`, `date`, `message_value`, `file_path`, `time`, `eye`, `nik`, `message_nik`) VALUES (NULL, '$formattedDate', '$message_value', '$file_name', '$message_time', 'NO', '$nik', '$message_nik')";
+    // if ($nik === $message_nik) {
+    //     header("Location: ../../pages/home.php");
+    //     exit;
+    // }
+    $sql = "INSERT INTO messages (`id`, `chat_id`, `date`, `message_value`, `file_path`, `time`, `eye`, `nik`, `message_nik`) VALUES (NULL, '$chat_id', '$formattedDate', '$message_value', '$file_name', '$message_time', 0, '$nik', '$message_nik')";
     $query = mysqli_query($bd_connect, $sql);
 
     //notification
@@ -37,7 +53,8 @@ if (isset($_SESSION["nik"])) {
     $resolt_message_num = mysqli_real_escape_string($bd_connect, mysqli_fetch_assoc($moment_notification_query)['messages'] + 1);
     $notification_sql = "UPDATE `user_notification` SET `messages` = $resolt_message_num WHERE `nik` = '$message_nik'";
     $notification_query = mysqli_query($bd_connect, $notification_sql);
-    header("Location: ../../pages/messages.php");
+
+    header("Location: ../../pages/messages.php?chat_id=$chat_id");
 } else {
     header("Location: ../../pages/home.php");
 }
