@@ -3,6 +3,7 @@
     height: 60vh;
     overflow: auto;
     background-color: lightgray;
+    border-right: 1px solid lightgray;
 }
 .messanger_container{
     display: grid;
@@ -15,11 +16,29 @@
 .messanger_users::-webkit-scrollbar-thumb {
     background-color: rgb(79, 130, 3);
 }
+.messanger_container .companion_choice{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 43%;
+    text-align: center;
+    opacity: 0.5;
+}
+.messanger_container .companion_choice p{
+    user-select: none;
+    pointer-events: none;
+}
+.messanger_users a{
+    color: black;
+    text-decoration: none;
+}
 .messanger_users .message_user{
     background-color: white;
-    padding: 8px;
+    padding: 10px;
+    position: relative;
     border-bottom: 1px solid rgb(79, 130, 3);
     width: 320px;
+    height: 64px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -32,6 +51,23 @@
     grid-gap: 6px;
     padding-left: 10px;
 }
+.messanger_users .notification_number{
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: tomato;
+}
+.messanger_users .notification_number p{
+    color: white !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 2px;
+    text-align: center;
+}
 .messanger_users .message_user p{
     margin: 0;
     color: #d08e0b;
@@ -39,6 +75,7 @@
 }
 .messanger_users img{
     height: 50px;
+    width: 50px;
     border-radius: 5px;
     border: 2px solid rgb(79, 130, 3);
 }
@@ -47,11 +84,26 @@
     background-color: white;
 }
 .user_chat .message_user{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.user_chat .message_user .companion_options svg{
+    font-size: 22px;
+    fill: rgb(79, 130, 3) !important;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.user_chat .message_user .companion_options svg:hover{
+    opacity: 0.5;
+}
+.user_chat .message_user .user_child{
     display: flex;
     align-items: center;
 }
 .user_chat .message_user img{
     height: 60px;
+    width: 60px;
     border-radius: 5px;
 }
 .user_chat .message_user .user_information{
@@ -71,9 +123,10 @@
 .user_chat .form_wrapper{
     width: 100%;
 }
-.user_chat form{
+.user_chat form .form_children_wrapper{
     padding: 10px 0;
     width: 100%;
+    transition: 0.5s;
     position: absolute;
     bottom: 0;
     border-top: 1px solid rgb(79, 130, 3);
@@ -82,6 +135,46 @@
     background-color: white;
     grid-template-columns: auto 1fr auto;
     align-items: center;
+}
+.user_chat form .form_children_wrapper_smile{
+    padding-top: 50px;
+}
+.user_chat form .smile_choice{
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    bottom: 60px;
+    width: 100%;
+    overflow: auto;
+    transition: 0.5s;
+    display: none;
+    opacity: 0;
+}
+.user_chat form .smile_choice::-webkit-scrollbar{
+    background-color: white;
+    height: 3px;
+}
+.user_chat form .smile_choice::-webkit-scrollbar-thumb{
+    background-color: rgb(79, 130, 3);
+    height: 3px;
+}
+.user_chat form .smile_choice svg{
+    font-size: 25px;
+}
+.user_chat form .smiles{
+    display: flex;
+    font-size: 25px;
+    padding-bottom: 5px;
+}
+.user_chat form .smiles div{
+    user-select: none;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: 0.5s;
+}
+.user_chat form .smiles div:hover{
+    opacity: 0.5;
 }
 .user_chat form textarea{
     height: 24px;
@@ -113,8 +206,36 @@
 .user_chat .chat_menu{
     position: relative;
 }
+.user_chat .chat_block_information{
+    padding-top: 10px;
+    border-top: 2px solid #d08e0b;
+}
+.user_chat .chat_block_information p{
+    margin: 0;
+    text-align: center;
+    user-select: none;
+    pointer-events: none;
+    color: gray;
+}
+.user_chat .smile{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+.user_chat .smile svg{
+    transition: 0.5s;
+}
+.user_chat .smile svg.smile_active{
+    fill: #d08e0b !important;
+}
+.user_chat .value_wrapper{
+    position: relative;
+}
 .user_chat .choice_menu{
     position: absolute;
+    z-index: 1;
     width: 150px;
     bottom: 30px;
     margin-left: 10px;
@@ -168,8 +289,11 @@
 .user_chat .chat::-webkit-scrollbar-thumb {
     background-color: #d08e0b;
 }
-.chat_row{
-    padding-top: 10px;
+.user_chat .blocked_chat{
+    opacity: 0.6;
+}
+.user_chat .blocked_chat .chat_row{
+    pointer-events: none;
 }
 .chat_row .date{
     margin: auto;
@@ -182,9 +306,36 @@
 }
 .chat_row .message{
     width: fit-content;
+    position: relative;
+    max-width: 50%;
     padding: 5px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.chat_row .message .arrow_options{
+    position: absolute;
+    right: 0;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    transition: 0.3s;
+    opacity: 0;
+}
+.chat_row .message:hover .arrow_options{
+    opacity: 1;
+}
+.chat_row .other_user .arrow_options svg{
+    fill: gray !important;
+}
+.chat_row .my_user .arrow_options svg{
+    fill: black !important;
+}
+.chat_row .my_user .arrow_options{
+    background-color: rgba(211, 211, 211, 0.73);
+}
+.chat_row .other_user .arrow_options{
+    background-color: rgba(211, 211, 211, 0.73);
 }
 .chat_row .message p{
     margin: 0;
@@ -203,6 +354,10 @@
     justify-content: right;
     display: flex;
     align-items: center;
+}
+.chat_row .tick img{
+    height: 8px;
+    padding-left: 2px;
 }
 .chat_row .message_infrmation p {
     font-size: 9px;
