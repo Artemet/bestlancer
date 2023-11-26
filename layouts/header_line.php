@@ -129,6 +129,9 @@
                     <div class="messages notification" title="Чаты">
                         <?php
                         if ($message_num !== 0 && $message_num !== null):
+                            if ($message_num >= 10) {
+                                $message_num = "9+";
+                            }
                             ?>
                             <div class="notification_number">
                                 <span>
@@ -154,6 +157,9 @@
                     <div class="notification notification_sms">
                         <?php
                         if ($notification_num !== 0 && $notification_num !== null):
+                            if ($notification_num >= 10) {
+                                $notification_num = "9+";
+                            }
                             ?>
                             <div class="notification_number">
                                 <span>
