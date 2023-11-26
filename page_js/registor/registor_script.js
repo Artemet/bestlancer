@@ -1,6 +1,5 @@
 //registor_script
 function registor_script(){
-    let registor_warnings = false;
     let level_count = -1;
     const get_input_wrappers = document.querySelectorAll(".resolt_input div");
     for (let i = 0; i < get_input_wrappers.length; i++){

@@ -1,17 +1,17 @@
 //chat_choice
 function chat_choice() {
-    let chat_click = parseInt(localStorage.getItem("chatClickCount")) || 0;
+    //let chat_click = parseInt(localStorage.getItem("chatClickCount")) || 0;
     const get_users = document.querySelectorAll(".messanger_users .message_user");
-    const selectedChat = localStorage.getItem("selectedChat");
-    if (selectedChat) {
-        const [selectedImage, selectedName, selectedNik] = selectedChat.split('|');
-        const get_chat_image = document.querySelector(".user_chat .message_user img");
-        const get_chat_name = document.querySelector(".user_chat .message_user .user_information b");
-        const get_chat_nik = document.querySelector(".user_chat .message_user .user_information p");
-        get_chat_image.src = selectedImage;
-        get_chat_name.innerHTML = selectedName;
-        get_chat_nik.innerHTML = selectedNik;
-    }
+    //const selectedChat = localStorage.getItem("selectedChat");
+    // if (selectedChat) {
+    //     const [selectedImage, selectedName, selectedNik] = selectedChat.split('|');
+    //     const get_chat_image = document.querySelector(".user_chat .message_user img");
+    //     const get_chat_name = document.querySelector(".user_chat .message_user .user_information b");
+    //     const get_chat_nik = document.querySelector(".user_chat .message_user .user_information p");
+    //     get_chat_image.src = selectedImage;
+    //     get_chat_name.innerHTML = selectedName;
+    //     get_chat_nik.innerHTML = selectedNik;
+    // }
     
     get_users.forEach((item) => {
         item.addEventListener("click", function () {
@@ -19,7 +19,7 @@ function chat_choice() {
             if (chat_click === 1) {
                 item.style.backgroundColor = "#d08e0b44";
             } else {
-                get_users.forEach((user) => {
+                get_users.forEach( (user) => {
                     user.style.backgroundColor = "white";
                 });
                 item.style.backgroundColor = "#d08e0b44";
