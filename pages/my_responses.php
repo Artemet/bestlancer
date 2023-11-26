@@ -47,7 +47,7 @@ include "../layouts/header_line.php";
                 if ($page >= 1):
                     while ($row = mysqli_fetch_assoc($query)):
                         //max_price
-                        $order_id = $row["id"];
+                        $order_id = $row["order_id"];
                         $max_price_sql = "SELECT `order_price` FROM `orders` WHERE `id` = '$order_id'";
                         $max_price_query = mysqli_query($bd_connect, $max_price_sql);
                         $max_price_resolt = mysqli_fetch_assoc($max_price_query)['order_price'];
@@ -86,7 +86,7 @@ include "../layouts/header_line.php";
                                         </a>
                                     </div>
                                     <?php
-                                    if ($max_price_resolt != 0) {
+                                    if ($max_price_resolt !== 0) {
                                         echo "<p class='max_price'>Максимальная цена: <b>$max_price_resolt$</b></p>";
                                     } else {
                                         echo "<p class='max_price'>Договорная цена</p>";

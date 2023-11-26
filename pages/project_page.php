@@ -11,8 +11,10 @@ include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/project_page.css'>";
 echo "<link rel='stylesheet' href='../page_css/modal_css/change_project.css'>";
 echo "<title>$project_nik: $project_name</title>";
-if ($_SESSION["nik"] == $project_nik) {
-    include "../layouts/modal/change_project.php";
+if (isset($_SESSION["nik"])) {
+    if ($_SESSION["nik"] == $project_nik) {
+        include "../layouts/modal/change_project.php";
+    }
 }
 include "../layouts/header_line.php";
 ?>
@@ -21,8 +23,10 @@ include "../layouts/header_line.php";
         <div class="header_title"
             style="background-image: url('../bd_send/user/project_cover/<?= $project_cover['cover_href']; ?>');">
             <?php
-            if ($_SESSION["nik"] == $project_nik) {
-                include "../layouts/change_pencil.php";
+            if (isset($_SESSION["nik"])) {
+                if ($_SESSION["nik"] == $project_nik) {
+                    include "../layouts/change_pencil.php";
+                }
             }
             ?>
             <h2>
@@ -67,8 +71,10 @@ include "../layouts/footer.php";
 if (!empty($project_cover['project_video'])) {
     echo "<script src='../page_js/user/project/video_get.js'></script>";
 }
-if ($_SESSION["nik"] == $project_nik) {
-    echo "<script src='../page_js/user/project/project_change.js'></script>";
+if (isset($_SESSION["nik"])) {
+    if ($_SESSION["nik"] == $project_nik) {
+        echo "<script src='../page_js/user/project/project_change.js'></script>";
+    }
 }
 ?>
 </body>

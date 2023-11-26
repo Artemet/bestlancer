@@ -205,6 +205,7 @@ include "../layouts/header_line.php";
                     $application_nik = $row["nik"];
                     $user_nik_sql = "SELECT `name` FROM `user_registoring` WHERE `nik` = '$application_nik'";
                     $user_nik_query = mysqli_query($bd_connect, $user_nik_sql);
+                    $user_application_name = mysqli_fetch_assoc($user_nik_query)['name'];
                     if (!empty($row["payment_choice"])) {
                         $web_payment = "| $payment_text";
                     }
@@ -251,7 +252,11 @@ include "../layouts/header_line.php";
                         if ($invite_user_temp >= 1) {
                             echo '<div class="invite_text"><p>Приглашён в заказ</p></div>';
                         }
-                        echo '<a href="user_page.php?user_id=' . $user_id . '">' . mysqli_fetch_assoc($user_nik_query)['name'] . '</a>';
+                        if ($user_application_name == $_SESSION["name"]) {
+                            echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . ' <b class="my_order_mark">(вы)</b></a>';
+                        } else {
+                            echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . '</a>';
+                        }
                         echo '</div></div></div>';
                     }
                 }

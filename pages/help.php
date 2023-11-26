@@ -14,7 +14,7 @@ include "../layouts/header_line.php";
     <div class="line" style="width: 100%;"></div>
     <div class="help_options">
         <?php
-        $option_text = array("Как найти исполнителя?", "Как найти удаленную работу", "Регистрация и активация учетной записи");
+        $option_text = array("Как найти исполнителя?", "Как найти удаленную работу?", "Регистрация и активация учетной записи.");
         $option_href = array("helper_find", "work_find", "registration");
         for ($i = 0; $i < count($option_text); $i++):
             ?>
