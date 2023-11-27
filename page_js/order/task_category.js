@@ -41,7 +41,6 @@ function task_category() {
       get_category_name.forEach( (item) => {
         if (item.innerHTML.includes(get_order[0].innerHTML.trim())){
           const parent = item.closest("div");
-          console.log(medium_number_convert);
           const get_sub = parent.querySelector(".link_sub");
           const get_medium_sub = document.querySelectorAll(".tasks_container .final_filter_sub")
           item.style.color = "rgb(79, 130, 3)";

@@ -1,7 +1,7 @@
 function send_menu_logic(){
     //menu_open
     let open_temp = 0;
-    const get_icon = document.querySelector(".user_chat form svg");
+    const get_icon = document.querySelector(".user_chat svg");
     get_icon.addEventListener("click", function (){
         open_temp++;
         const get_chat_menu = document.querySelector(".user_chat .choice_menu");

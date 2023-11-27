@@ -126,7 +126,7 @@ function registor_script(){
     });
     //main_regisot_warnings
     let block_count = 0;
-    let warning_include = false;
+    let warning_include = 0;
     const get_inputs_block_thirst = document.querySelectorAll(".registor_container .thirst_part input");
     get_inputs_block_thirst.forEach( (item) => {
         block_count++;
@@ -155,12 +155,12 @@ function registor_script(){
                 get_warning.innerHTML = "Длина пароля должна быть больше или ровно 8";
             }
             //button_active
-            get_inputs_block_thirst.forEach( (item) => {
-                if (item.value.length >= 2){
-                    const get_button = item.closest(".main_registration").querySelector("button");
-                    get_button.classList.add("button_active");
-                }
-            });
+            // get_inputs_block_thirst.forEach( (item) => {
+            //     if (item.value.length >= 2){
+            //         const get_button = item.closest(".main_registration").querySelector("button");
+            //         get_button.classList.add("button_active");
+            //     }
+            // });
         });
     });
 }
