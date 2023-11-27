@@ -32,6 +32,11 @@
     color: black;
     text-decoration: none;
 }
+.user_chat .message_user .companion_options{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+}
 .messanger_users .message_user{
     background-color: white;
     padding: 10px;
@@ -39,12 +44,16 @@
     border-bottom: 1px solid rgb(79, 130, 3);
     width: 320px;
     height: 64px;
+    transition: 0.3s;
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 .messanger_users .message_user:hover{
     opacity: 0.7;
+}
+.messanger_users .message_user_active{
+    background-color: #d08e0b1f;
 }
 .messanger_users .message_user .user_information{
     display: grid;
@@ -123,7 +132,7 @@
 .user_chat .form_wrapper{
     width: 100%;
 }
-.user_chat form .form_children_wrapper{
+.user_chat .form_children_wrapper{
     padding: 10px 0;
     width: 100%;
     transition: 0.5s;
@@ -136,10 +145,10 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
-.user_chat form .form_children_wrapper_smile{
+.user_chat .form_children_wrapper_smile{
     padding-top: 50px;
 }
-.user_chat form .smile_choice{
+.user_chat .smile_choice{
     position: absolute;
     z-index: 1;
     display: flex;
@@ -151,45 +160,45 @@
     display: none;
     opacity: 0;
 }
-.user_chat form .smile_choice::-webkit-scrollbar{
+.user_chat .smile_choice::-webkit-scrollbar{
     background-color: white;
     height: 3px;
 }
-.user_chat form .smile_choice::-webkit-scrollbar-thumb{
+.user_chat .smile_choice::-webkit-scrollbar-thumb{
     background-color: rgb(79, 130, 3);
     height: 3px;
 }
-.user_chat form .smile_choice svg{
+.user_chat .smile_choice svg{
     font-size: 25px;
 }
-.user_chat form .smiles{
+.user_chat .smiles{
     display: flex;
     font-size: 25px;
     padding-bottom: 5px;
 }
-.user_chat form .smiles div{
+.user_chat .smiles div{
     user-select: none;
     cursor: pointer;
     margin: 0 5px;
     transition: 0.5s;
 }
-.user_chat form .smiles div:hover{
+.user_chat .smiles div:hover{
     opacity: 0.5;
 }
-.user_chat form textarea{
+.user_chat textarea{
     height: 24px;
     resize: none;
 }
-.user_chat form .icon{
+.user_chat .icon{
     padding-left: 10px;
 }
-.user_chat form svg{
+.user_chat svg{
     fill: rgb(79, 130, 3) !important;
     font-size: 20px;
     transition: 0.5s;
     cursor: pointer;
 }
-.user_chat form svg.active{
+.user_chat svg.active{
     transform: rotate(135deg);
     fill: #d08e0b !important;
 }
@@ -266,7 +275,7 @@
     margin: 5px 5px;
     padding: 5px 0;
 }
-.user_chat form button{
+.user_chat button{
     margin-top: 3px;
     cursor: pointer;
     background-color: rgb(51, 51, 51);
@@ -367,7 +376,7 @@
     font-size: 9px;
     padding-left: 3px;
 }
-.user_chat form .file input{
+.user_chat .file input{
     position: absolute;
     width: 20px;
     padding-left: 10px;
