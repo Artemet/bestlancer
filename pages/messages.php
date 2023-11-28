@@ -112,7 +112,37 @@ include "../layouts/header_line.php";
             }
         }
         ?>
+        <div class="companion_options">
+            <div title="Перезагрузить чат">
+                <a href="?chat_id=<?= $chat_id ?>" class="reload_page_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                        viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path
+                            d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z" />
+                    </svg>
+                </a>
+            </div>
+            <div title="Удалить пользователя">
+                <svg xmlns="http://www.w3.org/2000/svg" class="delite" height="1em"
+                    viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                        d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
+                </svg>
+            </div>
+        </div>
+        <script>
+            //delite_comformation
+            $("svg.delite").on("click", function () {
+                const user_confirm = confirm("Вы уверины что хотите удалить пользователя <?= $companion_nik ?>?");
+                if (user_confirm) {
+                    window.location.href = "../bd_send/user/messanger/delete_chat.php?chat_id=<?= $chat_id ?>";
+                }
+            });
+        </script>
         <div class="content">
+            <div class="chat_id">
+                <?= $chat_id ?>
+            </div>
             <div class="user_line">
                 <div class="message_user">
                     <div class="user_child">
@@ -128,27 +158,6 @@ include "../layouts/header_line.php";
                             </p>
                         </div>
                     </div>
-                    <div class="companion_options">
-                        <div title="Перезагрузить чат">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg>
-                        </div>
-                        <div title="Удалить пользователя">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="delite" height="1em"
-                                viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                <path
-                                    d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <script>
-                        //delite_comformation
-                        $(".companion_options svg.delite").on("click", function () {
-                            const user_confirm = confirm("Вы уверины что хотите удалить пользователя <?= $companion_nik ?>?");
-                            if (user_confirm) {
-                                window.location.href = "../bd_send/user/messanger/delete_chat.php?chat_id=<?= $chat_id ?>";
-                            }
-                        });
-                    </script>
                 </div>
             </div>
             <div class="chat <?= $block_class ?>">
@@ -215,251 +224,251 @@ include "../layouts/header_line.php";
             ?>
             <!-- <form action="../bd_send/user/message_system.php?chat_id=<?= $_GET['chat_id'] ?>" method="post"
                 enctype="multipart/form-data"> -->
-                <div class="smile_choice">
-                    <div class="smiles">
-                        <div>😀</div>
-                        <div>😃</div>
-                        <div>😄</div>
-                        <div>😁</div>
-                        <div>😆</div>
-                        <div>😅</div>
-                        <div>😂</div>
-                        <div>🤣</div>
-                        <div>😊</div>
-                        <div>😇</div>
-                        <div>🙂</div>
-                        <div>🙃</div>
-                        <div>😉</div>
-                        <div>😌</div>
-                        <div>😍</div>
-                        <div>🥰</div>
-                        <div>😘</div>
-                        <div>😗</div>
-                        <div>😙</div>
-                        <div>😚</div>
-                        <div>😋</div>
-                        <div>😛</div>
-                        <div>😝</div>
-                        <div>😜</div>
-                        <div>🤪</div>
-                        <div>🤨</div>
-                        <div>🧐</div>
-                        <div>🤓</div>
-                        <div>😎</div>
-                        <div>🤩</div>
-                        <div>🥳</div>
-                        <div>😏</div>
-                        <div>😒</div>
-                        <div>😞</div>
-                        <div>😔</div>
-                        <div>😟</div>
-                        <div>😕</div>
-                        <div>🙁</div>
-                        <div>☹️</div>
-                        <div>😣</div>
-                        <div>😖</div>
-                        <div>😫</div>
-                        <div>😩</div>
-                        <div>🥺</div>
-                        <div>😢</div>
-                        <div>😭</div>
-                        <div>😮</div>
-                        <div>😤</div>
-                        <div>😠</div>
-                        <div>😡</div>
-                        <div>🤬</div>
-                        <div>🤯</div>
-                        <div>😳</div>
-                        <div>🥵</div>
-                        <div>🥶</div>
-                        <div>😱</div>
-                        <div>😨</div>
-                        <div>😰</div>
-                        <div>😥</div>
-                        <div>😓</div>
-                        <div>🤗</div>
-                        <div>🤔</div>
-                        <div>🤭</div>
-                        <div>🤫</div>
-                        <div>🤥</div>
-                        <div>😶</div>
-                        <div>😶</div>
-                        <div>😐</div>
-                        <div>😑</div>
-                        <div>😬</div>
-                        <div>🙄</div>
-                        <div>😯</div>
-                        <div>😦</div>
-                        <div>😧</div>
-                        <div>😮</div>
-                        <div>😲</div>
-                        <div>🥱</div>
-                        <div>😴</div>
-                        <div>🤤</div>
-                        <div>😪</div>
-                        <div>😵</div>
-                        <div>😵</div>
-                        <div>🤐</div>
-                        <div>🥴</div>
-                        <div>🤢</div>
-                        <div>🤮</div>
-                        <div>🤧</div>
-                        <div>😷</div>
-                        <div>🤒</div>
-                        <div>🤕</div>
-                        <div>🤑</div>
-                        <div>🤠</div>
-                        <div>😈</div>
-                        <div>👿</div>
-                        <div>👹</div>
-                        <div>👺</div>
-                        <div>🤡</div>
-                        <div>💩</div>
-                        <div>👻</div>
-                        <div>💀</div>
-                        <div>☠️</div>
-                        <div>👽</div>
-                        <div>👾</div>
-                        <div>🤖</div>
-                        <div>🎃</div>
-                        <div>😺</div>
-                        <div>😸</div>
-                        <div>😹</div>
-                        <div>😻</div>
-                        <div>😼</div>
-                        <div>😽</div>
-                        <div>🙀</div>
-                        <div>😿</div>
-                        <div>😾</div>
-                        <div>👋</div>
-                        <div>🤚</div>
-                        <div>🖐</div>
-                        <div>✋</div>
-                        <div>🖖</div>
-                        <div>👌</div>
-                        <div>🤏</div>
-                        <div>✌️</div>
-                        <div>🤞</div>
-                        <div>🤟</div>
-                        <div>🤘</div>
-                        <div>🤙</div>
-                        <div>👈</div>
-                        <div>👉</div>
-                        <div>👆</div>
-                        <div>🖕</div>
-                        <div>👇</div>
-                        <div>☝️</div>
-                        <div>👍</div>
-                        <div>👎</div>
-                        <div>✊</div>
-                        <div>👊</div>
-                        <div>🤛</div>
-                        <div>🤜</div>
-                        <div>👏</div>
-                        <div>🙌</div>
-                        <div>👐</div>
-                        <div>🤲</div>
-                        <div>🤝</div>
-                        <div>🙏</div>
-                        <div>✍️</div>
-                        <div>💅</div>
-                        <div>🤳</div>
-                        <div>💪</div>
-                        <div>🦾</div>
-                        <div>🦵</div>
-                        <div>🦿</div>
-                        <div>🦶</div>
-                        <div>👣</div>
-                        <div>👂</div>
-                        <div>🦻</div>
-                        <div>👃</div>
-                        <div>🧠</div>
-                        <div>🦷</div>
-                        <div>🦴</div>
-                        <div>👀</div>
-                        <div>👁</div>
-                        <div>👅</div>
-                        <div>👄</div>
-                        <div>💋</div>
-                        <div>🩸</div>
-                        <div>🧳</div>
-                        <div>🌂</div>
-                        <div>☂️</div>
-                        <div>🧵</div>
-                        <div>🧶</div>
-                        <div>👓</div>
-                        <div>🕶</div>
-                        <div>🥽</div>
-                        <div>🥼</div>
-                        <div>🦺</div>
-                        <div>👔</div>
-                        <div>👕</div>
-                        <div>👖</div>
-                        <div>🧣</div>
-                        <div>🧤</div>
-                        <div>🧥</div>
-                        <div>🧦</div>
-                        <div>👗</div>
-                        <div>👘</div>
-                        <div>🥻</div>
-                        <div>🩱</div>
-                        <div>🩲</div>
-                        <div>🩳</div>
-                        <div>👙</div>
-                        <div>👚</div>
-                        <div>👛</div>
-                        <div>👜</div>
-                        <div>👝</div>
-                        <div>🎒</div>
-                        <div>👞</div>
-                        <div>👟</div>
-                        <div>🥾</div>
-                        <div>🥿</div>
-                        <div>👠</div>
-                        <div>👡</div>
-                        <div>🩰</div>
-                        <div>👢</div>
-                        <div>👑</div>
-                        <div>👒</div>
-                        <div>🎩</div>
-                        <div>🎓</div>
-                        <div>🧢</div>
-                        <div>⛑</div>
-                        <div>🪖</div>
-                        <div>💄</div>
-                        <div>💍</div>
-                        <div>💼</div>
+            <div class="smile_choice">
+                <div class="smiles">
+                    <div>😀</div>
+                    <div>😃</div>
+                    <div>😄</div>
+                    <div>😁</div>
+                    <div>😆</div>
+                    <div>😅</div>
+                    <div>😂</div>
+                    <div>🤣</div>
+                    <div>😊</div>
+                    <div>😇</div>
+                    <div>🙂</div>
+                    <div>🙃</div>
+                    <div>😉</div>
+                    <div>😌</div>
+                    <div>😍</div>
+                    <div>🥰</div>
+                    <div>😘</div>
+                    <div>😗</div>
+                    <div>😙</div>
+                    <div>😚</div>
+                    <div>😋</div>
+                    <div>😛</div>
+                    <div>😝</div>
+                    <div>😜</div>
+                    <div>🤪</div>
+                    <div>🤨</div>
+                    <div>🧐</div>
+                    <div>🤓</div>
+                    <div>😎</div>
+                    <div>🤩</div>
+                    <div>🥳</div>
+                    <div>😏</div>
+                    <div>😒</div>
+                    <div>😞</div>
+                    <div>😔</div>
+                    <div>😟</div>
+                    <div>😕</div>
+                    <div>🙁</div>
+                    <div>☹️</div>
+                    <div>😣</div>
+                    <div>😖</div>
+                    <div>😫</div>
+                    <div>😩</div>
+                    <div>🥺</div>
+                    <div>😢</div>
+                    <div>😭</div>
+                    <div>😮</div>
+                    <div>😤</div>
+                    <div>😠</div>
+                    <div>😡</div>
+                    <div>🤬</div>
+                    <div>🤯</div>
+                    <div>😳</div>
+                    <div>🥵</div>
+                    <div>🥶</div>
+                    <div>😱</div>
+                    <div>😨</div>
+                    <div>😰</div>
+                    <div>😥</div>
+                    <div>😓</div>
+                    <div>🤗</div>
+                    <div>🤔</div>
+                    <div>🤭</div>
+                    <div>🤫</div>
+                    <div>🤥</div>
+                    <div>😶</div>
+                    <div>😶</div>
+                    <div>😐</div>
+                    <div>😑</div>
+                    <div>😬</div>
+                    <div>🙄</div>
+                    <div>😯</div>
+                    <div>😦</div>
+                    <div>😧</div>
+                    <div>😮</div>
+                    <div>😲</div>
+                    <div>🥱</div>
+                    <div>😴</div>
+                    <div>🤤</div>
+                    <div>😪</div>
+                    <div>😵</div>
+                    <div>😵</div>
+                    <div>🤐</div>
+                    <div>🥴</div>
+                    <div>🤢</div>
+                    <div>🤮</div>
+                    <div>🤧</div>
+                    <div>😷</div>
+                    <div>🤒</div>
+                    <div>🤕</div>
+                    <div>🤑</div>
+                    <div>🤠</div>
+                    <div>😈</div>
+                    <div>👿</div>
+                    <div>👹</div>
+                    <div>👺</div>
+                    <div>🤡</div>
+                    <div>💩</div>
+                    <div>👻</div>
+                    <div>💀</div>
+                    <div>☠️</div>
+                    <div>👽</div>
+                    <div>👾</div>
+                    <div>🤖</div>
+                    <div>🎃</div>
+                    <div>😺</div>
+                    <div>😸</div>
+                    <div>😹</div>
+                    <div>😻</div>
+                    <div>😼</div>
+                    <div>😽</div>
+                    <div>🙀</div>
+                    <div>😿</div>
+                    <div>😾</div>
+                    <div>👋</div>
+                    <div>🤚</div>
+                    <div>🖐</div>
+                    <div>✋</div>
+                    <div>🖖</div>
+                    <div>👌</div>
+                    <div>🤏</div>
+                    <div>✌️</div>
+                    <div>🤞</div>
+                    <div>🤟</div>
+                    <div>🤘</div>
+                    <div>🤙</div>
+                    <div>👈</div>
+                    <div>👉</div>
+                    <div>👆</div>
+                    <div>🖕</div>
+                    <div>👇</div>
+                    <div>☝️</div>
+                    <div>👍</div>
+                    <div>👎</div>
+                    <div>✊</div>
+                    <div>👊</div>
+                    <div>🤛</div>
+                    <div>🤜</div>
+                    <div>👏</div>
+                    <div>🙌</div>
+                    <div>👐</div>
+                    <div>🤲</div>
+                    <div>🤝</div>
+                    <div>🙏</div>
+                    <div>✍️</div>
+                    <div>💅</div>
+                    <div>🤳</div>
+                    <div>💪</div>
+                    <div>🦾</div>
+                    <div>🦵</div>
+                    <div>🦿</div>
+                    <div>🦶</div>
+                    <div>👣</div>
+                    <div>👂</div>
+                    <div>🦻</div>
+                    <div>👃</div>
+                    <div>🧠</div>
+                    <div>🦷</div>
+                    <div>🦴</div>
+                    <div>👀</div>
+                    <div>👁</div>
+                    <div>👅</div>
+                    <div>👄</div>
+                    <div>💋</div>
+                    <div>🩸</div>
+                    <div>🧳</div>
+                    <div>🌂</div>
+                    <div>☂️</div>
+                    <div>🧵</div>
+                    <div>🧶</div>
+                    <div>👓</div>
+                    <div>🕶</div>
+                    <div>🥽</div>
+                    <div>🥼</div>
+                    <div>🦺</div>
+                    <div>👔</div>
+                    <div>👕</div>
+                    <div>👖</div>
+                    <div>🧣</div>
+                    <div>🧤</div>
+                    <div>🧥</div>
+                    <div>🧦</div>
+                    <div>👗</div>
+                    <div>👘</div>
+                    <div>🥻</div>
+                    <div>🩱</div>
+                    <div>🩲</div>
+                    <div>🩳</div>
+                    <div>👙</div>
+                    <div>👚</div>
+                    <div>👛</div>
+                    <div>👜</div>
+                    <div>👝</div>
+                    <div>🎒</div>
+                    <div>👞</div>
+                    <div>👟</div>
+                    <div>🥾</div>
+                    <div>🥿</div>
+                    <div>👠</div>
+                    <div>👡</div>
+                    <div>🩰</div>
+                    <div>👢</div>
+                    <div>👑</div>
+                    <div>👒</div>
+                    <div>🎩</div>
+                    <div>🎓</div>
+                    <div>🧢</div>
+                    <div>⛑</div>
+                    <div>🪖</div>
+                    <div>💄</div>
+                    <div>💍</div>
+                    <div>💼</div>
 
-                    </div>
                 </div>
-                <div class="form_children_wrapper">
-                    <div class="nik"><input type="text" readonly name="message_nik" value="<?= $user_nik ?>"></div>
-                    <div class="chat_menu">
-                        <div class="choice_menu">
-                            <div class="file_add">
-                                <p>Добавить файл</p>
-                                <input type="file" class="file_send" name="file_send">
-                            </div>
-                        </div>
-                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                <path
-                                    d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-                            </svg></div>
-                    </div>
-                    <div class="value_wrapper">
-                        <textarea name="message_value" id="" class="right_in" placeholder="Ваше сообщение" cols="30"
-                            rows="10"></textarea>
-                        <div class="smile">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                <path
-                                    d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-                            </svg>
+            </div>
+            <div class="form_children_wrapper">
+                <div class="nik"><input type="text" readonly name="message_nik" value="<?= $user_nik ?>"></div>
+                <div class="chat_menu">
+                    <div class="choice_menu">
+                        <div class="file_add">
+                            <p>Добавить файл</p>
+                            <input type="file" class="file_send" name="file_send">
                         </div>
                     </div>
-                    <div><button>Отправить</button></div>
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                        </svg></div>
                 </div>
+                <div class="value_wrapper">
+                    <textarea name="message_value" id="" class="right_in" placeholder="Ваше сообщение" cols="30"
+                        rows="10"></textarea>
+                    <div class="smile">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                        </svg>
+                    </div>
+                </div>
+                <div><button>Отправить</button></div>
+            </div>
             <!-- </form> -->
             <?php
         endif;
