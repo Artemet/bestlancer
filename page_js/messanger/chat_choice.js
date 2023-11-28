@@ -16,10 +16,17 @@ document.addEventListener("DOMContentLoaded", function (){
                 } else{
                     console.error("Content not found in the loaded page.");
                 }
+            }) .catch(error => {
+                console.error("Error during fetch:", error);
             });
     }
 
     const setupEventListeners = () => {
+        const get_chat_id = parseInt($('.chat_id').html().trim(), 10);
+        const reload_link = $('a.reload_page_icon');
+        reload_link.prop("href", "?chat_id=" + get_chat_id);
+        console.log(reload_link);
+
         const updated_links = document.querySelectorAll(".messanger_users a.chat_link");
         updated_links.forEach((item) => {
             item.addEventListener('click', (e) => {
@@ -64,6 +71,44 @@ function chat_print_ajax(){
                     //code
                 });
         }
+    });
+    window.addEventListener("DOMContentLoaded", function (){
+        let rotate_temp = 0;
+        const get_content = document.querySelector(".content");
+        const get_link = document.querySelector("a.reload_page_icon");
+        const load_page = (url) => {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const new_content = doc.querySelector(".content");
+                    if (new_content){
+                        get_content.innerHTML = new_content.innerHTML;
+                        history.pushState({}, '', 'messages.php');
+                        setupEventListeners();
+                    } else{
+                        console.error("Content not found in the loaded page.");
+                    }
+                });
+        }
+    
+        const setupEventListeners = () => {
+            const get_link = document.querySelector("a.reload_page_icon");
+            get_link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = get_link.href;
+                load_page(url);
+            });
+        };
+    
+        get_link.addEventListener('click', (e) => {
+            rotate_temp += 360;
+            document.querySelector(".reload_page_icon svg").style.transform = "rotate(" + rotate_temp + "deg)";
+            e.preventDefault();
+            const url = e.currentTarget.getAttribute('href');
+            load_page(url);
+        });
     });
 }
 chat_print_ajax();
