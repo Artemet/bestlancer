@@ -5,6 +5,45 @@
     opacity: 0;
 }
 .notification_container .notification{
+    position: relative;
+}
+.notification_container .notification .checkbox{
+    position: absolute;
+    margin-top: 20px;
+    right: 0;
+    height: 20px;
+    width: 20px;
+    display: none;
+}
+.notification_container .notification .checkbox_active{
+    display: block;
+}
+.notification_container .notification_wrapper_block{
+    pointer-events: none;
+    opacity: 0.7;
+}
+.notification_container .notifications{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.notification_container .header_title{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.notification_container .notification_options{
+    margin-top: 24.900px;
+}
+.notification_container .notification_options svg{
+    fill: rgb(79, 130, 3) !important;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.notification_container .notification_options svg.active{
+    fill: #d08e0b !important;
+}
+.notification_container .notification{
     margin-bottom: 25px;
     padding-bottom: 25px;
     border-bottom: 3px solid rgb(79, 130, 3);
