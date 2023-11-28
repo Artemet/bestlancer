@@ -6,6 +6,10 @@
 }
 .notification_container .notification{
     position: relative;
+    transition: 0.3s;
+}
+.notification_container .notification_choice{
+    cursor: pointer;
 }
 .notification_container .notification .checkbox{
     position: absolute;
@@ -31,14 +35,26 @@
     grid-template-columns: 1fr auto;
     align-items: center;
 }
+.notification_container .delite_number{
+    display: none;
+}
+.notification_container .delite_number p{
+    margin: 0;
+}
+.notification_container .delite_number_active{
+    display: block;
+}
 .notification_container .notification_options{
     margin-top: 24.900px;
+    display: flex;
+    align-items: center;
 }
 .notification_container .notification_options svg{
     fill: rgb(79, 130, 3) !important;
     font-size: 25px;
     cursor: pointer;
     transition: 0.3s;
+    margin-left: 20px;
 }
 .notification_container .notification_options svg.active{
     fill: #d08e0b !important;
