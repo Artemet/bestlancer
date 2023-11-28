@@ -14,8 +14,10 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     $sql = "SELECT * FROM orders WHERE id = $order_id";
     $query = mysqli_query($bd_connect, $sql);
     $order = mysqli_fetch_assoc($query);
-    if ($order["nik"] === $nik) {
-        echo "<link rel='stylesheet' href='../page_css/modal_css/invite_application.css'>";
+    if (isset($_SESSION["nik"])){
+        if ($order["nik"] === $nik) {
+            echo "<link rel='stylesheet' href='../page_css/modal_css/invite_application.css'>";
+        }
     }
     if ($order) {
         $pageTitle = $order['order_name'];
@@ -34,8 +36,10 @@ echo "<link rel='stylesheet' href='../page_css/order_page.css'>";
 echo "<link rel='stylesheet' href='../page_css/media/order_page_media.css'>";
 echo "<title>$pageTitle</title>";
 include "../layouts/modal/change_information.php";
-if ($order["nik"] === $nik) {
-    include "../layouts/modal/invite_application.php";
+if (isset($_SESSION["nik"])){
+    if ($order["nik"] === $nik) {
+        include "../layouts/modal/invite_application.php";
+    }
 }
 $row = mysqli_fetch_assoc($query);
 include "../layouts/header_line.php";
@@ -252,8 +256,12 @@ include "../layouts/header_line.php";
                         if ($invite_user_temp >= 1) {
                             echo '<div class="invite_text"><p>Приглашён в заказ</p></div>';
                         }
-                        if ($user_application_name == $_SESSION["name"]) {
-                            echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . ' <b class="my_order_mark">(вы)</b></a>';
+                        if (isset($_SESSION["nik"])){
+                            if ($user_application_name == $_SESSION["name"]) {
+                                echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . ' <b class="my_order_mark">(вы)</b></a>';
+                            } else {
+                                echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . '</a>';
+                            }
                         } else {
                             echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . '</a>';
                         }
@@ -276,8 +284,10 @@ include "../layouts/footer.php";
 if ($user_order === TRUE) {
     echo '<script src="../page_js/order/application_menu.js"></script>';
 }
-if ($order["nik"] === $_SESSION["nik"]) {
-    echo '<script src="../page_js/order/modal/invite_application_modal.js"></script>';
+if (isset($_SESSION["nik"])){
+    if ($order["nik"] === $_SESSION["nik"]) {
+        echo '<script src="../page_js/order/modal/invite_application_modal.js"></script>';
+    }
 }
 ?>
 </body>
