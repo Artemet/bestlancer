@@ -40,31 +40,35 @@
                     $past_acquaintance_repeat = false;
                     $past_acquaintance = "SELECT * FROM `notifications` WHERE `order_nik` = '$second_user' AND `nik` = '$nik' AND `order_information` = '$order_id'";
                     $past_acquaintance_query = mysqli_query($bd_connect, $past_acquaintance);
+
                     while ($past_acquaintance_resolt = mysqli_fetch_assoc($past_acquaintance_query)) {
                         $past_acquaintance_repeat = true;
                     }
                     if ($past_acquaintance_repeat == true) {
                         $row_class = "none_user";
                     }
-                    ?>
-                    <div class="row_wrapper">
-                        <div class="user_row <?= $row_class ?>">
-                            <div class="user_icon">
-                                <img src="../bd_send/user/user_icons/<?= $resolt_icon_path ?>" draggable="false" alt="">
+
+                    if (empty($acquaintance_resolt["main_block"])):
+                        ?>
+                        <div class="row_wrapper">
+                            <div class="user_row <?= $row_class ?>">
+                                <div class="user_icon">
+                                    <img src="../bd_send/user/user_icons/<?= $resolt_icon_path ?>" draggable="false" alt="">
+                                </div>
+                                <div class="user_nik">
+                                    <p>
+                                        <?= $resolt_nik ?>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="user_nik">
-                                <p>
-                                    <?= $resolt_nik ?>
-                                </p>
-                            </div>
+                            <?php
+                            if ($past_acquaintance_repeat == true) {
+                                echo "<div class='invited_text'><p>Приглашён</p></div>";
+                            }
+                            ?>
                         </div>
                         <?php
-                        if ($past_acquaintance_repeat == true) {
-                            echo "<div class='invited_text'><p>Приглашён</p></div>";
-                        }
-                        ?>
-                    </div>
-                    <?php
+                    endif;
                 endwhile;
                 if ($acquaintance_temp == 0) {
                     echo "<div class='none_acquaintance'><b>У вас нет знакомых пользователей!</b></div>";
