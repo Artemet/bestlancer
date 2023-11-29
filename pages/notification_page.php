@@ -16,7 +16,7 @@ echo "<title>Мои увидомления</title>";
 include "../layouts/header_line.php";
 
 //page_system
-$notifications_per_page = 1;
+$notifications_per_page = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $notifications_per_page;
 $page_sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik' LIMIT $offset, $notifications_per_page";
@@ -37,48 +37,49 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
             <div class="notification_options">
                 <?php
                 if ($total_pages >= 2):
+                    ?>
+                    <div class="pagination">
+                        <div class="arrow left_arrow">
+                            <?php
+                            if ($page == 1) {
+                                echo '<a href="?page=' . ($page - 1) . '" class="none_active">';
+                            } else {
+                                echo '<a href="?page=' . ($page - 1) . '">';
+                            }
+                            ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path
+                                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                            </svg></a>
+                        </div>
+                        <div class="number_part">
+                            <div><b class="page_number">
+                                    <?= $page ?>
+                                </b></div>
+                            <div><b class="slash">/</b></div>
+                            <div><b class="page_number end_page">
+                                    <?= $total_pages ?>
+                                </b></div>
+                        </div>
+                        <div class="arrow right_arrow">
+                            <?php
+                            if ($page == $total_pages) {
+                                echo '<a href="?page=' . ($page + 1) . '" class="none_active">';
+                            } else {
+                                echo '<a href="?page=' . ($page + 1) . '">';
+                            }
+                            ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path
+                                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+                            </svg></a>
+                        </div>
+                    </div>
+                    <?php
+                endif;
                 ?>
-            <div class="pagination">
-                                    <div class="arrow left_arrow">
-                                    <?php
-                                        if ($page == 1) {
-                                            echo '<a href="?page='.($page - 1).'" class="none_active">';
-                                        } else {
-                                            echo '<a href="?page='.($page - 1).'">';
-                                        }
-                                    ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <path
-                                                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
-                                            </svg></a>
-                                        </div>
-                                    <div class="number_part">
-                                        <div><b class="page_number">
-                                                <?=$page?>
-                                            </b></div>
-                                        <div><b class="slash">/</b></div>
-                                        <div><b class="page_number end_page">
-                                        <?= $total_pages ?>
-                                            </b></div>
-                                    </div>
-                                    <div class="arrow right_arrow">
-                                    <?php
-                                        if ($page == $total_pages) {
-                                            echo '<a href="?page='.($page + 1).'" class="none_active">';
-                                        } else {
-                                            echo '<a href="?page='.($page + 1).'">';
-                                        }
-                                    ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <path
-                                                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
-                                            </svg></a></div>
-                                </div>
-                                <?php
-            endif;
-            ?>
                 <div class="delite_number">
                     <p>Выбрано: <b>0</b></p>
                     <u title="Выбрать все увидомления на странице">Выбрать всё</u>
@@ -99,149 +100,155 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
         </div>
         <div class="notifications">
             <div class="content">
-                <p class="page"><?=$_GET["page"];?></p>
-            <?php
-            $sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik'";
-            $query = mysqli_query($bd_connect, $sql);
-            $notificationBlocks = array();
-            
-            if ($page >= 1):
-            while ($row = mysqli_fetch_assoc($page_query)):
-                $order_id = $row['id'];
-                $nik = $row['nik'];
-                $order_type = $row['type'];
+                <p class="page">
+                    <?= $_GET["page"]; ?>
+                </p>
+                <div class="notifications_wrapper">
+                    <?php
+                    $sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik'";
+                    $query = mysqli_query($bd_connect, $sql);
+                    $notificationBlocks = array();
 
-                //user_id
-                $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                $id_result = mysqli_query($bd_connect, $id_query);
-                $id_row = mysqli_fetch_assoc($id_result);
-                $user_id = $id_row['id'];
+                    if ($page >= 1):
+                        while ($row = mysqli_fetch_assoc($page_query)):
+                            $order_id = $row['id'];
+                            $nik = $row['nik'];
+                            $order_type = $row['type'];
 
-                //user_icon
-                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                $icon_resolt = mysqli_query($bd_connect, $icon_query);
-                $icon_row = mysqli_fetch_assoc($icon_resolt);
-                $user_icon = $icon_row['icon_path'];
+                            //user_id
+                            $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
+                            $id_result = mysqli_query($bd_connect, $id_query);
+                            $id_row = mysqli_fetch_assoc($id_result);
+                            $user_id = $id_row['id'];
 
-                if ($order_type == 'invite' || $order_type == 'personal'):
-                    ?>
-                    <div class="notification" id="<?= $row['id'] ?>">
-                        <div class="notification_wrapper">
-                            <input type="checkbox" class="checkbox">
-                            <div class="top_part">
-                                <div class="user_notification">
-                                    <div class="img">
-                                        <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false">
-                                    </div>
-                                    <div>
-                                        <a href="user_page.php?user_id=<?= $user_id ?>">
-                                            <?= $row['nik'] ?>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <?php
-                                    if ($row['type'] == 'personal') {
-                                        echo "<h3>Личный заказ</h3>";
-                                    } else {
-                                        echo "<h3>Приглашение в заказ</h3>";
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="main_notification">
-                                <div>
-                                    <div>
-                                        <h4>
-                                            <?= $row['order_name'] ?>
-                                        </h4>
-                                    </div>
-                                    <?php
-                                    if ($row['type'] == 'personal'):
-                                        ?>
-                                        <div>
-                                            <p>
-                                                <?= $row['order_information'] ?>
-                                            </p>
+                            //user_icon
+                            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
+                            $icon_resolt = mysqli_query($bd_connect, $icon_query);
+                            $icon_row = mysqli_fetch_assoc($icon_resolt);
+                            $user_icon = $icon_row['icon_path'];
+
+                            if ($order_type == 'invite' || $order_type == 'personal'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <?php
+                                                if ($row['type'] == 'personal') {
+                                                    echo "<h3>Личный заказ</h3>";
+                                                } else {
+                                                    echo "<h3>Приглашение в заказ</h3>";
+                                                }
+                                                ?>
+                                            </div>
                                         </div>
-                                        <?php
-                                    endif;
-                                    ?>
-                                </div>
-                                <div class="order_files">
-                                    <div>
-                                        <h4>Файлы</h4>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h4>
+                                                        <?= $row['order_name'] ?>
+                                                    </h4>
+                                                </div>
+                                                <?php
+                                                if ($row['type'] == 'personal'):
+                                                    ?>
+                                                    <div>
+                                                        <p>
+                                                            <?= $row['order_information'] ?>
+                                                        </p>
+                                                    </div>
+                                                    <?php
+                                                endif;
+                                                ?>
+                                            </div>
+                                            <div class="order_files">
+                                                <div>
+                                                    <h4>Файлы</h4>
+                                                </div>
+                                                <div class="files">
+                                                    <a href="../bd_send/order/personal_order_files/<?= $row['order_file'] ?>"
+                                                        download>Скачать
+                                                        документ</a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <?php
+                                                if ($row['type'] == 'personal') {
+                                                    echo '<div><a href=""><button>Взять задачу</button></a></div>';
+                                                } else {
+                                                    echo '<div><a href="order_page.php?order_id=' . $row['order_information'] . '"><button>Посмотреть заказ</button></a></div>';
+                                                }
+                                                ?>
+                                                <!-- ../bd_send/order/remove_personal_order.php?personal_order_id=<?= $order_id ?> -->
+                                                <div><button class="remove_order">Отказаться</button></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="files">
-                                        <a href="../bd_send/order/personal_order_files/<?= $row['order_file'] ?>"
-                                            download>Скачать
-                                            документ</a>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'application'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="order_page.php?order_id=<?= $row['order_information'] ?>"
+                                                        title="Заявка к заказу №<?= $row['order_information'] ?>">
+                                                        <?= $nik ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Отправил(а) заявку</h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <?php
-                                    if ($row['type'] == 'personal') {
-                                        echo '<div><a href=""><button>Взять задачу</button></a></div>';
-                                    } else {
-                                        echo '<div><a href="order_page.php?order_id=' . $row['order_information'] . '"><button>Посмотреть заказ</button></a></div>';
-                                    }
-                                    ?>
-                                    <!-- ../bd_send/order/remove_personal_order.php?personal_order_id=<?= $order_id ?> -->
-                                    <div><button class="remove_order">Отказаться</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                endif;
-                if ($order_type == 'application'):
+                                <?php
+                            endif;
+                        endwhile;
+                    endif;
                     ?>
-                    <div class="notification" id="<?=$row['id']?>">
-                        <div class="notification_wrapper">
-                            <input type="checkbox" class="checkbox">
-                            <div class="top_part">
-                                <div class="user_notification">
-                                    <div class="img">
-                                        <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false">
-                                    </div>
-                                    <div>
-                                        <a href="order_page.php?order_id=<?= $row['order_information'] ?>"
-                                            title="Заявка к заказу №<?= $row['order_information'] ?>">
-                                            <?= $nik ?>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3>Отправил(а) заявку</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                endif;
-            endwhile;
-        endif;
-            ?>
-            <script>
-                let refusal_temp = 0;
-                document.querySelectorAll("button.remove_order").forEach((item) => {
-                    item.addEventListener("click", function () {
-                        refusal_temp++;
-                        const get_item_id = item.closest(".notification").id;
-                        $.ajax({
-                            url: "../bd_send/order/remove_personal_order.php?personal_order_id=" + get_item_id,
-                        })
-                            .done(function () {
-                                item.closest(".notification").remove();
-                                if (refusal_temp === 1) {
-                                    setTimeout(() => {
-                                        alert("Вы успешно отказались от заказа!");
-                                    }, 500);
-                                }
-                            });
+                </div>
+                <script>
+                    let refusal_temp = 0;
+                    document.querySelectorAll("button.remove_order").forEach((item) => {
+                        item.addEventListener("click", function () {
+                            refusal_temp++;
+                            const get_item_id = item.closest(".notification").id;
+                            $.ajax({
+                                url: "../bd_send/order/remove_personal_order.php?personal_order_id=" + get_item_id,
+                            })
+                                .done(function () {
+                                    item.closest(".notification").remove();
+                                    if (refusal_temp === 1) {
+                                        setTimeout(() => {
+                                            alert("Вы успешно отказались от заказа!");
+                                        }, 500);
+                                    }
+                                });
+                        });
                     });
-                });
-            </script>
+                </script>
             </div>
         </div>
     </div>
