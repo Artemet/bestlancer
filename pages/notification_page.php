@@ -14,6 +14,19 @@ include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/notification_page.css'>";
 echo "<title>Мои увидомления</title>";
 include "../layouts/header_line.php";
+
+//page_system
+$notifications_per_page = 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $notifications_per_page;
+$page_sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik' LIMIT $offset, $notifications_per_page";
+$page_query = mysqli_query($bd_connect, $page_sql);
+
+$sql_count = "SELECT COUNT(*) as total FROM `notifications` WHERE `order_nik` = '$user_nik'";
+$count_query = mysqli_query($bd_connect, $sql_count);
+$count_row = mysqli_fetch_assoc($count_query);
+$total_notifications = $count_row['total'];
+$total_pages = ceil($total_notifications / $notifications_per_page);
 ?>
 <div class="container notification_container">
     <div class="header">
@@ -22,8 +35,57 @@ include "../layouts/header_line.php";
                 <h2>Мои уведомления</h2>
             </div>
             <div class="notification_options">
+                <?php
+                if ($total_pages >= 2):
+                ?>
+            <div class="pagination">
+                                    <div class="arrow left_arrow">
+                                    <?php
+                                        if ($page == 1) {
+                                            echo '<a href="?page='.($page - 1).'" class="none_active">';
+                                        } else {
+                                            echo '<a href="?page='.($page - 1).'">';
+                                        }
+                                    ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                <path
+                                                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                                            </svg></a>
+                                        </div>
+                                    <div class="number_part">
+                                        <div><b class="page_number">
+                                                <?=$page?>
+                                            </b></div>
+                                        <div><b class="slash">/</b></div>
+                                        <div><b class="page_number end_page">
+                                        <?= $total_pages ?>
+                                            </b></div>
+                                    </div>
+                                    <div class="arrow right_arrow">
+                                    <?php
+                                        if ($page == $total_pages) {
+                                            echo '<a href="?page='.($page + 1).'" class="none_active">';
+                                        } else {
+                                            echo '<a href="?page='.($page + 1).'">';
+                                        }
+                                    ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                <path
+                                                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+                                            </svg></a></div>
+                                </div>
+                                <?php
+            endif;
+            ?>
                 <div class="delite_number">
                     <p>Выбрано: <b>0</b></p>
+                    <u title="Выбрать все увидомления на странице">Выбрать всё</u>
+                    <div class="button">
+                        <input type="text" class="notification_id" readonly>
+                        <button>Удалить</button>
+                    </div>
                 </div>
                 <div class="delite_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" class="delite" height="1em"
@@ -36,12 +98,15 @@ include "../layouts/header_line.php";
             </div>
         </div>
         <div class="notifications">
+            <div class="content">
+                <p class="page"><?=$_GET["page"];?></p>
             <?php
             $sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik'";
             $query = mysqli_query($bd_connect, $sql);
             $notificationBlocks = array();
-
-            while ($row = mysqli_fetch_assoc($query)):
+            
+            if ($page >= 1):
+            while ($row = mysqli_fetch_assoc($page_query)):
                 $order_id = $row['id'];
                 $nik = $row['nik'];
                 $order_type = $row['type'];
@@ -131,7 +196,7 @@ include "../layouts/header_line.php";
                 endif;
                 if ($order_type == 'application'):
                     ?>
-                    <div class="notification">
+                    <div class="notification" id="<?=$row['id']?>">
                         <div class="notification_wrapper">
                             <input type="checkbox" class="checkbox">
                             <div class="top_part">
@@ -147,7 +212,7 @@ include "../layouts/header_line.php";
                                     </div>
                                 </div>
                                 <div>
-                                    <h3>Отправил заявку</h3>
+                                    <h3>Отправил(а) заявку</h3>
                                 </div>
                             </div>
                         </div>
@@ -155,6 +220,7 @@ include "../layouts/header_line.php";
                     <?php
                 endif;
             endwhile;
+        endif;
             ?>
             <script>
                 let refusal_temp = 0;
@@ -176,6 +242,7 @@ include "../layouts/header_line.php";
                     });
                 });
             </script>
+            </div>
         </div>
     </div>
 </div>

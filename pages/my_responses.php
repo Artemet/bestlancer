@@ -35,17 +35,17 @@ include "../layouts/header_line.php";
                 $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik'";
                 $query = mysqli_query($bd_connect, $sql);
                 //page
-                $responses_per_page = 8;
+                $responses_per_page = 2;
 
                 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
                 $offset = ($page - 1) * $responses_per_page;
 
-                $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik' LIMIT $offset, $responses_per_page";
-                $query = mysqli_query($bd_connect, $sql);
+                $page_sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik' LIMIT $offset, $responses_per_page";
+                $page_query = mysqli_query($bd_connect, $page_sql);
 
                 if ($page >= 1):
-                    while ($row = mysqli_fetch_assoc($query)):
+                    while ($row = mysqli_fetch_assoc($page_query)):
                         //max_price
                         $order_id = $row["order_id"];
                         $max_price_sql = "SELECT `order_price` FROM `orders` WHERE `id` = '$order_id'";
