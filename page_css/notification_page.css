@@ -4,9 +4,50 @@
     display: none;
     opacity: 0;
 }
+.notification_container .notifications p.page{
+    display: none;
+}
 .notification_container .notification{
     position: relative;
     transition: 0.3s;
+}
+.notification_container .pagination{
+    display: flex;
+    margin-right: 10px;
+}
+.notification_container .pagination .number_part{
+    display: flex;
+    align-items: center;
+}
+.notification_container .pagination a{
+    transition: 0.5s;
+}
+.notification_container .loading_line{
+    height: 3px;
+    background-color: #d08e0b;
+    position: absolute;
+    bottom: 0;
+    transition: 0.5s;
+    width: 0;
+}
+.notification_container .pagination a.none_active{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.notification_container .pagination b{
+    padding: 0 3px;
+}
+.notification_container .pagination .slash{
+    color: rgb(79, 130, 3);
+}
+.notification_container .pagination svg{
+    margin-top: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: 0.5s;
+}
+.notification_container .pagination svg:hover{
+    fill: rgb(79, 130, 3) !important;
 }
 .notification_container .notification_choice{
     cursor: pointer;
@@ -33,10 +74,46 @@
 .notification_container .header_title{
     display: grid;
     grid-template-columns: 1fr auto;
-    align-items: center;
+    align-items: baseline;
 }
 .notification_container .delite_number{
     display: none;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.notification_container .delite_number .button{
+    position: absolute;
+}
+.notification_container .delite_number input.notification_id{
+    display: none;
+}
+.notification_container .delite_number button{
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(53, 52, 52);
+    border-radius: 5px;
+    border: 3px solid #d08e0b;
+    transition: 0.5s;
+    width: 100%;
+    opacity: 0.7;
+    pointer-events: none;
+}
+.notification_container .delite_number button:hover{
+    color: #d08e0b;
+}
+.notification_container .delite_number button.active{
+    opacity: 1;
+    pointer-events: all;
+}
+.notification_container .delite_number u{
+    color: tomato;
+    cursor: pointer;
+    user-select: none;
 }
 .notification_container .delite_number p{
     margin: 0;
@@ -45,16 +122,14 @@
     display: block;
 }
 .notification_container .notification_options{
-    margin-top: 24.900px;
     display: flex;
     align-items: center;
 }
-.notification_container .notification_options svg{
+.notification_container .notification_options svg.delite{
     fill: rgb(79, 130, 3) !important;
     font-size: 25px;
     cursor: pointer;
     transition: 0.3s;
-    margin-left: 20px;
 }
 .notification_container .notification_options svg.active{
     fill: #d08e0b !important;
