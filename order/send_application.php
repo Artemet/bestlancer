@@ -29,16 +29,20 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     if ($price_id_row['order_price'] >= 1) {
         if ($price_id_row['order_price'] < $price || $price == 0) {
             header("Location: ../../pages/make_application.php?order_id=$order_id");
-            exit();
+            exit;
         }
     }
     if (preg_match('/[a-zA-Z]/', $price)) {
         header("Location: ../../pages/make_application.php?order_id=$order_id");
-        exit();
+        exit;
     }
     if (mysqli_num_rows($existingResponseResult) === 0) {
         $sql = "INSERT INTO `orders_responses` (`id`, `order_id`, `price`, `time`, `payment_option`, `payment_choice`, `user_message`, `nik`, `orderer_nik`, `order_name`) VALUES (NULL, '$order_id', '$price', '$time', '$payment_option', '$payment_choice', '$user_message', '$nik', '$orderer_nik', '$order_name')";
         $order_query = mysqli_query($bd_connect, $sql);
+        if ($order_query){
+            $notification_add = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `type`) VALUES (NULL, '$order_name', '$order_id', '', '$orderer_nik', '$nik', 'application')";
+            $notification_query = mysqli_query($bd_connect, $notification_add);
+        }
     }
 
     //user_notification
