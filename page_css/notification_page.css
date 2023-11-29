@@ -7,6 +7,10 @@
 .notification_container .notifications p.page{
     display: none;
 }
+.notification_container .notifications_wrapper{
+    display: flex;
+    flex-direction: column-reverse;
+}
 .notification_container .notification{
     position: relative;
     transition: 0.3s;
@@ -66,10 +70,6 @@
 .notification_container .notification_wrapper_block{
     pointer-events: none;
     opacity: 0.7;
-}
-.notification_container .notifications{
-    display: flex;
-    flex-direction: column-reverse;
 }
 .notification_container .header_title{
     display: grid;
