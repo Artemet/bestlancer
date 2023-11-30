@@ -39,6 +39,9 @@
     top: 30px;
     z-index: 1;
 }
+.user_chat .chat_id{
+    display: none;
+}
 .user_chat .companion_options a{
     margin-right: 15px;
 }
@@ -309,6 +312,9 @@
 .user_chat .blocked_chat{
     opacity: 0.6;
 }
+.user_chat .chat_row{
+    margin-bottom: 40px;
+}
 .user_chat .blocked_chat .chat_row{
     pointer-events: none;
 }
@@ -334,13 +340,20 @@
     position: absolute;
     right: 0;
     border-radius: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
     transition: 0.3s;
     opacity: 0;
 }
 .chat_row .message:hover .arrow_options{
     opacity: 1;
+}
+.chat_row .other_user .arrow_options{
+    background-color: rgba(211, 211, 211, 0.73);
+    transition: 0.3s;
+}
+.chat_row .other_user .arrow_options_active{
+    transform: rotate(180deg);
 }
 .chat_row .other_user .arrow_options svg{
     fill: gray !important;
@@ -349,9 +362,6 @@
     fill: black !important;
 }
 .chat_row .my_user .arrow_options{
-    background-color: rgba(211, 211, 211, 0.73);
-}
-.chat_row .other_user .arrow_options{
     background-color: rgba(211, 211, 211, 0.73);
 }
 .chat_row .message p{
