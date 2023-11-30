@@ -327,6 +327,7 @@
 }
 .orders .new_cover p{
     margin: 0;
+    user-select: none;
     font-size: 12px;
     color: white;
 }

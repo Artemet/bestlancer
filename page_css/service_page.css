@@ -29,6 +29,9 @@
     padding-top: 20px;
     display: flex;
 }
+.service_page .service_information_icons{
+    display: flex;
+}
 .service_page .icon_choice .report_icon{
     transition: 0.5s;
 }
@@ -38,12 +41,17 @@
 }
 .service_page .icon_choice svg{
     margin-left: 10px;
-    font-size: 23px;
     cursor: pointer;
     transition: 0.5s;
 }
 .service_page .icon_choice svg:hover{
     fill: tomato !important;
+}
+.service_page .eye svg{
+    height: 20px;
+}
+.service_page svg{
+    font-size: 23px;
 }
 .service_page .user_wrapper a{
     color: rgb(79, 130, 3);

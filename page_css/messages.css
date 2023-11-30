@@ -8,6 +8,7 @@
 .messanger_container{
     display: grid;
     grid-template-columns: auto 1fr;
+    height: 60vh;
 }
 .messanger_users::-webkit-scrollbar {
     background-color: lightgray;
@@ -148,7 +149,8 @@
     width: 100%;
     transition: 0.5s;
     position: absolute;
-    bottom: 0;
+    /* top: 505px; */
+    /* bottom: 0; */
     border-top: 1px solid rgb(79, 130, 3);
     display: grid;
     grid-gap: 5px;
@@ -301,6 +303,8 @@
 .user_chat .chat{
     height: 425px;
     overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 .user_chat .chat::-webkit-scrollbar {
     background-color: lightgray;
