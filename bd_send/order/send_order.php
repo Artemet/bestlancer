@@ -49,5 +49,9 @@ $final_options_resolt = array_search($final_order_category, $final_options) + 1;
 $nik = $_SESSION["nik"];
 $sql = "INSERT INTO `orders` (`id`, `order_name`, `order_information`, `file_path`, `order_price`, `order_email`, `type`, `main_category`, `medium_category`, `final_category`, `date`, `nik`) VALUES (NULL, '$order_name', '$order_information', '$file_name', '$order_price', '$order_email', '$order_type', '$main_category_resolt', '$medium_options_resolt', '$final_options_resolt', '$date', '$nik')";
 $query = mysqli_query($bd_connect, $sql);
-header("location: ../../pages/tasks.php");
+if ($query) {
+    header("location: ../../pages/my_orders.php");
+} else {
+    header("location: ../../pages/tasks.php");
+}
 ?>
