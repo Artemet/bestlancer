@@ -47,6 +47,10 @@
     overflow: hidden;
     transition: 0.5s;
 }
+.settings_container .background_options{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 .settings_container .setting_sub_none{
     border: none;
     height: 0 !important;
@@ -58,10 +62,10 @@
     font-size: 16px;
     user-select: none;
 }
-.settings_container .setting_sub form div{
+.settings_container .setting_sub div{
     margin-top: 20px;
 }
-.settings_container .setting_sub form button{
+.settings_container .setting_sub button{
     padding: 5px;
     margin-top: 20px;
     font-size: 17px;
@@ -73,7 +77,7 @@
     border: 3px solid #d08e0b;
     transition: 0.5s;
 }
-.settings_container .setting_sub form button:hover{
+.settings_container .setting_sub button:hover{
     opacity: 0.7;
 }
 .settings_container .menu_header{
@@ -127,4 +131,35 @@
 }
 .settings_container .payment_value svg{
     padding-right: 20px;
+}
+.settings_container .background_options .background_option{
+    height: 200px;
+    overflow: hidden;
+    margin: 0;
+    width: 300px;
+}
+.settings_container .background_options .option{
+    width: fit-content;
+    transition: 0.5s;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.settings_container .background_options .option:hover{
+    background-color: #d08e0b1f;
+}
+.settings_container .background_options .active_option{
+    background-color: #d08e0b1f;
+}
+.settings_container .background_options .checkbox{
+    text-align: center;
+    pointer-events: none;
+}
+.settings_container .background_options img{
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+.settings_container p.active_bg{
+    display: none;
 }

@@ -1,5 +1,5 @@
 /* freelance_tasks_style */
-.tasks_container{
+.tasks_container .tasks_wrapper{
     display: grid;
     grid-template-columns: auto 1fr;
     grid-gap: 20px;
@@ -7,6 +7,81 @@
 .tasks_container .tasks{
     z-index: 100;
     position: relative;
+}
+.tasks_container .application_left_information{
+    display: flex;
+}
+.tasks_container .application_left_information .number_application{
+    margin: 0 3.5px;
+}
+.tasks_container .page_choice{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-gap: 10px;
+    height: 50px;
+}
+.tasks_container .page_choice a{
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    transition: 0.5s;
+}
+.tasks_container .page_choice a:hover{
+    color: #d08e0b;
+}
+.tasks_container .user_order_information{
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.tasks_container .application_level_end{
+    opacity: 0.7;
+}
+.tasks_container .applicated_wrapper{
+    display: flex;
+    align-items: center;
+}
+.tasks_container .applicated_wrapper svg{
+    fill: #2fb215 !important;
+}
+.tasks_container .applicated_wrapper p{
+    margin: 0 !important;
+    font-size: 15px !important;
+    padding-left: 5px;
+}
+.tasks_container .user_order_information .return_date{
+    padding-left: 15px;
+    margin-left: 15px;
+    border-left: 2px solid lightgray;
+}
+.tasks_container .application_infromation{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.tasks_container .user_order_information p{
+    margin: 0;
+}
+.tasks_container .user_order_information .application_line{
+    width: 100%;
+    margin-top: 10px;
+    height: 5px;
+    background-color: lightgray;
+    border-radius: 50px;
+}
+.tasks_container .user_order_information .in_line{
+    height: 5px;
+    border-radius: 50px;
+    background-color: rgb(79, 130, 3);
 }
 .tasks_container .make_order{
     background-color: white;
@@ -146,7 +221,6 @@
 .tasks_container .make_order .link_sub{
     overflow: hidden;
     padding-left: 8px;
-    transition: 0.5s;
     border-left: 2px solid rgb(79, 130, 3);
 }
 .tasks_container .make_order .link_sub a{
@@ -318,6 +392,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 1;
     margin-right: 14px;
     padding: 5px;
     background-color: rgb(79, 130, 3);
@@ -358,9 +433,7 @@
     left: 0;
     right: 0;
     top: 40%;
-    padding-left: 190px;
     text-align: center;
-    display: none;
 }
 .orders .order a.more_tz_link{
     color: rgb(79, 130, 3);

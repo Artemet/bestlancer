@@ -5,9 +5,17 @@
     margin-bottom: 32px;
     border-bottom: 3px solid rgb(79, 130, 3);
 }
-.my_orders .orders{
-    display: flex;
-    flex-direction: column-reverse;
+.my_orders .mobile_page_choice{
+    display: none;
+    grid-gap: 5px;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.my_orders .mobile_page_choice a{
+    text-decoration: none;
+    color: black;
 }
 .my_orders .new_cover{
     position: absolute;

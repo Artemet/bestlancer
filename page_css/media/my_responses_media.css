@@ -2,7 +2,6 @@
 @media only screen and (max-width: 908px){
     .my_responses .users_order{
         border-right: none;
-        justify-content: center;
         padding: 0;
         margin: 0;
     }
@@ -23,6 +22,16 @@
         align-items: normal;
     }
 }
+@media only screen and (max-width: 558px){
+    .order_information .page_choice{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+    }
+    .order_information .page_choice div{
+        padding: 0 10px;
+    }
+}
 @media only screen and (max-width: 408px){
     .my_responses .response_sub p.comment{
         font-size: 15px;
@@ -34,5 +43,11 @@
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
+    }
+    .order_information .page_choice{
+        display: none;
+    }
+    .my_responses .mobile_page_choice{
+        display: grid;
     }
 }

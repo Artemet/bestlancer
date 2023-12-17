@@ -1,14 +1,41 @@
 /* messages_style */
+body{
+    overflow: hidden;
+}
+.chat_number{
+    display: none;
+}
 .messanger_users{
-    height: 60vh;
-    overflow: auto;
+    height: 65vh;
+    width: 340px;
+    position: relative;
+    overflow-x: hidden;
     background-color: lightgray;
     border-right: 1px solid lightgray;
+}
+.messanger_users .information_line{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    background-color: rgb(171, 186, 148);
+    border-bottom: 1px solid rgb(79, 130, 3);
+}
+.messanger_users .information_line p{
+    margin: 0;
+    font-size: 13px;
+}
+.no_companions{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 43%;
+    text-align: center;
+    opacity: 0.5;
 }
 .messanger_container{
     display: grid;
     grid-template-columns: auto 1fr;
-    height: 60vh;
+    height: 65vh;
 }
 .messanger_users::-webkit-scrollbar {
     background-color: lightgray;
@@ -47,6 +74,9 @@
     margin-right: 15px;
 }
 .user_chat .content{
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 65vh;
     position: relative;
 }
 .messanger_users .message_user{
@@ -145,12 +175,8 @@
     width: 100%;
 }
 .user_chat .form_children_wrapper{
-    padding: 10px 0;
     width: 100%;
     transition: 0.5s;
-    position: absolute;
-    /* top: 505px; */
-    /* bottom: 0; */
     border-top: 1px solid rgb(79, 130, 3);
     display: grid;
     grid-gap: 5px;
@@ -158,20 +184,16 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
-.user_chat .form_children_wrapper_smile{
-    padding-top: 50px;
-}
 .user_chat .smile_choice{
-    position: absolute;
-    z-index: 1;
     display: flex;
     align-items: center;
-    bottom: 60px;
     width: 100%;
     overflow: auto;
     transition: 0.5s;
     display: none;
-    opacity: 0;
+}
+.user_chat .active_choice{
+    display: block;
 }
 .user_chat .smile_choice::-webkit-scrollbar{
     background-color: white;
@@ -301,8 +323,9 @@
     margin-right: 10px;
 }
 .user_chat .chat{
-    height: 425px;
-    overflow: auto;
+    height: 100%;
+    overflow-x: hidden;
+    background-size: cover;
     display: flex;
     flex-direction: column-reverse;
 }
@@ -315,9 +338,6 @@
 }
 .user_chat .blocked_chat{
     opacity: 0.6;
-}
-.user_chat .chat_row{
-    margin-bottom: 40px;
 }
 .user_chat .blocked_chat .chat_row{
     pointer-events: none;
@@ -338,7 +358,7 @@
     padding: 5px;
     border-radius: 5px;
     margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .chat_row .message .arrow_options{
     position: absolute;
@@ -373,7 +393,7 @@
     font-size: 14px;
 }
 .chat_row .my_user{
-    background-color: rgba(79, 130, 3, 0.34);
+    background-color: rgb(195, 212, 169);
     margin-left: auto;
     margin-right: 10px;
 }

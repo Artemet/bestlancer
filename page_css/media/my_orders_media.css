@@ -1,0 +1,14 @@
+/* my_orders_medias */
+@media only screen and (max-width: 558px){
+    .order_information .page_choice div{
+        padding: 0 10px;
+    }
+}
+@media only screen and (max-width: 408px){
+    .order_information .page_choice{
+        display: none;
+    }
+    .my_orders .mobile_page_choice{
+        display: grid;
+    }
+}

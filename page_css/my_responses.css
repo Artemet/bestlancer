@@ -27,6 +27,18 @@
     transition: 0.5s;
     width: 0;
 }
+.my_responses .mobile_page_choice{
+    display: none;
+    grid-gap: 5px;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.my_responses .mobile_page_choice a{
+    text-decoration: none;
+    color: black;
+}
 .my_responses .pagination a.none_active{
     opacity: 0.5;
     pointer-events: none;

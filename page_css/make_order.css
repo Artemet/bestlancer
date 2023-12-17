@@ -58,9 +58,12 @@
 .make_order_container .form_part{
     display: grid;
 }
+.make_order_container .budget{
+    padding-bottom: 20px;
+}
 .make_order_container .category_header{
     display: grid;
-    grid-template-columns: 1fr auto;
+    /* grid-template-columns: 1fr auto; */
     align-items: center;
 }
 .make_order_container .category_header .restart{
@@ -175,6 +178,10 @@
 .make_order_container button:hover{
     color: #d08e0b;
     border: 2px solid rgb(79, 130, 3);
+}
+.make_order_container button.none_active{
+    pointer-events: none;
+    opacity: 0.7;
 }
 .make_order_container .category_choice{
     border: 2px solid #d08e0b;

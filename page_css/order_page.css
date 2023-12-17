@@ -27,13 +27,30 @@
 .order_page .user_information a span{
     color: #d08e0b;
 }
+.order_page .header{
+    position: relative;
+}
+.order_page .header .copy_icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-top: 20px;
+    padding-right: 30px;
+}
+.order_page .header .copy_icon svg{
+    fill: rgb(79, 130, 3) !important;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.order_page .header .copy_icon svg:hover{
+    opacity: 0.5;
+}
 .order_page .header h2{
     padding-top: 35px;
     font-size: 25px !important;
     border-top: 3px solid #d08e0b;
 }
 .order_page .order_information{
-    border-bottom: 3px solid rgb(79, 130, 3);
     padding-bottom: 16px;
 }
 .order_page .back_page{

@@ -241,15 +241,6 @@
     font-size: 20px;
     padding-right: 50px;
 }
-.user_account .burger_menu{
-    height: 70px;
-    cursor: pointer;
-    transition: 0.5s;
-    transform: rotate(90deg);
-}
-.user_account .burger_menu_animation{
-    transform: rotate(0deg);
-}
 .user_account .menu_include p{
     padding: 10px;
     line-height: 50px;
