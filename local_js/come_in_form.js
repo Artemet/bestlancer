@@ -273,7 +273,6 @@ function value_check() {
     const get_input_family = document.querySelector(".user_container form input.family");
     const get_input_nik = document.querySelector(".user_container form input.nik");
     const get_input_password = document.querySelector(".user_container form input.password_input");
-    const get_input_code_word = document.querySelector(".user_container form input.code_word");
     const get_input_price = document.querySelector(".user_container form input.money");
     let hasErrors = false;
     // email
@@ -340,14 +339,6 @@ function value_check() {
     } else {
       get_warning[4].innerHTML = "";
       get_eye[0].style.marginTop = 10 + "px";
-    }
-
-    //code_word
-    if (get_input_code_word.value.length === 0){
-      get_warning[5].innerHTML = "Введите ваше кодовое слово";
-      hasErrors = true;
-    } else{
-      get_warning[5].innerHTML = "";
     }
 
     //hour_price

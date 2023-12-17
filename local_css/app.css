@@ -55,7 +55,7 @@ textarea{
 }
 /* warning_text */
 u.warning{
-    color: red;
+    color: tomato;
 }
 /* input_text */
 b.input_name{
