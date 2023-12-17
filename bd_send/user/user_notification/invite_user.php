@@ -1,6 +1,11 @@
 <?php
 session_start();
 include "../../database_connect.php";
+if (!isset($_SESSION["nik"])) {
+    header("Location: ../../../pages/home.php");
+    exit;
+}
+$my_nik = $_SESSION["nik"];
 if (isset($_GET['order_id']) && is_numeric($_GET['order_id']) && isset($_SESSION["nik"])) {
     $order_id = $_GET['order_id'];
     $order_sql = "SELECT * FROM `orders` WHERE `id` = '$order_id'";
@@ -12,6 +17,18 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id']) && isset($_SESSION
         "invited_user" => $_POST["user_nik"],
         "my_user" => $_SESSION["nik"]
     ];
+
+    //doule_send_check
+    $invites_count = 0;
+    $invite_check = "SELECT * FROM `notifications` WHERE `type` = 'invite' AND `order_information` = '$order_id' AND `nik` = '$my_nik'";
+    $invite_query = mysqli_query($bd_connect, $invite_check);
+    while ($invite_resolt = mysqli_fetch_assoc($invite_query)) {
+        $invites_count++;
+    }
+    if ($invites_count >= 2) {
+        header("Location: ../../../pages/home.php");
+        exit;
+    }
 
     $invite_sql = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `type`) VALUES (NULL, ?, ?, '', ?, ?, 'invite')";
     $invite_query = mysqli_prepare($bd_connect, $invite_sql);

@@ -12,7 +12,6 @@ if ($duplicate_count > 0) {
     //$name = $_POST["user_name"];
     //$family = $_POST["user_family"];
     //$password = $_POST["user_password"];
-    $code_word = $_POST["user_code_word"];
     //$country = $_POST["user_country"];
     //$age = $_POST["user_age"];
     $skills = $_POST["user_skills"];
@@ -22,7 +21,7 @@ if ($duplicate_count > 0) {
     //$price = $_POST["user_price"];
     $icon_path = "user.png";
 
-    $sql = "INSERT INTO `user_registoring` (`id`, `email`, `name`, `family`, `nik`, `password`, `code_word`, `country`, `age`, `skills`, `about`, `projects`, `work_time`, `price`, `icon_path`, `status`) VALUES (NULL, '$email', '$name', '$family', '$nik', '$password', '$code_word', '$country', '$age', '$skills', '$about', '$projects', '$time', '$price', '$icon_path', 'offline')";
+    $sql = "INSERT INTO `user_registoring` (`id`, `email`, `name`, `family`, `nik`, `password`, `country`, `age`, `skills`, `about`, `projects`, `work_time`, `price`, `icon_path`, `status`) VALUES (NULL, '$email', '$name', '$family', '$nik', '$password', '$country', '$age', '$skills', '$about', '$projects', '$time', '$price', '$icon_path', 'offline')";
     $query = mysqli_query($bd_connect, $sql);
 }
 ?>

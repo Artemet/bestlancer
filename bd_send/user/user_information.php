@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $user_country = $_POST["country"];
         $user_age = $_POST["age"];
-        if ($_SESSION["role"] == "seller") {
+        if ($user_resolt["role"] == "seller") {
             $user_price = $_POST["hour_price"];
             $user_time = $_POST["start_time"];
         }
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_nik = $_SESSION["nik"];
         $user_country = mysqli_real_escape_string($bd_connect, $user_country);
         $user_age = mysqli_real_escape_string($bd_connect, $user_age);
-        if ($_SESSION["role"] == "seller") {
+        if ($user_resolt["role"] == "seller") {
             $user_price = mysqli_real_escape_string($bd_connect, $user_price);
             $user_time = mysqli_real_escape_string($bd_connect, $user_time);
         }
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_nik = mysqli_real_escape_string($bd_connect, $user_nik);
 
         $sql = null;
-        if ($_SESSION["role"] == "seller") {
+        if ($user_resolt["role"] == "seller") {
             $sql = "UPDATE `user_registoring` SET `country` = '$user_country', `age` = '$user_age', `work_time` = '$user_time', `price` = '$user_price', `about` = '$about_user', `icon_path` = '$file_name' WHERE `nik` = '$user_nik'";
         } else {
             $sql = "UPDATE `user_registoring` SET `country` = '$user_country', `age` = '$user_age', `about` = '$about_user', `icon_path` = '$file_name' WHERE `nik` = '$user_nik'";
