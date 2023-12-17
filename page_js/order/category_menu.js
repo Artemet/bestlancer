@@ -266,6 +266,7 @@ function category_menu(){
             let input_id = null;
             item.addEventListener("click", function () {
                 input_id = item.id;
+                console.log(true);
                 const get_option_block = document.querySelector(".category_options");
                 const get_options = get_option_block.querySelectorAll(".category_option");
                 document.querySelector(".make_order_container .category_part input.category_input").click();
@@ -293,6 +294,7 @@ function category_menu(){
                     get_options.forEach( (item) => {
                         item.addEventListener("click", function () {
                             input_temp = 2;
+                            console.log(true);
                             new_input();
                             input();
                             if (local_block_id === '1'){

@@ -1,4 +1,13 @@
 //check_profile
+function modal_include(){
+    const get_modal = document.querySelectorAll(".change_profile_container");
+    if (get_modal.length >= 1){
+        return true;
+    } else{
+        return false;
+    }
+}
+
 function check_profile(){
     const get_check_button = document.querySelector(".change_profile form p.click");
     get_check_button.addEventListener('click', function (){
@@ -27,4 +36,22 @@ function check_profile(){
         }
     });
 }
-check_profile();
+//delite_icon
+function delite_icon(){
+    $('svg.delite_icon').on("click", function (){
+        const confirm_ask = confirm("Вы действительно хотите удалить аватарку?");
+        if (confirm_ask){
+            $.ajax({
+                url: "../bd_send/user/delete_icon.php",
+            })
+                .done(function (){
+                    $('.change_profile .img_change img').attr("src", "../bd_send/user/user_icons/user.png");
+                });
+        }
+    });
+}
+//script_resolt
+if (modal_include() === true){
+    check_profile();
+    delite_icon();
+}

@@ -16,7 +16,6 @@ function role_menu(){
     });
     //option_click_script
     get_input_options.forEach( (item) => {
-        const get_option_text = item.querySelector("p");
         item.addEventListener("click", function (){
             const get_role_input = document.querySelector(".role_input input");
             const get_all_p = document.querySelectorAll(".settings_container .role_input .sub_option p");
@@ -26,6 +25,13 @@ function role_menu(){
             });
             get_option_text.classList.add("active");
             get_role_input.value = get_option_text.innerHTML;
+
+            const role_value = $('.profile_menu input.role_value').val();
+            $.ajax({
+                method: "POST",
+                url: "../bd_send/settings/change_profile.php",
+                data: { role: role_value }
+            });
         });
         if (item.querySelector("p").innerHTML === get_role_input.value){
             item.click();
