@@ -2,6 +2,11 @@
 session_start();
 if (!isset($_SESSION["nik"])) {
     header("Location: home.php");
+} else {
+    include "../bd_send/database_connect.php";
+    if ($user_resolt["role"] == "seller") {
+        header("Location: tasks.php");
+    }
 }
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/make_order.css'>";
@@ -18,19 +23,21 @@ include "../layouts/header_line.php";
             <form action="../bd_send/order/send_order.php" method="post" enctype="multipart/form-data">
                 <div class="form_part">
                     <b class="input_name">Название заказа</b>
-                    <input type="text" name="order_name" class="check_value right_order"
+                    <u class="warning"></u>
+                    <input type="text" name="order_name" class="check_value warning_checkable order_name right_order"
                         placeholder="Введите название вашего заказа">
                 </div>
                 <div class="form_part">
                     <b class="input_name">Описание</b>
-                    <textarea name="order_information" class="check_value right_order"
+                    <u class="warning"></u>
+                    <textarea name="order_information" class="check_value warning_checkable right_order"
                         placeholder="Введите описание вашего заказа" id="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form_part">
                     <b class="input_name">Файл</b>
                     <input type="file" name="file_send" class="right_order">
                 </div>
-                <div class="form_part">
+                <div class="form_part budget">
                     <b class="input_name">Бюджет</b>
                     <div class="checkbox_wrapper">
                         <div class="checkbox_block">
@@ -43,9 +50,12 @@ include "../layouts/header_line.php";
                                 <p>Я хочу указать бюджет</p>
                             </div>
                             <div class="checkbox_sub">
-                                <input type="number" placeholder="Введите сумму" name="order_price"
-                                    class="right_order money_right sub_element">
-                                <span class="sub_element">$</span>
+                                <u class="warning"></u>
+                                <div>
+                                    <input type="number" placeholder="Введите сумму" name="order_price"
+                                        class="right_order money_right sub_element check_value">
+                                    <span class="sub_element">₽</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,6 +113,7 @@ include "../layouts/header_line.php";
                 <div class="form_part category_part">
                     <div class="category_header">
                         <b class="input_name">Категория</b>
+                        <u class="warning"></u>
                         <div class="restart" title="Очистить категорию">
                             <svg xmlns="http://www.w3.org/2000/svg" class="rubbish" height="1em"
                                 viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -165,7 +176,7 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
                 <div class="button_wrapper">
-                    <button>Разместить задачу</button>
+                    <button class="none_active">Разместить задачу</button>
                 </div>
             </form>
         </div>

@@ -77,7 +77,7 @@ include "../layouts/header_line.php";
                 <div>
                     <input type="number" name="service_price" class="right_in" min="5"
                         placeholder="Введите среднию цену услуги">
-                    <span class="dolar">$</span>
+                    <span class="dolar">₽</span>
                 </div>
             </div>
             <div class="button_wrapper">

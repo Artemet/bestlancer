@@ -2,8 +2,11 @@
 session_start();
 if (!isset($_SESSION["nik"])) {
     header("Location: home.php");
+} else {
+    $my_nik = $_SESSION["nik"];
 }
 include "../layouts/header.php";
+include "../bd_send/database_connect.php";
 echo "<link rel='stylesheet' href='../page_css/settings.css'>";
 echo "<title>О бирже Bestlancer</title>";
 include "../layouts/header_line.php";
@@ -27,7 +30,7 @@ include "../layouts/header_line.php";
                         </svg>
                     </div>
                 </div>
-                <div class="setting_sub setting_sub_none">
+                <div class="setting_sub">
                     <form action="../bd_send/settings/change_password.php" method="post">
                         <div>
                             <h3>Старый пароль</h3>
@@ -43,7 +46,7 @@ include "../layouts/header_line.php";
                     </form>
                 </div>
             </div>
-            <div class="setting_option normal_option menu_option">
+            <div class="setting_option normal_option menu_option profile_menu">
                 <div class="menu_header">
                     <div>
                         <a>Профиль</a>
@@ -56,46 +59,39 @@ include "../layouts/header_line.php";
                         </svg>
                     </div>
                 </div>
-                <div class="setting_sub setting_sub_none">
-                    <form action="../bd_send/settings/change_profile.php" method="post">
-                        <div>
-                            <h3>Email</h3>
-                            <input type="text" name="email" value="<?= $_SESSION["email"]; ?>" class="right_in"
-                                placeholder="Введите ваш email">
-                        </div>
-                        <div class="role_input">
-                            <h3>Роли</h3>
-                            <?php
-                            $role_resolt = "";
-                            $role_arr = array("seller", "buyer");
-                            if ($_SESSION["role"] == $role_arr[0]) {
-                                $role_resolt = "Продавец";
-                            } elseif ($_SESSION["role"] == $role_arr[1]) {
-                                $role_resolt = "Покупатель";
-                            }
-                            ?>
-                            <input type="text" name="role" value="<?= $role_resolt ?>" class="right_in" readonly>
-                            <div class="sub_wrapper">
-                                <div class="sub_menu">
-                                    <div class="sub_option"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                            viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                            <path
-                                                d="M312 24V34.5c6.4 1.2 12.6 2.7 18.2 4.2c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17c-10.9-2.9-21.1-4.9-30.2-5c-7.3-.1-14.7 1.7-19.4 4.4c-2.1 1.3-3.1 2.4-3.5 3c-.3 .5-.7 1.2-.7 2.8c0 .3 0 .5 0 .6c.2 .2 .9 1.2 3.3 2.6c5.8 3.5 14.4 6.2 27.4 10.1l.9 .3c11.1 3.3 25.9 7.8 37.9 15.3c13.7 8.6 26.1 22.9 26.4 44.9c.3 22.5-11.4 38.9-26.7 48.5c-6.7 4.1-13.9 7-21.3 8.8V232c0 13.3-10.7 24-24 24s-24-10.7-24-24V220.6c-9.5-2.3-18.2-5.3-25.6-7.8c-2.1-.7-4.1-1.4-6-2c-12.6-4.2-19.4-17.8-15.2-30.4s17.8-19.4 30.4-15.2c2.6 .9 5 1.7 7.3 2.5c13.6 4.6 23.4 7.9 33.9 8.3c8 .3 15.1-1.6 19.2-4.1c1.9-1.2 2.8-2.2 3.2-2.9c.4-.6 .9-1.8 .8-4.1l0-.2c0-1 0-2.1-4-4.6c-5.7-3.6-14.3-6.4-27.1-10.3l-1.9-.6c-10.8-3.2-25-7.5-36.4-14.4c-13.5-8.1-26.5-22-26.6-44.1c-.1-22.9 12.9-38.6 27.7-47.4c6.4-3.8 13.3-6.4 20.2-8.2V24c0-13.3 10.7-24 24-24s24 10.7 24 24zM568.2 336.3c13.1 17.8 9.3 42.8-8.5 55.9L433.1 485.5c-23.4 17.2-51.6 26.5-80.7 26.5H192 32c-17.7 0-32-14.3-32-32V416c0-17.7 14.3-32 32-32H68.8l44.9-36c22.7-18.2 50.9-28 80-28H272h16 64c17.7 0 32 14.3 32 32s-14.3 32-32 32H288 272c-8.8 0-16 7.2-16 16s7.2 16 16 16H392.6l119.7-88.2c17.8-13.1 42.8-9.3 55.9 8.5zM193.6 384l0 0-.9 0c.3 0 .6 0 .9 0z" />
-                                        </svg>
-                                        <p>Продавец</p>
-                                    </div>
-                                    <div class="sub_option"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                            viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                            <path
-                                                d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
-                                        </svg>
-                                        <p>Покупатель</p>
-                                    </div>
+                <div class="setting_sub">
+                    <!-- <form action="../bd_send/settings/change_profile.php" method="post"> -->
+                    <div class="role_input">
+                        <h3>Роли</h3>
+                        <?php
+                        $role_resolt = "";
+                        $role_arr = array("seller", "buyer");
+                        if ($user_resolt["role"] == $role_arr[0]) {
+                            $role_resolt = "Продавец";
+                        } elseif ($user_resolt["role"] == $role_arr[1]) {
+                            $role_resolt = "Покупатель";
+                        }
+                        ?>
+                        <input type="text" name="role" value="<?= $role_resolt ?>" class="right_in role_value" readonly>
+                        <div class="sub_wrapper">
+                            <div class="sub_menu">
+                                <div class="sub_option"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                        viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M312 24V34.5c6.4 1.2 12.6 2.7 18.2 4.2c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17c-10.9-2.9-21.1-4.9-30.2-5c-7.3-.1-14.7 1.7-19.4 4.4c-2.1 1.3-3.1 2.4-3.5 3c-.3 .5-.7 1.2-.7 2.8c0 .3 0 .5 0 .6c.2 .2 .9 1.2 3.3 2.6c5.8 3.5 14.4 6.2 27.4 10.1l.9 .3c11.1 3.3 25.9 7.8 37.9 15.3c13.7 8.6 26.1 22.9 26.4 44.9c.3 22.5-11.4 38.9-26.7 48.5c-6.7 4.1-13.9 7-21.3 8.8V232c0 13.3-10.7 24-24 24s-24-10.7-24-24V220.6c-9.5-2.3-18.2-5.3-25.6-7.8c-2.1-.7-4.1-1.4-6-2c-12.6-4.2-19.4-17.8-15.2-30.4s17.8-19.4 30.4-15.2c2.6 .9 5 1.7 7.3 2.5c13.6 4.6 23.4 7.9 33.9 8.3c8 .3 15.1-1.6 19.2-4.1c1.9-1.2 2.8-2.2 3.2-2.9c.4-.6 .9-1.8 .8-4.1l0-.2c0-1 0-2.1-4-4.6c-5.7-3.6-14.3-6.4-27.1-10.3l-1.9-.6c-10.8-3.2-25-7.5-36.4-14.4c-13.5-8.1-26.5-22-26.6-44.1c-.1-22.9 12.9-38.6 27.7-47.4c6.4-3.8 13.3-6.4 20.2-8.2V24c0-13.3 10.7-24 24-24s24 10.7 24 24zM568.2 336.3c13.1 17.8 9.3 42.8-8.5 55.9L433.1 485.5c-23.4 17.2-51.6 26.5-80.7 26.5H192 32c-17.7 0-32-14.3-32-32V416c0-17.7 14.3-32 32-32H68.8l44.9-36c22.7-18.2 50.9-28 80-28H272h16 64c17.7 0 32 14.3 32 32s-14.3 32-32 32H288 272c-8.8 0-16 7.2-16 16s7.2 16 16 16H392.6l119.7-88.2c17.8-13.1 42.8-9.3 55.9 8.5zM193.6 384l0 0-.9 0c.3 0 .6 0 .9 0z" />
+                                    </svg>
+                                    <p>Продавец</p>
+                                </div>
+                                <div class="sub_option"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                        viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+                                    </svg>
+                                    <p>Покупатель</p>
                                 </div>
                             </div>
                         </div>
-                        <button>Сохранить</button>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="setting_option normal_option menu_option">
@@ -111,13 +107,13 @@ include "../layouts/header_line.php";
                         </svg>
                     </div>
                 </div>
-                <div class="setting_sub setting_sub_none">
+                <div class="setting_sub">
                     <form action="../bd_send/settings/payment_option.php" method="post">
                         <?php
                         $payment_information_arr = array("", "");
-                        if (!empty($_SESSION["payment_methods"])) {
-                            $payment_information_arr[0] = explode(',', $_SESSION["payment_methods"])[0];
-                            $payment_information_arr[1] = explode(',', $_SESSION["payment_methods"])[1];
+                        if (!empty($user_resolt["payment_methods"])) {
+                            $payment_information_arr[0] = explode(',', $user_resolt["payment_methods"])[0];
+                            $payment_information_arr[1] = explode(',', $user_resolt["payment_methods"])[1];
                         }
                         ?>
                         <div class="payment_value">
@@ -198,6 +194,80 @@ include "../layouts/header_line.php";
                     </form>
                 </div>
             </div>
+            <div class="setting_option normal_option menu_option">
+                <div class="menu_header">
+                    <div>
+                        <a>Мессенджер</a>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                            viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="setting_sub">
+                    <div class="background_choice">
+                        <!-- chat_bg -->
+                        <?php
+                        $bg_sql = "SELECT `chat_bg` FROM `user_registoring` WHERE `nik` = '$my_nik'";
+                        $bg_query = mysqli_query($bd_connect, $bg_sql);
+                        $bg_resolt = mysqli_fetch_assoc($bg_query)['chat_bg'];
+                        ?>
+                        <p class="active_bg">
+                            <?= $bg_resolt ?>
+                        </p>
+                        <div>
+                            <h3>Фон чатов</h3>
+                        </div>
+                        <div class="background_options">
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/normal_backgroud.jpg" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/background2.jpg" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/background3.jpg" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/background4.png" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/background5.jpg" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                            <div class="option">
+                                <div class="background_option"><img
+                                        src="../bd_send/user/messanger/chat_background/background6.png" alt=""
+                                        draggable="false">
+                                </div>
+                                <div class="checkbox"><input type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -208,6 +278,7 @@ include "../layouts/footer.php";
 <script src="../page_js/user/settings/role_menu.js"></script>
 <script src="../page_js/user/settings/phone_mask.js"></script>
 <script src="../page_js/user/settings/card_mask.js"></script>
+<script src="../page_js/user/settings/chat_background.js"></script>
 </body>
 
 </html>

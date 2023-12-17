@@ -8,7 +8,7 @@ include "../layouts/header.php";
 <link rel="stylesheet" href="../page_css/modal_css/star_modal.css">
 <link rel="stylesheet" href="../local_css/media/star_modal_media.css">
 <?php
-echo "<title>Bestlancer</title>";
+echo "<title>Фриланс биржа Bestlancer</title>";
 include "../layouts/modal/star_option.php";
 include "../layouts/header_line.php";
 ?>

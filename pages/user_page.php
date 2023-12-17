@@ -22,7 +22,6 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
             }
         }
         echo "<title>Профиль " . $user['nik'] . "</title>";
-        include "../layouts/modal/change_information.php";
         include "../layouts/modal/personal_order.php";
         include "../layouts/modal/chat_start.php";
         include "../layouts/header_line.php";
@@ -31,7 +30,7 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         echo "<title>Пользователь не найден!</title>";
         include "../layouts/header_line.php";
         include "../bd_send/warnings/rong_user.php";
-        exit();
+        exit;
     }
     $user_nik = $user['nik'];
     $user_block_resolt = null;
@@ -301,7 +300,6 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     <div>
                         <h2>Мои умения</h2>
                     </div>
-                    <div><img src="../res/burger_menu2.png" alt="" draggable="false" class="burger_menu"></div>
                 </div>
                 <div class="skill_wrapper sub_menu">
                     <div class="include">
@@ -417,7 +415,7 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                                     </div>
                                     <div class="under_line"></div>
                                     <div>
-                                        <span class="price">' . $row['price'] . '$</span>
+                                        <span class="price">' . $row['price'] . '₽</span>
                                     </div>
                                 </div>
                             </a>
@@ -441,7 +439,6 @@ include "../layouts/footer.php";
 <script src="../page_js/user/edit_menu.js"></script>
 <script src="../page_js/user/change_profile.js"></script>
 <script src="../page_js/user/option_script.js"></script>
-<script src="../page_js/user/menu.js"></script>
 <script src="../page_js/user/time_script.js"></script>
 <?php
 if ($user['role'] == "seller") {

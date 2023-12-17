@@ -105,12 +105,14 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                 </p>
                 <div class="notifications_wrapper">
                     <?php
+                    $notification_temp = 0;
                     $sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik'";
                     $query = mysqli_query($bd_connect, $sql);
                     $notificationBlocks = array();
 
                     if ($page >= 1):
                         while ($row = mysqli_fetch_assoc($page_query)):
+                            $notification_temp++;
                             $order_id = $row['id'];
                             $nik = $row['nik'];
                             $order_type = $row['type'];
@@ -227,6 +229,9 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                             endif;
                         endwhile;
                     endif;
+                    if ($notification_temp == 0) {
+                        echo "<p>Нет увидомлений</p>";
+                    }
                     ?>
                 </div>
                 <script>

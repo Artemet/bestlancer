@@ -6,6 +6,7 @@ if (!isset($_SESSION["nik"])) {
 }
 $user_nik = $_SESSION["nik"];
 include "../bd_send/database_connect.php";
+$chat_bg = $user_resolt['chat_bg'];
 //notification_remove
 $notification_sql = "UPDATE `user_notification` SET `messages` = 0 WHERE `nik` = '$user_nik'";
 $notification_query = mysqli_query($bd_connect, $notification_sql);
@@ -18,9 +19,18 @@ include "../layouts/header_line.php";
 <div class="container messanger_container">
     <div class="messanger_users">
         <?php
+        $users_temp = 0;
         $user_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$user_nik' OR `nik_two` = '$user_nik'";
         $user_query = mysqli_query($bd_connect, $user_sql);
         while ($user_row = mysqli_fetch_assoc($user_query)):
+            $users_temp++;
+            if ($users_temp == 1):
+                ?>
+                <div class="information_line">
+                    <p>Все чаты</p>
+                </div>
+                <?php
+            endif;
             ?>
             <a href="?chat_id=<?= $user_row['chat_id'] ?>" class="chat_link">
                 <div class="message_user">
@@ -68,6 +78,9 @@ include "../layouts/header_line.php";
             </a>
             <?php
         endwhile;
+        if ($users_temp <= 0) {
+            echo "<div class='no_companions'><p>Нет собеседников</p></div>";
+        }
         ?>
     </div>
     <div class="user_chat">
@@ -113,8 +126,18 @@ include "../layouts/header_line.php";
         }
         ?>
         <div class="companion_options">
+            <div title="Закрепить пользователя">
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="none_save" title="Сохранить" height="1em"
+                        viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path
+                            d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
             <div title="Перезагрузить чат">
-                <a href="?chat_id=<?= $chat_id ?>" class="reload_page_icon">
+                <a href="?chat_id=<?= $chat_id_resolt ?>" class="reload_page_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                         viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                         <path
@@ -130,19 +153,7 @@ include "../layouts/header_line.php";
                 </svg>
             </div>
         </div>
-        <script>
-            //delite_comformation
-            $("svg.delite").on("click", function () {
-                const user_confirm = confirm("Вы уверины что хотите удалить пользователя <?= $companion_nik ?>?");
-                if (user_confirm) {
-                    window.location.href = "../bd_send/user/messanger/delete_chat.php?chat_id=<?= $chat_id ?>";
-                }
-            });
-        </script>
         <div class="content">
-            <div class="chat_id">
-                <?= $chat_id ?>
-            </div>
             <div class="user_line">
                 <div class="message_user">
                     <div class="user_child">
@@ -156,11 +167,19 @@ include "../layouts/header_line.php";
                             <p>
                                 <?= $companion_nik ?>
                             </p>
+                            <div class="chat_number">
+                                <?php
+                                $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' AND `nik_two` = '$companion_nik') OR (`nik_one` = '$companion_nik' AND `nik_two` = '$user_nik')";
+                                $chat_id_query = mysqli_query($bd_connect, $chat_id_sql);
+                                $chat_id_resolt = mysqli_fetch_assoc($chat_id_query)['chat_id'];
+                                echo "$chat_id_resolt";
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="chat <?= $block_class ?>">
+            <div class="chat <?= $block_class ?>" style='background-image: url("<?= $chat_bg ?>");'>
                 <div class="chat_wrapper">
                     <?php
                     if (isset($_SESSION["nik"])):
@@ -223,8 +242,6 @@ include "../layouts/header_line.php";
             <?php
             if ($user_block !== true):
                 ?>
-                <!-- <form action="../bd_send/user/message_system.php?chat_id=<?= $_GET['chat_id'] ?>" method="post"
-                enctype="multipart/form-data"> -->
                 <div class="smile_choice">
                     <div class="smiles">
                         <div>😀</div>
@@ -470,7 +487,6 @@ include "../layouts/header_line.php";
                     </div>
                     <div><button>Отправить</button></div>
                 </div>
-                <!-- </form> -->
                 <?php
             endif;
             if ($user_block == true) {
@@ -481,12 +497,18 @@ include "../layouts/header_line.php";
     </div>
 </div>
 <?php
-include "../layouts/footer.php";
+//include "../layouts/footer.php";
 ?>
-<script src="../page_js/messanger/chat_choice.js"></script>
+<script src="../page_js/messanger/chat_choice.js" type="module"></script>
 <script src="../page_js/messanger/chat.js"></script>
 <script src="../page_js/messanger/send_menu.js"></script>
-<script src="../page_js/messanger/smile_add.js"></script>
+<script src="../page_js/messanger/smile_add.js" type="module"></script>
+
+<script src="../local_js/scroll.js"></script>
+<script src="../local_js/menu.js"></script>
+<script src="../local_js/come_in_form.js"></script>
+<script src="../local_js/app.js"></script>
+<script src="../local_js/scroll_time.js"></script>
 </body>
 
 </html>

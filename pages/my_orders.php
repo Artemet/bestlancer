@@ -7,6 +7,7 @@ include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/order_information.css'>";
 echo "<link rel='stylesheet' href='../page_css/my_orders.css'>";
+echo "<link rel='stylesheet' href='../page_css/media/my_orders_media.css'>";
 echo "<title>Мои заказы</title>";
 include "../layouts/header_line.php";
 ?>
@@ -20,6 +21,10 @@ include "../layouts/header_line.php";
             <a href="my_orders.php" class="active">Мои заказы</a>
             <div class="under_line"></div>
         </div>
+    </div>
+    <div class="mobile_page_choice">
+        <div><a href="my_responses.php">Мои отклики</a></div>
+        <div><a href="my_orders.php">Мои заказы</a></div>
     </div>
     <div class="header">
         <div class="header_title">
@@ -36,7 +41,7 @@ include "../layouts/header_line.php";
 
                 $start_from = ($page - 1) * $orders_per_page;
 
-                $sql = "SELECT * FROM orders WHERE nik = '$user_nik' LIMIT $start_from, $orders_per_page";
+                $sql = "SELECT * FROM orders WHERE nik = '$user_nik' ORDER BY id DESC LIMIT $start_from, $orders_per_page";
                 $query = mysqli_query($bd_connect, $sql);
 
                 while ($row = mysqli_fetch_assoc($query)):
@@ -80,7 +85,7 @@ include "../layouts/header_line.php";
                             if ($row['order_price'] <= 0) {
                                 echo '<p>Цена договорная</p>';
                             } else {
-                                echo '<span>' . $row['order_price'] . '$</span>';
+                                echo '<span>' . $row['order_price'] . '₽</span>';
                             }
                             echo '</div>
                 </div>';

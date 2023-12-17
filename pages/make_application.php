@@ -1,9 +1,9 @@
 <?php
 session_start();
-if ($_SESSION["role"] == "buyer") {
+include "../bd_send/database_connect.php";
+if ($user_resolt["role"] == "buyer") {
     header("Location: home.php");
 }
-include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/make_application.css'>";
 $nik = $_SESSION["nik"];
@@ -48,82 +48,99 @@ include "../layouts/header_line.php";
             </h2>
         </div>
         <div class="make_application">
-            <form action="<?= "../bd_send/order/send_application.php?order_id=" . $order_id . "" ?>" method="post">
-                <u class="warning"></u>
-                <?php
-                if ($order_price == 0) {
-                    echo "<p class='max_price'>Заказчик поставил договорную цену</p>";
-                } else {
-                    echo "<p class='max_price'>Заказчик указал бюджет: <b class='price'>$order_price</b><b>$</b></p>";
-                }
+            <?php
+            //block_check
+            $user_blocked = false;
+            $blocking_orderer = $order['nik'];
+            $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = '$nik' AND `nik_two` = '$blocking_orderer') OR (`nik_one` = '$blocking_orderer' AND `nik_two` = '$nik')) AND `status` = 'block'";
+            $block_query = mysqli_query($bd_connect, $block_sql);
+            while ($block_resolt = mysqli_fetch_assoc($block_query)) {
+                $user_blocked = true;
+            }
+            if ($user_blocked == true) {
+                echo "<p>Заказ недоступен</p>";
+            }
+            if ($user_blocked == false):
                 ?>
-                <div class="part_wrapper">
-                    <div>
-                        <div class="application_price application_information">
-                            <div>
-                                <?php
-                                if ($order_price == 0) {
-                                    echo "<input type='number' name='price' min='5' class='right_in'
+                <form action="<?= "../bd_send/order/send_application.php?order_id=" . $order_id . "" ?>" method="post">
+                    <u class="warning"></u>
+                    <?php
+                    if ($order_price == 0) {
+                        echo "<p class='max_price'>Заказчик поставил договорную цену</p>";
+                    } else {
+                        echo "<p class='max_price'>Заказчик указал бюджет: <b class='price'>$order_price</b><b>₽</b></p>";
+                    }
+                    ?>
+                    <div class="part_wrapper">
+                        <div>
+                            <div class="application_price application_information">
+                                <div>
+                                    <?php
+                                    if ($order_price == 0) {
+                                        echo "<input type='number' name='price' min='5' class='right_in'
                                         placeholder='Цена'>";
-                                } else {
-                                    echo "<input type='number' name='price' min='5' max='$order_price' class='right_in'
+                                    } else {
+                                        echo "<input type='number' name='price' min='5' max='$order_price' class='right_in'
                                         placeholder='Цена'>";
-                                }
-                                ?>
+                                    }
+                                    ?>
+                                </div>
+                                <div>
+                                    <span>₽</span>
+                                </div>
                             </div>
-                            <div>
-                                <span>$</span>
+                            <div class="application_time application_information">
+                                <div>
+                                    <input type="number" name="time" min="1" class="right_in" placeholder="Сроки">
+                                </div>
+                                <div>
+                                    <p>суток</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="application_time application_information">
-                            <div>
-                                <input type="number" name="time" min="1" class="right_in" placeholder="Сроки">
+                        <div>
+                            <div class="payment_option_choice">
+                                <p>Выберете способ оплаты <span class="arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                                            height="1em"
+                                            viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                            <path
+                                                d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z" />
+                                        </svg></span></p>
+                                <div class="option_sub">
+                                    <div class="option">
+                                        <input type="checkbox">
+                                        <p>QIWI Кошелек</p>
+                                    </div>
+                                    <div class="option">
+                                        <input type="checkbox">
+                                        <p>На рублевую карту Visa/Mastercard/Мир</p>
+                                    </div>
+                                    <div class="option">
+                                        <input type="checkbox">
+                                        <p>На крипто-кошелек USDT TRC20</p>
+                                    </div>
+                                    <input type="text" name="payment_option" class="option_resolt" readonly>
+                                </div>
                             </div>
-                            <div>
-                                <p>суток</p>
+                            <div class="payment_choice">
+                                <div><input type="checkbox"></div>
+                                <div>
+                                    <p>Безопасный платеж обязателен</p>
+                                </div>
+                                <input type="text" name="payment_choice" class="bd_information" readonly>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="payment_option_choice">
-                            <p>Выберете способ оплаты <span class="arrow"><svg xmlns="http://www.w3.org/2000/svg"
-                                        height="1em"
-                                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                        <path
-                                            d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z" />
-                                    </svg></span></p>
-                            <div class="option_sub">
-                                <div class="option">
-                                    <input type="checkbox">
-                                    <p>QIWI Кошелек</p>
-                                </div>
-                                <div class="option">
-                                    <input type="checkbox">
-                                    <p>На рублевую карту Visa/Mastercard/Мир</p>
-                                </div>
-                                <div class="option">
-                                    <input type="checkbox">
-                                    <p>На крипто-кошелек USDT TRC20</p>
-                                </div>
-                                <input type="text" name="payment_option" class="option_resolt" readonly>
-                            </div>
-                        </div>
-                        <div class="payment_choice">
-                            <div><input type="checkbox"></div>
-                            <div>
-                                <p>Безопасный платеж обязателен</p>
-                            </div>
-                            <input type="text" name="payment_choice" class="bd_information" readonly>
-                        </div>
+                    <textarea name="user_message" class="right_in" placeholder="Сообщение заказчику..." id="" cols="30"
+                        rows="10"></textarea>
+                    <div class="form_send_block">
+                        <!-- <p class="form_send">Отправить</p> -->
+                        <button class="form_send">Отправить</button>
                     </div>
-                </div>
-                <textarea name="user_message" class="right_in" placeholder="Сообщение заказчику..." id="" cols="30"
-                    rows="10"></textarea>
-                <div class="form_send_block">
-                    <!-- <p class="form_send">Отправить</p> -->
-                    <button class="form_send">Отправить</button>
-                </div>
-            </form>
+                </form>
+                <?php
+            endif;
+            ?>
         </div>
     </div>
 </div>

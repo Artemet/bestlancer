@@ -6,6 +6,8 @@ if (!isset($_SESSION['nik'])) {
     exit;
 }
 $user_nik = $_SESSION["nik"];
+$user_id = $_SESSION["id"];
+
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/user.css'>";
 echo "<link rel='stylesheet' href='../page_css/modal_css/user_modal.css'>";
@@ -33,7 +35,7 @@ include "../layouts/header_line.php";
         </div>
         <div class="user_information">
             <div class="img">
-                <img src="../bd_send/user/user_icons/<?= $_SESSION["icon_path"]; ?>" alt="" draggable="false">
+                <img src="../bd_send/user/user_icons/<?= $user_resolt["icon_path"]; ?>" alt="" draggable="false">
             </div>
             <div class="information">
                 <div class="name">
@@ -67,42 +69,27 @@ include "../layouts/header_line.php";
                 </div>
                 <u>
                     <?php
-                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                        echo $_SESSION["country"]; // Показывать логин пользователя, если вход выполнен
-                    } else {
-                        echo ""; // Показывать "Гость", если вход не выполнен
-                    }
+                    echo $user_resolt["country"];
                     ?>
                     /
                     <?php
-                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                        echo $_SESSION["age"], " лет"; // Показывать логин пользователя, если вход выполнен
-                    } else {
-                        echo ""; // Показывать "Гость", если вход не выполнен
-                    }
+                    echo $user_resolt["age"];
                     ?>
+                    лет
                 </u>
                 <?php
-                if ($_SESSION["role"] == "seller"):
+                if ($user_resolt == "seller"):
                     ?>
                     <div class="main_information">
                         <b>
                             <?php
-                            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                                echo $_SESSION["price"], "$ час"; // Показывать логин пользователя, если вход выполнен
-                            } else {
-                                echo ""; // Показывать "Гость", если вход не выполнен
-                            }
+                            echo $user_resolt["price"], "$ час";
                             ?>
                         </b>
                         /
                         <b>
                             <?php
-                            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                                echo "начало работы с ", "<span class='time'>", $_SESSION["work_time"], "</span>"; // Показывать логин пользователя, если вход выполнен
-                            } else {
-                                echo ""; // Показывать "Гость", если вход не выполнен
-                            }
+                            echo "начало работы с ", "<span class='time'>", $user_resolt["work_time"], "</span>";
                             ?>
                         </b>
                     </div>
@@ -122,7 +109,7 @@ include "../layouts/header_line.php";
                 <div class="sub_menu">
                     <p onclick="change_information(this)">Изменить информацию о себе</p>
                     <?php
-                    if ($_SESSION["role"] == "seller"):
+                    if ($user_resolt["role"] == "seller"):
                         ?>
                         <a href="add_project.php">
                             <p>Добавить работы в портфолио</p>
@@ -164,7 +151,7 @@ include "../layouts/header_line.php";
                 <p>
                     <?php
                     if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                        echo $_SESSION["about"]; // Показывать логин пользователя, если вход выполнен
+                        echo $user_resolt["about"]; // Показывать логин пользователя, если вход выполнен
                     } else {
                         echo "нет информации"; // Показывать "Гость", если вход не выполнен
                     }
@@ -177,14 +164,13 @@ include "../layouts/header_line.php";
                 <div>
                     <h2>Мои умения</h2>
                 </div>
-                <div><img src="../res/burger_menu2.png" alt="" draggable="false" class="burger_menu"></div>
             </div>
             <div class="skill_wrapper sub_menu">
                 <div class="include">
                     <p class="skill_text">
                         <?php
                         if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                            $skills = explode(" ", $_SESSION["skills"]);
+                            $skills = explode(" ", $user_resolt["skills"]);
                             foreach ($skills as $skill) {
                                 echo "<span>$skill</span> ";
                             }
@@ -222,8 +208,8 @@ include "../layouts/header_line.php";
                                     <div>
                                         <div class="user_information">
                                             <div>
-                                                <img src="../bd_send/user/user_icons/<?= $_SESSION["icon_path"] ?>" alt=""
-                                                    draggable="false">
+                                                <img src="../bd_send/user/user_icons/<?= $user_resolt["icon_path"] ?>"
+                                                    alt="" draggable="false">
                                             </div>
                                             <b class="user_name">
                                                 <?= $row["nik"] ?>
@@ -237,10 +223,10 @@ include "../layouts/header_line.php";
                             </a>
                             <?php
                         endwhile;
-                        if ($project_temp === 0 && $_SESSION["role"] == "buyer") {
+                        if ($project_temp === 0 && $user_resolt["role"] == "buyer") {
                             echo "Нет проектов";
                         }
-                        if ($_SESSION["role"] !== "buyer"):
+                        if ($user_resolt["role"] !== "buyer"):
                             ?>
                             <a href="add_project.php" title="Добавить проект" class="add_project_link">
                                 <div class="project add_project">
@@ -261,10 +247,6 @@ include "../layouts/header_line.php";
             <div class="service_container card_container">
                 <?php
                 $nik = $_SESSION['nik'];
-
-                if (!$bd_connect) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
 
                 $sql = "SELECT * FROM services WHERE nik = '$nik'";
                 $query = mysqli_query($bd_connect, $sql);
@@ -305,7 +287,7 @@ include "../layouts/header_line.php";
                                         </div>
                                         <div class="under_line"></div>
                                         <div>
-                                            <span class="price">' . $row['price'] . '$</span>
+                                            <span class="price">' . $row['price'] . '₽</span>
                                         </div>
                                     </div>
                                 </a>
@@ -327,7 +309,6 @@ include "../layouts/footer.php";
 <script src="../page_js/user/edit_menu.js"></script>
 <script src="../page_js/user/change_profile.js"></script>
 <script src="../page_js/user/option_script.js"></script>
-<script src="../page_js/user/menu.js"></script>
 <script src="../page_js/user/time_script.js"></script>
 <script src="../page_js/user/modal_information.js"></script>
 <script src="../page_js/user/project/project_page.js"></script>

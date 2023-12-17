@@ -22,6 +22,10 @@ include "../layouts/header_line.php";
             <div class="under_line"></div>
         </div>
     </div>
+    <div class="mobile_page_choice">
+        <div><a href="my_responses.php">Мои отклики</a></div>
+        <div><a href="my_orders.php">Мои заказы</a></div>
+    </div>
     <div class="header">
         <div class="header_title">
             <h2>Мои отклики</h2>
@@ -35,7 +39,7 @@ include "../layouts/header_line.php";
                 $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik'";
                 $query = mysqli_query($bd_connect, $sql);
                 //page
-                $responses_per_page = 2;
+                $responses_per_page = 8;
 
                 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -86,8 +90,8 @@ include "../layouts/header_line.php";
                                         </a>
                                     </div>
                                     <?php
-                                    if ($max_price_resolt !== 0) {
-                                        echo "<p class='max_price'>Максимальная цена: <b>$max_price_resolt$</b></p>";
+                                    if ($max_price_resolt != 0) {
+                                        echo "<p class='max_price'>Максимальная цена: <b>$max_price_resolt ₽</b></p>";
                                     } else {
                                         echo "<p class='max_price'>Договорная цена</p>";
                                     }
@@ -118,7 +122,7 @@ include "../layouts/header_line.php";
                     
                     </div>
                         <div>
-                            <span class="main_information">' . $row['price'] . '$</span>
+                            <span class="main_information">' . $row['price'] . '₽</span>
                             <p class="main_information">' . $row['time'] . ' суток</p>
                         </div>
                     </div>

@@ -349,7 +349,7 @@ include "../layouts/header_line.php";
             </div>
         </div>
         <div class="price">
-            <p>К оплате: <b class="price">0</b><b>$</b></p>
+            <p>К оплате: <b class="price">0</b><b>₽</b></p>
         </div>
         <div class="line" style="width: 100%;"></div>
         <div class="button">

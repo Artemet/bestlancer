@@ -782,7 +782,7 @@ include "../layouts/header_line.php";
                     <u class="warning"></u>
                     <div class="price_input">
                         <input type="number" name="user_price" placeholder="Впишите цену" class="right_in">
-                        <div><span>$</span></div>
+                        <div><span>₽</span></div>
                     </div>
                 </div>
                 <div class="post_button">

@@ -1,9 +1,10 @@
 <?php
 session_start();
+include "../bd_send/database_connect.php";
 if (!isset($_SESSION["nik"])) {
     header("Location: home.php");
 } else {
-    if ($_SESSION["role"] !== "seller") {
+    if ($user_resolt["role"] !== "seller") {
         header("Location: home.php");
     }
 }

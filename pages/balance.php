@@ -10,7 +10,7 @@ include "../layouts/header_line.php";
         <div class="header_title">
             <h2>Мой кошелёк</h2>
         </div>
-        <p class="balance">400$</p>
+        <p class="balance">400₽</p>
         <div class="button_choice">
             <div><button title="Пополнить свой кошелёк">Пополнить</button></div>
             <div><button title="Вывести средства со своего кошелёка">Вывести</button></div>

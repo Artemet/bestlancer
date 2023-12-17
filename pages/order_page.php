@@ -14,7 +14,7 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     $sql = "SELECT * FROM orders WHERE id = $order_id";
     $query = mysqli_query($bd_connect, $sql);
     $order = mysqli_fetch_assoc($query);
-    if (isset($_SESSION["nik"])){
+    if (isset($_SESSION["nik"])) {
         if ($order["nik"] === $nik) {
             echo "<link rel='stylesheet' href='../page_css/modal_css/invite_application.css'>";
         }
@@ -36,11 +36,12 @@ echo "<link rel='stylesheet' href='../page_css/order_page.css'>";
 echo "<link rel='stylesheet' href='../page_css/media/order_page_media.css'>";
 echo "<title>$pageTitle</title>";
 include "../layouts/modal/change_information.php";
-if (isset($_SESSION["nik"])){
+if (isset($_SESSION["nik"])) {
     if ($order["nik"] === $nik) {
         include "../layouts/modal/invite_application.php";
     }
 }
+$orderer_nik = $order["nik"];
 $row = mysqli_fetch_assoc($query);
 include "../layouts/header_line.php";
 ?>
@@ -49,6 +50,24 @@ include "../layouts/header_line.php";
         <?= $order_id ?>
     </p>
     <div class="header">
+        <div class="copy_icon"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"
+                viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                <path
+                    d="M352 224H305.5c-45 0-81.5 36.5-81.5 81.5c0 22.3 10.3 34.3 19.2 40.5c6.8 4.7 12.8 12 12.8 20.3c0 9.8-8 17.8-17.8 17.8h-2.5c-2.4 0-4.8-.4-7.1-1.4C210.8 374.8 128 333.4 128 240c0-79.5 64.5-144 144-144h80V34.7C352 15.5 367.5 0 386.7 0c8.6 0 16.8 3.2 23.2 8.9L548.1 133.3c7.6 6.8 11.9 16.5 11.9 26.7s-4.3 19.9-11.9 26.7l-139 125.1c-5.9 5.3-13.5 8.2-21.4 8.2H384c-17.7 0-32-14.3-32-32V224zM80 96c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16H400c8.8 0 16-7.2 16-16V384c0-17.7 14.3-32 32-32s32 14.3 32 32v48c0 44.2-35.8 80-80 80H80c-44.2 0-80-35.8-80-80V112C0 67.8 35.8 32 80 32h48c17.7 0 32 14.3 32 32s-14.3 32-32 32H80z" />
+            </svg></div>
+        <script>
+            $(document).ready(function () {
+                $('.order_page .header .copy_icon svg').click(function () {
+                    var tempTextarea = $('<textarea>');
+                    tempTextarea.val(window.location.href);
+                    $('body').append(tempTextarea);
+                    tempTextarea.select();
+                    document.execCommand('copy');
+                    tempTextarea.remove();
+                    alert("Ссылка скопирована!");
+                });
+            });
+        </script>
         <div class="header_title">
             <?php
             if (isset($_SERVER['HTTP_REFERER'])):
@@ -123,12 +142,56 @@ include "../layouts/header_line.php";
                 }
 
                 if ($user_order === FALSE) {
-                    if (isset($_SESSION["nik"]) && $_SESSION["role"] == "seller") {
+                    if (isset($_SESSION["nik"]) && $user_resolt["role"] == "seller") {
+                        //block_check
+                        $my_nik = $_SESSION["nik"];
+                        $user_blocked = false;
+                        $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = '$my_nik' AND `nik_two` = '$orderer_nik') OR (`nik_one` = '$orderer_nik' AND `nik_two` = '$my_nik')) AND `status` = 'block'";
+                        $block_query = mysqli_query($bd_connect, $block_sql);
+                        while ($block_resolt = mysqli_fetch_assoc($block_query)) {
+                            $user_blocked = true;
+                            $response_class = "ready_application";
+                        }
                         echo '<div class="button_choice">
-                                <div class="' . $response_class . '">
-                                    <a href="make_application.php?order_id=' . $order_id . '"><button>Добавить заявку</button></a>
+                                <div class="' . $response_class . '">';
+                        if ($user_blocked == false) {
+                            //max_date_push
+                            $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = '$my_nik'";
+                            $max_date_query = mysqli_query($bd_connect, $max_date_sql);
+                            $max_date_resolt = mysqli_fetch_assoc($max_date_query)['application_date'];
+
+                            //application_limit_check
+                            $limit_temp = 0;
+                            $limit_sql = "SELECT * FROM `orders_responses` WHERE `nik` = '$my_nik' AND `max_date` = '$max_date_resolt'";
+                            $limit_query = mysqli_query($bd_connect, $limit_sql);
+                            //moment_date
+                            $date = date("Y.m");
+                            $date_result = null;
+                            list($year, $month) = explode(".", $date);
+                            $date_array = array($year, $month);
+
+                            for ($i = 0; $i < count($date_array); $i++) {
+                                if ($i >= 1) {
+                                    $date_result .= ".";
+                                }
+                                $date_result .= sprintf("%02d", $date_array[$i]);
+                            }
+                            while ($limit_resolt = mysqli_fetch_assoc($limit_query)) {
+                                $limit_temp += substr_count($limit_resolt['response_date'], $date_result);
+                            }
+
+                            if ($limit_temp <= 30) {
+                                echo '<a href="make_application.php?order_id=' . $order_id . '"><button>Добавить заявку</button></a>';
+                            } else {
+                                echo '<a href="rates.php"><button>Добавить заявку</button></a>';
+                            }
+                        } else {
+                            echo '<div><button>Добавить заявку</button></div>';
+                            echo '<script>setTimeout( () => {alert("Данный пользователь заблокировал вас!");}, 800);</script>';
+                        }
+                        echo '
                                 </div>
-                                <div><a href="rates.php"><button>Тарифный план</button></a></div>
+                                <div><a href="rates.php" target="_blank"><button>Тарифный план</button></a></div>
                             </div>';
                     }
                 }
@@ -152,7 +215,7 @@ include "../layouts/header_line.php";
                 <b class="order_price">
                     <?= $order['order_price'] ?>
                 </b>
-                <b>$</b>
+                <b>₽</b>
             </span>
         </div>
     </div>
@@ -232,7 +295,7 @@ include "../layouts/header_line.php";
                                     <div class="sub_information">
                                         <div class="part_one part">
                                             <div><p>' . $user_message . '</p></div>
-                                            <div class="user_price"><span>' . $row["price"] . '$</span></div>
+                                            <div class="user_price"><span>' . $row["price"] . '₽</span></div>
                                         </div>
                                         <div class="part_two part">
                                             <div><p>' . $row["time"] . ' суток</p></div>
@@ -256,7 +319,7 @@ include "../layouts/header_line.php";
                         if ($invite_user_temp >= 1) {
                             echo '<div class="invite_text"><p>Приглашён в заказ</p></div>';
                         }
-                        if (isset($_SESSION["nik"])){
+                        if (isset($_SESSION["nik"])) {
                             if ($user_application_name == $_SESSION["name"]) {
                                 echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . ' <b class="my_order_mark">(вы)</b></a>';
                             } else {
@@ -284,7 +347,7 @@ include "../layouts/footer.php";
 if ($user_order === TRUE) {
     echo '<script src="../page_js/order/application_menu.js"></script>';
 }
-if (isset($_SESSION["nik"])){
+if (isset($_SESSION["nik"])) {
     if ($order["nik"] === $_SESSION["nik"]) {
         echo '<script src="../page_js/order/modal/invite_application_modal.js"></script>';
     }
