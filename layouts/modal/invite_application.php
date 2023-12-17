@@ -36,9 +36,8 @@
                     $resolt_icon_path = mysqli_fetch_assoc($icon_query)["icon_path"];
                     //past_acquaintance
                     $row_class = null;
-                    $second_user = $acquaintance_resolt["nik_two"];
                     $past_acquaintance_repeat = false;
-                    $past_acquaintance = "SELECT * FROM `notifications` WHERE `order_nik` = '$second_user' AND `nik` = '$nik' AND `order_information` = '$order_id'";
+                    $past_acquaintance = "SELECT * FROM `notifications` WHERE `order_nik` = '$resolt_nik' AND `nik` = '$nik' AND `order_information` = '$order_id'";
                     $past_acquaintance_query = mysqli_query($bd_connect, $past_acquaintance);
 
                     while ($past_acquaintance_resolt = mysqli_fetch_assoc($past_acquaintance_query)) {

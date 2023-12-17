@@ -44,7 +44,7 @@
                 <h3>Помощь</h3>
                 <div class="links">
                     <a href="../pages/help.php">Помощь</a>
-                    <a href="">Правила сервиса</a>
+                    <a href="../pages/rules.php">Правила сервиса</a>
                     <a href="../pages/support_user.php">Служба поддержки</a>
                 </div>
             </div>

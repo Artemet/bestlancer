@@ -80,7 +80,7 @@
                                 <?php
                                 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                                     echo $_SESSION["nik"];
-                                    $icon_path = $_SESSION["icon_path"];
+                                    $icon_path = $user_resolt["icon_path"];
                                 } else {
                                     echo "Гость";
                                     $icon_path = "user.png";

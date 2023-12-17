@@ -39,7 +39,7 @@
                     <div class="starting_price">
                         <div><input type="number" min="5" name="service_price" value="<?= $service['price'] ?>"
                                 class="right_in" placeholder="Введите начальную ставку"></div>
-                        <div class="money_icon"><span>$</span></div>
+                        <div class="money_icon"><span>₽</span></div>
                     </div>
                 </div>
                 <div>

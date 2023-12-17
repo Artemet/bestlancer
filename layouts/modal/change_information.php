@@ -8,15 +8,10 @@
         </div>
         <form action="../bd_send/user/user_information.php" class="change_information_form" id="userForm" method="post" enctype="multipart/form-data">
             <div class="img_change">
-                <?php
-                include '../bd_send/user/icon_db.php';
-                ?>
                 <div>
                 <div class="file_part">
-                <?php foreach ($result as $img): ?>
-                <?php endforeach; ?>
                 <div class="img" id="selectedIcon">
-                    <img src="../bd_send/user/user_icons/<?= $_SESSION["icon_path"] ?>" draggable="false">
+                    <img src="../bd_send/user/user_icons/<?= $user_resolt["icon_path"] ?>" draggable="false">
                 </div>
                 
                     <div>
@@ -25,7 +20,11 @@
                             <svg xmlns="http://www.w3.org/2000/svg" title="Выбрать изображение" class="file_choice" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#4f8203}</style><path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"/></svg>
                             </div>
                                 <div>
-                                    <button title="Удалить изображение"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#4f8203}</style><path d="M49.7 32c-10.5 0-19.8 6.9-22.9 16.9L.9 133c-.6 2-.9 4.1-.9 6.1C0 150.7 9.3 160 20.9 160h94L140.5 32H49.7zM272 160V32H173.1L147.5 160H272zm32 0H428.5L402.9 32H304V160zm157.1 0h94c11.5 0 20.9-9.3 20.9-20.9c0-2.1-.3-4.1-.9-6.1L549.2 48.9C546.1 38.9 536.8 32 526.3 32H435.5l25.6 128zM32 192l4 32H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H44L64 448c0 17.7 14.3 32 32 32s32-14.3 32-32H448c0 17.7 14.3 32 32 32s32-14.3 32-32l20-160h12c17.7 0 32-14.3 32-32s-14.3-32-32-32h-4l4-32H32z"/></svg></button>
+                                    <!-- <a href="../bd_send/user/delete_icon.php"> -->
+                                        <div title="Удалить изображение">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="delite_icon" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"></path></svg>
+                                        </div>
+                                    <!-- </a> -->
                             </div>
                         </div>
                     </div>
@@ -36,7 +35,7 @@
                     <div class="country_wrapper">
                         <h3>Страна</h3>
                         <u class="warning"></u>
-                        <input type="text" value="<?= $_SESSION["country"] ?>" name="country" class="country_input right_in" placeholder="Ваш вашу страну" readonly>
+                        <input type="text" value="<?= $user_resolt["country"] ?>" name="country" class="country_input right_in" placeholder="Ваш вашу страну" readonly>
                         <div class="country_sub">
                             <div><p>Абхазия</p></div>
                             <div><p>Австралия</p></div>
@@ -258,25 +257,25 @@
                     <div>
                         <h3>Возраст</h3>
                         <u class="warning"></u>
-                        <input type="number" value="<?= $_SESSION["age"] ?>" name="age" class="age right_in" placeholder="Ваш возраст">
+                        <input type="number" value="<?= $user_resolt["age"] ?>" name="age" class="age right_in" placeholder="Ваш возраст">
                     </div>
                     <?php
-                    if ($_SESSION["role"] == "seller"):
+                    if ($user_resolt["role"] == "seller"):
                         ?>
-                                                                        <div>
-                                                                            <h3>Ставка</h3>
-                                                                            <u class="warning"></u>
-                                                                            <div class="price_input">
-                                                                                <input type="number" name="hour_price" value="<?= $_SESSION["price"] ?>" class="right_in" placeholder="Ваша часовая ставка">
-                                                                                <span>$</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div>
-                                                                            <h3>Начало работы</h3>
-                                                                            <u class="warning"></u>
-                                                                            <input type="time" name="start_time" value="<?= $_SESSION["work_time"] ?>" class="right_in" placeholder="Время началы работы">
-                                                                        </div>
-                                                                        <?php
+                                                                                                                                            <div>
+                                                                                                                                                <h3>Ставка</h3>
+                                                                                                                                                <u class="warning"></u>
+                                                                                                                                                <div class="price_input">
+                                                                                                                                                    <input type="number" name="hour_price" value="<?= $user_resolt["price"] ?>" class="right_in" placeholder="Ваша часовая ставка">
+                                                                                                                                                    <span>₽</span>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                                <h3>Начало работы</h3>
+                                                                                                                                                <u class="warning"></u>
+                                                                                                                                                <input type="time" name="start_time" value="<?= $user_resolt["work_time"] ?>" class="right_in" placeholder="Время началы работы">
+                                                                                                                                            </div>
+                                                                                                                                            <?php
                     endif;
                     ?>
                 </div>
