@@ -17,14 +17,12 @@
                     <?= $user['nik'] ?>
                 </u></h2>
         </div>
-        <!-- <form action="../bd_send/user/message_users.php?user_id=<?= $user_id ?>" method="post"> -->
             <div>
                 <h4>Сообщение</h4>
                 <textarea name="thirst_message" class="right_in" id="" cols="30" rows="10"
                     placeholder="Введите ваше сообщение"></textarea>
             </div>
             <button>Отправить</button>
-        <!-- </form> -->
         <script>
             $('.start_chat_container button').on('click', function () {
                 const message_value = $('.start_chat_container textarea').val();

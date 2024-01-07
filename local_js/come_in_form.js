@@ -24,17 +24,15 @@ function open_form_two(){
 }
 //close_containers
 function close_form(){
-    get_buttons.style.display = "flex";
-    get_body.style.overflow = "auto";
-    get_user_container.forEach( (item) => {
-        item.classList.add("user_container_opacity");
-    });
-    setTimeout( () => {
-        get_buttons.style.opacity = 1;
-        get_user_container.forEach( (item) => {
-            item.style.display = "none";
-        });
-    }, 100);
+  get_buttons.style.display = "flex";
+  get_body.style.overflow = "auto";
+  get_user_container[1].classList.remove("user_container_opacity");
+  setTimeout( () => {
+      get_buttons.style.opacity = 1;
+  }, 100);
+  setTimeout( () => {
+    get_user_container[1].style.display = "none";
+  }, 500);
 }
 //form_need
 let press_temp = 0;

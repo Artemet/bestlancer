@@ -5,6 +5,8 @@
     include "modal/registor.php";
     include "modal/sing_in.php";
     include "../bd_send/database_connect.php";
+    $currentURL = $_SERVER['REQUEST_URI'];
+
     $project_filter_resolt = "tasks.php";
     if (isset($_SESSION["nik"])) {
         include "modal/other.php";
@@ -27,6 +29,9 @@
                         </a></h1>
                     <a href="../pages/home.php"><img src="../res/web_logo.png" alt="" class="logo_img"></a>
                 </div>
+                <?php
+                if (strpos($currentURL, "registor") == false):
+                ?>
                 <div class="links">
                     <?php
                     $link_temp = -1;
@@ -38,6 +43,9 @@
                     }
                     ?>
                 </div>
+                <?php
+                endif;
+                ?>
             </div>
             <div class="mobile_menu">
                 <div class="img" onclick="menu_open()">
@@ -199,8 +207,14 @@
             if (!isset($_SESSION["nik"])):
                 ?>
                 <div class="header_part header_part_two">
+                    <?php
+                        if (strpos($currentURL, "registor") == false):
+                    ?>
                     <div class="registor button" title="Пройдите регистрацию"><a
-                            href="../pages/registor.php?registor_part=1">Регистрация</a></div>
+                            href="../pages/registor.php">Регистрация</a></div>
+                    <?php
+                        endif;
+                    ?>
                     <div class="login button" onclick="open_form_two()" title="Зайдите в аккаунт">Вход</div>
                 </div>
                 <?php

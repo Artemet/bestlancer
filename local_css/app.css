@@ -103,3 +103,30 @@ input.right_in{
     top: 10px;
     margin: auto;
 }
+/* loader */
+.overlay{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+.overlay_active{
+    display: flex;
+}
+.overlay .loader{
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid rgb(79, 130, 3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
