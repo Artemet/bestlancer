@@ -82,7 +82,6 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                 ?>
                 <div class="delite_number">
                     <p>Выбрано: <b>0</b></p>
-                    <u title="Выбрать все увидомления на странице">Выбрать всё</u>
                     <div class="button">
                         <input type="text" class="notification_id" readonly>
                         <button>Удалить</button>

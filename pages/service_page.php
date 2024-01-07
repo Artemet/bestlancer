@@ -12,7 +12,7 @@ if (isset($_GET['service_id']) && is_numeric($_GET['service_id'])) {
         if ($_SESSION["nik"] == $service['nik']) {
             echo "<link rel='stylesheet' href='../page_css/modal_css/change_service.css'>";
         } else {
-            echo "<link rel='stylesheet' href='../page_css/modal_css/service_report.css'>";
+            echo "<link rel='stylesheet' href='../page_css/modal_css/report_modal.css'>";
         }
     }
     if ($service) {
@@ -114,7 +114,7 @@ include "../layouts/header_line.php";
                 $spam_class = null;
 
                 if (isset($_SESSION["nik"])) {
-                    $spam_check = "SELECT `service_id` FROM `service_report` WHERE `nik` = '$user_nik' AND `service_id` = '$service_id'";
+                    $spam_check = "SELECT `service_id` FROM `reports` WHERE `nik` = '$user_nik' AND `service_id` = '$service_id'";
                     $spam_query = mysqli_query($bd_connect, $spam_check);
                     while ($spam_resolt = mysqli_fetch_assoc($spam_query)) {
                         $spam_temp++;
@@ -174,7 +174,10 @@ include "../layouts/header_line.php";
                         <?= $service['information'] ?>
                     </p>
                     <b>
-                        <?= $service['category'] ?>
+                        <?php
+                        $category_arr = array("Дизайн", "Разработка и IT", "Тексты и переводы", "SEO и трафик", "Соцсети и реклама", "Аудио, видео, съемка", "Бизнес и жизнь", "Учеба и репетиторство");
+                        ?>
+                        <?=$category_arr[$service['category']]?>
                     </b>
                 </div>
                 <div class="price">

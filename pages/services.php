@@ -5,6 +5,7 @@ echo "<link rel='stylesheet' href='../page_css/services.css'>";
 echo "<link rel='stylesheet' href='../page_css/media/services_media.css'>";
 echo "<title>Услуги фрилансеров</title>";
 include "../layouts/header_line.php";
+$category_arr = array("Дизайн", "Разработка и IT", "Тексты и переводы", "SEO и трафик", "Соцсети и реклама", "Аудио, видео, съемка", "Бизнес и жизнь", "Учеба и репетиторство");
 ?>
 <div class="container">
     <div class="service_search">
@@ -14,37 +15,30 @@ include "../layouts/header_line.php";
     <div class="service_filter">
         <h4>Все услуги</h4>
         <div>
-            <a href="">
-                <p>Дизайн</p>
-            </a>
-            <a href="">
-                <p>Разработка и IT</p>
-            </a>
-            <a href="">
-                <p>Тексты и переводы</p>
-            </a>
-            <a href="">
-                <p>SEO и трафик</p>
-            </a>
-            <a href="">
-                <p>Соцсети и реклама</p>
-            </a>
-            <a href="">
-                <p>Аудио, видео, съемка</p>
-            </a>
-            <a href="">
-                <p>Бизнес и жизнь</p>
-            </a>
-            <a href="">
-                <p>Учеба и репетиторство</p>
-            </a>
+            <?php
+            for ($i = 0; $i < count($category_arr); $i++){
+                $category_value = $category_arr[$i];
+                echo "<a href='?filter=$i' class='filter_link'><p>$category_value</p></a>";
+            }
+            ?>
         </div>
     </div>
     <div class="line" style="width: 100%;"></div>
-    <div class="service_container">
+    <div class="overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="service_container content">
         <?php
         include "../bd_send/database_connect.php";
-        $sql = "SELECT * FROM services";
+        $sql = "SELECT * FROM `services`";
+        function sql_convert(){
+            global $sql;
+            if (isset($_GET["filter"]) && is_numeric($_GET["filter"])){
+                $filter_index = $_GET["filter"];
+                $sql = "SELECT * FROM `services` WHERE `category` = $filter_index";
+            }
+        }
+        sql_convert();
         $query = mysqli_query($bd_connect, $sql);
         $warning_tag = "<b>Нет услуг</b>";
         while ($row = mysqli_fetch_assoc($query)):
@@ -73,13 +67,13 @@ include "../layouts/header_line.php";
                         <div class="under_line"></div>
                         <div>
                             <p class="category">
-                                <?= $row['category'] ?>
+                                <?=$category_arr[$row['category']]?>
                             </p>
                         </div>
                         <div class="under_line"></div>
                         <div>
                             <span class="price">
-                                <?= $row['price'] ?>$
+                                <?= $row['price'] ?> ₽
                             </span>
                         </div>
                     </div>
@@ -98,6 +92,7 @@ include "../layouts/header_line.php";
 <?php
 include "../layouts/footer.php";
 ?>
+<script src="../page_js/service/category_choice.js"></script>
 </body>
 
 </html>

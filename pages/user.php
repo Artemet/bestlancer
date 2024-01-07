@@ -83,7 +83,7 @@ include "../layouts/header_line.php";
                     <div class="main_information">
                         <b>
                             <?php
-                            echo $user_resolt["price"], "$ час";
+                            echo $user_resolt["price"], "₽ час";
                             ?>
                         </b>
                         /
@@ -148,17 +148,18 @@ include "../layouts/header_line.php";
         <div class="about_user user_block">
             <h2>Обо мне</h2>
             <div>
-                <p>
-                    <?php
-                    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                        echo $user_resolt["about"]; // Показывать логин пользователя, если вход выполнен
-                    } else {
-                        echo "нет информации"; // Показывать "Гость", если вход не выполнен
-                    }
+                <?php
+                        if (!empty($user_resolt["about"])){
+                            echo "<p>" . $user_resolt["about"] . "</p>";
+                        } else{
+                            echo "<p class='no_information'>Нет информации</p>";
+                        }
                     ?>
-                </p>
             </div>
         </div>
+        <?php
+        if ($user_resolt["role"] == "seller"):
+        ?>
         <div class="user_skills menu_include user_block">
             <div class="menu_block">
                 <div>
@@ -167,18 +168,18 @@ include "../layouts/header_line.php";
             </div>
             <div class="skill_wrapper sub_menu">
                 <div class="include">
-                    <p class="skill_text">
-                        <?php
-                        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                            $skills = explode(" ", $user_resolt["skills"]);
+                    <?php
+                        $skills = explode(" ", $user_resolt["skills"]);
+                        if (!empty($user_resolt["skills"])){
+                            echo "<p class='skill_text'>";
                             foreach ($skills as $skill) {
                                 echo "<span>$skill</span> ";
                             }
-                        } else {
-                            echo "нет информации";
+                            echo "</p>";
+                        } else{
+                            echo "<p class='no_information'>Нет информации</p>";
                         }
-                        ?>
-                    </p>
+                    ?>
                 </div>
             </div>
         </div>
@@ -301,6 +302,9 @@ include "../layouts/header_line.php";
                 ?>
             </div>
         </div>
+        <?php
+            endif;
+        ?>
     </div>
 </div>
 <?php

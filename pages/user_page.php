@@ -156,7 +156,7 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                         <b>
                             <?php
                             echo $user['price'];
-                            echo "$ час";
+                            echo "₽ час";
                             ?>
                         </b>
                         /
@@ -206,10 +206,17 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     if ($friend_find == false) {
                         echo '<div><button class="chat_start" title="Связаться с ' . $user_nik . '">Связаться</button></div>';
                     } else {
-                        if ($user_block_resolt !== $user_nik) {
-                            echo '<div><a href="messages.php"><button title="Открыть чат с ' . $user_nik . '">Открыть чат</button></a></div>';
+                        function chat_id_get(){
+                            global $bd_connect, $user_nik, $my_nik;
+                            $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' OR `nik_two` = '$user_nik') AND (`nik_one` = '$my_nik' OR `nik_two` = '$my_nik')";
+                            $chat_id_query = mysqli_query($bd_connect, $chat_id_sql);
+                            return mysqli_fetch_assoc($chat_id_query)['chat_id'];
                         }
+                        echo "<noscript class='chat_id'>".chat_id_get()."</noscript>";
+                        echo '<div><a href="messages.php?chat_id='.chat_id_get().'"><button title="Открыть чат с ' . $user_nik . '" class="chat_button">Открыть чат</button></a></div>';
                     }
+                    ?>
+                    <?php
                     if ($friend_find == true):
                         //user_status
                         $status_text = "Заблокировать";

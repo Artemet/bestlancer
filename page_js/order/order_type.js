@@ -45,7 +45,6 @@ function order_type(){
         get_subs.forEach( (item) => {
           item.style.transition = "0.5s";
           if (item.offsetHeight >= 1){
-            console.log(item);
             item.style.height = parseInt(item.offsetHeight, 10) + "px";
           }
         });

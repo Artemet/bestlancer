@@ -91,7 +91,7 @@ include "../layouts/header_line.php";
                                     </div>
                                     <?php
                                     if ($max_price_resolt != 0) {
-                                        echo "<p class='max_price'>Максимальная цена: <b>$max_price_resolt ₽</b></p>";
+                                        echo "<p class='max_price'>Бюджет: <b>$max_price_resolt ₽</b></p>";
                                     } else {
                                         echo "<p class='max_price'>Договорная цена</p>";
                                     }

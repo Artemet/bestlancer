@@ -752,9 +752,6 @@ include "../layouts/modal/corect_order.php";
             echo "<p class='type_option type'>$type</p>";
         }
         ?>
-        <div class="overlay">
-            <div class="loader"></div>
-        </div>
         <div class="orders">
             <?php
             if (isset($_SESSION["nik"])):
@@ -861,6 +858,9 @@ include "../layouts/modal/corect_order.php";
                 endif;
             endif;
             ?>
+            <div class="overlay">
+                <div class="loader"></div>
+            </div>
             <div class="order_wrappers content">
                 <?php
                 $ordersPerPage = 18;

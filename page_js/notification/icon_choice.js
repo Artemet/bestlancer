@@ -26,6 +26,7 @@ function icon_choice(){
         checkbox_check();
     });
     //checkbox_choice
+    let deleting_arr = [];
     const get_notififcations = document.querySelectorAll(".notification_container .notification");
     get_notififcations.forEach( (item) => {
         item.addEventListener("click", function (){
@@ -34,8 +35,21 @@ function icon_choice(){
                 const get_choice_number = document.querySelector(".notification_container .delite_number b");
                 get_checkbox.classList.toggle("checked");
                 if (!get_checkbox.className.includes("checked")){
+                    let array_index = -1;
+                    const notification_id = parseInt(item.id, 10);
+                    while (true){
+                        array_index++;
+                        if (notification_id === deleting_arr[array_index]){
+                            break;
+                        }
+                        if (array_index >= deleting_arr.length){
+                            break;
+                        }
+                    }
+                    deleting_arr.splice(array_index, 1);
                     get_checkbox.checked = false;
                 } else{
+                    deleting_arr.push(parseInt(item.id, 10));
                     get_checkbox.checked = true;
                 }
                 get_choice_number.innerHTML = document.querySelectorAll("input.checked").length;
@@ -43,35 +57,28 @@ function icon_choice(){
             checkbox_check();
         });
     });
-    //all_choice
-    let choice_all_temp = 0;
-    const get_choice_tag = document.querySelector(".notification_container .delite_number u");
-    const old_html = get_choice_tag.innerHTML;
-    get_choice_tag.addEventListener("click", function (){
-        choice_all_temp++;
-        const get_checkbox = document.querySelectorAll(".notification_container .notification input.checkbox");
-        if (choice_all_temp === 1){
-            this.innerHTML = "Вернуть всё";
-            document.querySelectorAll(".notification_container .notification").forEach( (item) => {
-                item.style.pointerEvents = "none";
+    const get_delete_button = document.querySelector(".notification_container .delite_number button");
+    get_delete_button.addEventListener("click", function (){
+        const get_choice_number = document.querySelector(".notification_container .delite_number b");
+        get_choice_number.innerHTML = 0;
+        this.classList.remove("active");
+        $.ajax({
+            method: "POST",
+            url: "../bd_send/notification/notification_delete.php",
+            data: { notification_arr: deleting_arr },
+        })
+            .done(function (){
+                for (let i = 0; i < get_notififcations.length; i++){
+                    const notification_id = parseInt(get_notififcations[i].id, 10);
+                    if (deleting_arr.includes(notification_id)){
+                        get_notififcations[i].remove();
+                    }
+                }
+                const notifications_length = document.querySelectorAll(".notifications_wrapper .notification").length;
+                if (notifications_length === 0){
+                    document.querySelector(".content").innerHTML = '<div class="notifications_wrapper"><p>Нет увидомлений</p></div>';
+                }
             });
-            get_checkbox.forEach( (item) => {
-                item.checked = true;
-            });
-            document.querySelector(".notification_container .delite_number b").innerHTML = document.querySelectorAll(".notification_container .notification").length;
-        } else{
-            this.innerHTML = old_html;
-            document.querySelectorAll(".notification_container .notification").forEach( (item) => {
-                item.style.pointerEvents = "all";
-            });
-            get_checkbox.forEach( (item) => {
-                item.checked = false;
-                item.classList = "checkbox checkbox_active";
-            });
-            document.querySelector(".notification_container .delite_number b").innerHTML = 0;
-            choice_all_temp = 0;
-        }
-        checkbox_check();
     });
     //checkbox_check
     function checkbox_check(){

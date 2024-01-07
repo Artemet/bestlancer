@@ -1,4 +1,4 @@
-var selDiv = "";
+var selDiv = null;
 var storedFiles = [];
 $(document).ready(function () {
   $("#icon_choice").on("change", handleFileSelect);

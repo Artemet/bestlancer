@@ -10,28 +10,10 @@ echo "<title>Создание Аккаунта - Bestlancer</title>";
 include "../layouts/header_line.php";
 ?>
 <div class="registor_container container">
-    <div class="resolt_input">
-        <form action="">
-            <div>
-                <input type="text" name="role" readonly>
-            </div>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-            <input type="text" readonly>
-        </form>
-    </div>
-    <?php
-    //echo "<p class='registor_part_number'>$registor_part</p>";
-    ?>
-    <div class="registor_question question">
+    <div class="registor_question question" id="0">
         <h2>Присоединяйтесь в качестве клиента <br> или фрилансера</h2>
         <div class="role_options">
-            <div class="role_option" id="0">
+            <div class="role_option" id="buyer">
                 <div class="circle">
                     <div class="in_circle"></div>
                 </div>
@@ -40,7 +22,7 @@ include "../layouts/header_line.php";
                 </div>
                 <p>Я клиент, набираю сотрудников для проекта</p>
             </div>
-            <div class="role_option" id="1">
+            <div class="role_option" id="seller">
                 <div class="circle">
                     <div class="in_circle"></div>
                 </div>
@@ -54,7 +36,11 @@ include "../layouts/header_line.php";
             <button class="none_click">Продолжить</button>
         </div>
     </div>
-    <div class="main_registor_question thirst_part question">
+    <div class="main_registor_question question" id="1">
+        <div class="back_move">
+            <div><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg></div>
+            <div><p>Назад</p></div>
+        </div>
         <h2>Регестрация аккаунта</h2>
         <div class="main_registration">
 
@@ -62,27 +48,26 @@ include "../layouts/header_line.php";
                 <div>
                     <h3>Имя</h3>
                     <u class="warning"></u>
-                    <input type="text" name="user_name" placeholder="Имя" class="right_in" id="input_name">
+                    <input type="text" name="user_name" placeholder="Имя" class="right_in checking_value" id="input_name">
                 </div>
                 <div>
                     <h3>Фамилия</h3>
-                    <u class="warning"></u>
-                    <input type="text" name="user_family" placeholder="Фамилия" class="right_in" id="input_surname">
+                    <input type="text" name="user_family" placeholder="Фамилия (по желанию)" class="right_in" id="input_surname">
                 </div>
             </div>
             <div class="input_part">
                 <h3>Email</h3>
                 <u class="warning"></u>
-                <input type="text" name="user_email" id="email" placeholder="Рабочий email адрес" class="right_in">
+                <input type="text" name="user_email" id="email" placeholder="Рабочий email адрес" class="right_in checking_value">
             </div>
-            <div class="input_part">
+            <div class="input_part password_value">
                 <h3>Пароль</h3>
                 <u class="warning"></u>
-                <input type="password" name="user_password" placeholder="Пароль" class="right_in">
+                <input type="password" name="user_password" placeholder="Пароль" class="right_in checking_value">
+                <div class="eye"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm51.3 163.3l-41.9-33C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5zm-88-69.3L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8z"/></svg></div>
             </div>
             <div class="input_part country">
                 <h3>Страна</h3>
-                <u class="warning"></u>
                 <input type="text" name="user_country" readonly class="right_in">
                 <div class="menu">
                     <div>
@@ -740,7 +725,7 @@ include "../layouts/header_line.php";
                             соответствующий моим потребностям.</p>
                     </div>
                 </div>
-                <div class="checkbox_choice">
+                <div class="checkbox_choice important_agree_choice">
                     <div><input type="checkbox"></div>
                     <div>
                         <p>Да, я понимаю и согласен с Условиями обслуживания Bestlancer, <br> включая
@@ -749,52 +734,46 @@ include "../layouts/header_line.php";
                 </div>
             </div>
             <div class="post_button">
-                <button>Продолжить создание аккаунта</button>
+                <button>Сделать последний шаг</button>
             </div>
-
         </div>
     </div>
-    <div class="main_registor_question second_part question">
-        <h2>Продолжение регистрации</h2>
-        <div class="main_registration">
-            <form action="">
-                <div class="line_block">
-                    <div class="input_part">
-                        <h3>Возраст</h3>
-                        <u class="warning"></u>
-                        <input type="number" name="user_age" placeholder="Впишите возраст" class="right_in"
-                            id="input_name">
-                    </div>
-                    <div class="input_part">
-                        <h3>Начало работы</h3>
-                        <u class="warning"></u>
-                        <input type="time" name="user_time" class="right_in" id="input_surname">
-                    </div>
-                </div>
-                <div class="input_part">
-                    <h3>Расскажите о себе</h3>
-                    <u class="warning"></u>
-                    <textarea name="" placeholder="Расскажите о себе и о вашем опыте" class="right_in" id="" cols="30"
-                        rows="10"></textarea>
-                </div>
-                <div class="input_part">
-                    <h3>Начальная ставка</h3>
-                    <u class="warning"></u>
-                    <div class="price_input">
-                        <input type="number" name="user_price" placeholder="Впишите цену" class="right_in">
-                        <div><span>₽</span></div>
-                    </div>
-                </div>
-                <div class="post_button">
-                    <button>Создать аккаунт</button>
-                </div>
-            </form>
+    <div class="end_registor_question question" id="2">
+        <div class="overlay">
+            <div class="loader"></div>
+        </div>
+        <div class="back_move">
+            <div><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg></div>
+            <div><p>Назад</p></div>
+        </div>
+        <h2>Последний шаг</h2>
+        <div class="end_registration">
+            <div class="input_part">
+                <h3>Никнейм</h3>
+                <u class="warning"></u>
+                <input type="text" placeholder="Ваш вариант никнейма" class="right_in checking_value">
+            </div>
+            <div>
+                <p class="information_text">Придумайте латинский никнейм, по которому другие пользователи будут <br> видеть ваш аккаунт. Пример никнейма: Artem308.</p>
+            </div>
+        </div>
+        <div class="post_button">
+            <button>Создать аккаунт</button>
         </div>
     </div>
-</div>
+    <div class="finish_window question">
+        <h2>Аккаунт создан!</h2>
+        <div>
+            <p class="do_information"></p>
+        </div>
+        <div class="post_button">
+            <button class="active_click">Войти в аккаунт</button>
+        </div>
+    </div>
 <script src="../page_js/registor/registor_script.js"></script>
 <script src="../page_js/registor/value_check.js"></script>
 <script src="../page_js/registor/country_menu.js"></script>
+<script src="../local_js/come_in_form.js"></script>
 </body>
 
 </html>
