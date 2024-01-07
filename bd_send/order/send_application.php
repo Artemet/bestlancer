@@ -33,7 +33,7 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     //block_check
     $user_blocked = false;
     $blocking_orderer = $order['nik'];
-    $block_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = '$nik' AND `nik_two` = '$orderer_nik') OR (`nik_one` = '$orderer_nik' AND `nik_two` = '$nik') AND `status` = 'block'";
+    $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = '$nik' AND `nik_two` = '$message_user') OR (`nik_one` = '$message_user' AND `nik_two` = '$nik')) AND `status` = 'block'";
     $block_query = mysqli_query($bd_connect, $block_sql);
     while ($block_resolt = mysqli_fetch_assoc($block_query)) {
         $user_blocked = true;

@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION["nik"])) {
     header("Location: ../../pages/home.php");
-    exit();
+    exit;
 }
 include "../database_connect.php";
 $nik = $_SESSION["nik"];
