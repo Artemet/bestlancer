@@ -73,6 +73,7 @@
 }
 .notification_container .header_title{
     display: grid;
+    position: relative;
     grid-template-columns: 1fr auto;
     align-items: baseline;
 }
@@ -80,7 +81,6 @@
     display: none;
     position: relative;
     margin-right: 10px;
-    margin-bottom: 20px;
 }
 .notification_container .delite_number .button{
     position: absolute;
@@ -110,11 +110,6 @@
     opacity: 1;
     pointer-events: all;
 }
-.notification_container .delite_number u{
-    color: tomato;
-    cursor: pointer;
-    user-select: none;
-}
 .notification_container .delite_number p{
     margin: 0;
 }
@@ -124,6 +119,8 @@
 .notification_container .notification_options{
     display: flex;
     align-items: center;
+    position: absolute;
+    right: 0;
 }
 .notification_container .notification_options svg.delite{
     fill: rgb(79, 130, 3) !important;

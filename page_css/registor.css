@@ -1,11 +1,11 @@
 /* registor_style */
 .question{
     padding: 20px;
+    position: relative;
     border-radius: 20px;
     border: 2px solid lightgrey;
     background-color: white;
     width: 800px;
-    opacity: 0;
     margin: auto;
     transition: 0.5s;
 }
@@ -17,9 +17,6 @@
 }
 .question h2{
     text-align: center;
-}
-.registor_container .main_registor_question{
-    opacity: 0;
 }
 .registor_container p.registor_part_number{
     display: none;
@@ -135,6 +132,10 @@
     color: white;
     margin-top: 10px;
     overflow-x: auto;
+    z-index: 1;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
     height: 0;
     transition: 0.5s;
     background-color: rgb(79, 130, 3);
@@ -195,12 +196,66 @@
     pointer-events: all;
     opacity: 1;
 }
+.registor_container .input_part{
+    padding-top: 10px;
+    position: relative;
+}
+.registor_container .password_value .eye{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 10px;
+    margin-bottom: 4px;
+}
+.registor_container .password_value input{
+    padding-right: 35px;
+}
+.registor_container .password_value svg{
+    fill: rgb(79, 130, 3) !important;
+    cursor: pointer;
+}
+.registor_container .checkbox_part{
+    padding-top: 10px;
+    margin-top: 23px;
+    border-top: 2px solid rgb(79, 130, 3);
+    border-bottom: 2px solid rgb(79, 130, 3);
+    padding-bottom: 10px;
+}
+.registor_container .checkbox_choice input{
+    margin-right: 10px;
+}
+.registor_container .checkbox_choice p{
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+.registor_container .main_registor_question{
+    display: none;
+    opacity: 0;
+    position: relative;
+}
 .registor_container .main_registor_question .line_block{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
 }
-.registor_container .main_registor_question h3{
+.registor_container .back_move{
+    position: absolute;
+    display: flex;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.registor_container .back_move:hover{
+    opacity: 0.5;
+}
+.registor_container .back_move p{
+    margin: 0;
+    font-size: 12px;
+    padding-left: 3px;
+    color: #d08e0b;
+}
+.registor_container .question h3{
     margin: 0;
     font-size: 15px;
 }
@@ -226,4 +281,30 @@
     font-weight: 500;
     cursor: pointer;
     user-select: none;
+}
+.registor_container .end_registor_question{
+    display: none;
+    opacity: 0;
+}
+.registor_container .end_registor_question .end_registration{
+    transition: 0.3s;
+}
+.registor_container .end_registor_question .end_registration_load{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.registor_container .end_registor_question p.information_text{
+    margin: 5px 0;
+    font-size: 11px;
+    color: gray;
+}
+.registor_container .finish_window{
+    display: none;
+    opacity: 0;
+    transition: 0.5s;
+}
+.registor_container .finish_window p{
+    font-size: 16px;
+    text-align: center;
+    color: gray;
 }

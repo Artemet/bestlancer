@@ -241,6 +241,12 @@
     font-size: 20px;
     padding-right: 50px;
 }
+.user_account p.no_information{
+    font-size: 14px;
+    color: gray;
+    padding: 0 !important;
+    line-height: normal !important;
+}
 .user_account .menu_include p{
     padding: 10px;
     line-height: 50px;

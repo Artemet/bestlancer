@@ -140,6 +140,7 @@
 }
 .settings_container .background_options .option{
     width: fit-content;
+    margin: auto;
     transition: 0.5s;
     padding: 10px;
     cursor: pointer;

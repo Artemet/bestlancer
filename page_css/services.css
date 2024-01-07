@@ -4,6 +4,9 @@
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+.service_container_none{
+    opacity: 0;
+}
 .service_search{
     display: grid;
     grid-template-columns: 1fr auto;
@@ -55,6 +58,10 @@
 }
 .service_filter p:hover{
     color: #d08e0b;
+}
+.service_filter a{
+    width: fit-content;
+    text-decoration: none;
 }
 .service_container .service{
     width: 320px;
