@@ -18,7 +18,7 @@ if (isset($_SESSION["nik"])) {
     }
     //user_spam_resport_check
     $spam_temp = 0;
-    $spam_sql = "SELECT `service_id` FROM `service_report` WHERE `service_id` = '$service_id' AND `nik` = '$report_nik'";
+    $spam_sql = "SELECT `service_id` FROM `reports` WHERE `service_id` = '$service_id' AND `nik` = '$report_nik'";
     $spam_query = mysqli_query($bd_connect, $spam_sql);
     while (mysqli_fetch_assoc($spam_query)) {
         $spam_temp++;
@@ -27,7 +27,7 @@ if (isset($_SESSION["nik"])) {
         exit;
     }
 
-    $sql = "INSERT INTO `service_report` (`id`, `report_option`, `report_description`, `service_id`, `nik`) VALUES (NULL, '$report_option', '$report_description', '$service_id', '$report_nik')";
+    $sql = "INSERT INTO `reports` (`id`, `report_option`, `report_description`, `service_id`, `nik`) VALUES (NULL, '$report_option', '$report_description', '$service_id', '$report_nik')";
     $query = mysqli_query($bd_connect, $sql);
     header("Location: ../positive/correct_report.php");
 } else {
