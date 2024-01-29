@@ -1,0 +1,7 @@
+/* app_medias */
+@media only screen and (max-width: 1550px){
+    .container{
+        margin: 140px 30px;
+        width: auto;
+    }
+}

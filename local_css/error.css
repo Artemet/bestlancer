@@ -1,0 +1,14 @@
+/* error_style */
+.error h2{
+    color: red;
+}
+.error .text{
+    text-align: center;
+    padding-top: 20px;
+    font-size: 25px;
+    color: red;
+    line-height: 40px;
+}
+.error a{
+    color: #d08e0b;
+}

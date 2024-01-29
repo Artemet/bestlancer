@@ -1,0 +1,11 @@
+/* come_in_form_media */
+@media only screen and (max-width: 1033px){
+    .user_container{
+        top: 87px;
+    }
+}
+@media only screen and (max-width: 550px){
+    .user_container .come_in{
+        width: 80%;
+    }
+}

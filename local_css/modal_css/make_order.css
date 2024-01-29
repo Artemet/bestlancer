@@ -1,0 +1,73 @@
+/* make_order_style */
+.personal_order_container{
+    display: none;
+    opacity: 0;
+    transition: 0.5s;
+}
+.personal_order_container_open{
+    display: block;
+}
+.personal_order_container .make_order{
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    border: 3px solid rgb(79, 130, 3);
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 50px;
+}
+.personal_order_container .close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.personal_order_container .close svg{
+    fill: rgb(79, 130, 3) !important;
+    transition: 0.5s;
+}
+.personal_order_container .close svg:hover{
+    transform: rotate(180deg);
+}
+.personal_order_container h3{
+    margin-bottom: 0;
+}
+.personal_order_container input.file_choice{
+    margin-top: 10px;
+}
+.personal_order_container textarea{
+    resize: none !important;
+}
+.personal_order_container button{
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 2px solid #d08e0b;
+    transition: 0.5s;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
+}
+.personal_order_container button:hover{
+    opacity: 0.7;
+}
+.personal_order_container .value_information{
+    overflow-x: auto;
+    padding-right: 30px;
+    height: 324px;
+}
+.personal_order_container .value_information::-webkit-scrollbar{
+    background-color: white;
+    width: 3px;
+}
+.personal_order_container .value_information::-webkit-scrollbar-thumb{
+    background-color: rgb(79, 130, 3);
+}
+.personal_order_container u.user_nik{
+    color: rgb(79, 130, 3);
+}

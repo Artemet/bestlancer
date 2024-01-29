@@ -1,0 +1,117 @@
+/* header_line_medias */
+@media only screen and (max-width: 1201px){
+    .header_line .header_part_one div{
+        padding-right: 25px;
+    }
+}
+@media only screen and (max-width: 1140px){
+    .user p.user_name{
+        display: none;
+    }
+    .user{
+        background: none !important;
+    }
+}
+@media only screen and (max-width: 1100px){
+    .header_line .header_part_one div{
+        padding-right: 20px;
+    }
+}
+@media only screen and (max-width: 1032px){
+    .header_line .header_part_two{
+        display: none !important;
+    }
+    .header_line .mobile_menu{
+        display: block;
+        padding-right: 40px;
+    }
+    .header_line .mobile_menu .img{
+        text-align: right;
+    }
+    .header_line .user p.user_name{
+        display: block;
+    }
+    .user:hover{
+        background-color: black !important;
+    }
+    .header_line .line_wrapper{
+        grid-template-columns: 1fr 1fr auto;
+    }
+    .header_line .header_part_one .links{
+        display: none;
+    }   
+}
+@media only screen and (max-width: 790px){
+    .header_line .user p.user_name{
+        display: none;
+    }
+    .user{
+        background: none !important;
+    }
+}
+@media only screen and (max-width: 707px){
+    .user{
+        margin-right: 0;
+    }
+    .user_panel .notification{
+        padding-right: 25px;
+    }
+    .header_line .mobile_menu{
+        padding-right: 20px;
+    }
+}
+@media only screen and (max-width: 612px){
+    .header_line .mobile_menu{
+        padding: 0;
+    }
+}
+@media only screen and (max-width: 577px){
+    .header_line .header_part_one{
+        padding-left: 10px;
+    }
+    .user_panel .accaunt_change{
+        padding-right: 10px;
+    }
+    .header_line .mobile_menu img{
+        padding-top: 0;
+        height: 60px;
+    }
+    .header_line .line_wrapper{
+        align-items: center;
+    }
+    .user img{
+        margin-left: 5px;
+    }
+}
+@media only screen and (max-width: 510px){
+    .user img{
+        height: 30px;
+        width: 30px;
+    }
+    .header_line h1{
+        display: none;
+    }
+    .header_line .logo_img{
+        display: block;
+    }
+    .header_line .mobile_menu img{
+        height: 40px;
+        padding-right: 10px;
+    }
+}
+@media only screen and (max-width: 353px){
+    .user{
+        padding-right: 15px;
+    }
+    .user_panel .notification{
+        padding-right: 15px;
+    }
+}
+@media only screen and (max-width: 312px){
+    .header_line .logo_img{
+        height: 60px;
+    }
+    .header_line .header_part_one{
+        padding-left: 2px;
+    }
+}
