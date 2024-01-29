@@ -1,0 +1,323 @@
+/* order_page_style */
+.order_page .user_information{
+    display: flex;
+    align-items: center;
+}
+.order_page b.my_order_mark{
+    color: #d08e0b;
+}
+.order_page p.order_id{
+    display: none;
+}
+.order_page .user_information img{
+    border: 2px solid #d08e0b;
+    border-radius: 5px;
+    height: 80px;
+    width: 80px;
+    margin-right: 20px;
+}
+.order_page .user_information a{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(79, 130, 3);
+}
+.order_page .user_information a:hover{
+    text-decoration: underline;
+}
+.order_page .user_information a span{
+    color: #d08e0b;
+}
+.order_page .header{
+    position: relative;
+}
+.order_page .header .copy_icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-top: 20px;
+    padding-right: 30px;
+}
+.order_page .header .copy_icon svg{
+    fill: rgb(79, 130, 3) !important;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.order_page .header .copy_icon svg:hover{
+    opacity: 0.5;
+}
+.order_page .header h2{
+    padding-top: 35px;
+    font-size: 25px !important;
+    border-top: 3px solid #d08e0b;
+}
+.order_page .order_information{
+    padding-bottom: 16px;
+}
+.order_page .back_page{
+    display: flex;
+    text-decoration: none;
+    width: fit-content;
+    color: #d08e0b;
+    padding-bottom: 5px;
+    transition: 0.5s;
+}
+.order_page .back_page:hover{
+    opacity: 0.7;
+}
+.order_page .back_page svg{
+    padding-top: 2px;
+    padding-right: 5px;
+}
+.order_page .back_page p{
+    margin: 0;
+}
+.order_page .price{
+    color: #d08e0b;
+    font-size: 21px;
+}
+.order_page .price p{
+    margin: 0;
+}
+.order_page .header_wrapper{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.order_page .button_choice{
+    padding: 20px 10px;
+    display: grid;
+    grid-gap: 10px;
+}
+.order_page .button_choice button{
+    width: 200px;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #d08e0b;
+    color: rgb(51, 51, 51);
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+.order_page .button_choice button:hover{
+    opacity: 0.7;
+}
+.order_page .button_choice .ready_application{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.order_page .users_applications{
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+.order_page .applications{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.order_page .application{
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid rgb(79, 130, 3);
+}
+.order_page .application .application_part{
+    display: flex;
+    align-items: center;
+}
+.order_page .invite_text{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+@keyframes colorChange {
+    0% {
+        color: #d08e0b;
+    }
+    10%{
+        color: rgb(51, 51, 51);
+    }
+    33% {
+        color: grey;
+    }
+    66% {
+        color: rgb(79, 130, 3);
+    }
+    100% {
+        color: #d08e0b;
+    }
+}
+
+.order_page .invite_text p {
+    margin: 0;
+    font-size: 14px;
+    animation: colorChange 15s linear 0s infinite;
+}
+.order_page .application img{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    border: 2px solid #d08e0b;
+    margin-right: 10px;
+}
+.order_page .application a{
+    color: rgb(79, 130, 3);
+    text-decoration: none;
+    font-size: 18px;
+}
+.order_page .application_number_wrapper{
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+}
+.order_page .add_person{
+    margin-right: 10px;
+}
+.order_page .add_person svg{
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.order_page .add_person svg:hover{
+    fill: gray !important;
+}
+.order_page .application_number_wrapper a{
+    color: #d08e0b;
+    font-size: 20px;
+    padding-right: 20px;
+}
+.order_page .application_number_wrapper span{
+    font-size: 22px;
+    color: rgb(79, 130, 3);
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;    
+}
+.order_page .user_order .application_part{
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+}
+.order_page .user_order .resolt_application{
+    grid-template-columns: auto 1fr auto;
+    align-items: normal;
+}
+.order_page .user_order .resolt_application img{
+    height: 55px;
+    width: 55px;
+}
+.order_page .user_order .resolt_application p.price{
+    color: rgb(79, 130, 3);
+    margin: 0;
+}
+.order_page .user_order .resolt_application p.time{
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+.order_page .user_order .resolt_application a.full_name{
+    color: rgb(53, 52, 52);
+    transition: 0.5s;
+}
+.order_page .user_order .resolt_application a.full_name:hover{
+    color: rgb(79, 130, 3);
+}
+.order_page .user_order .resolt_application p.life_information{
+    margin: 0;
+    color: gray;
+    font-size: 14px;
+}
+.order_page .user_order .resolt_application p.reviews{
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #d08e0b;
+}
+.order_page .user_order .arrow{
+    text-align: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+.order_page .user_order .arrow svg{
+    transition: 0.5s;
+}
+.order_page .user_order .arrow svg.animation{
+    transform: rotate(180deg);
+    fill: rgb(79, 130, 3) !important;
+}
+.order_page b.no_message{
+    color: #d08e0b;
+}
+.order_page .user_order .part_one{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 10px;
+}
+.order_page .user_order .part_one p{
+    font-size: 18px;
+    user-select: none;
+    border-right: 2px solid rgb(79, 130, 3);
+    border-bottom: 2px solid #d08e0b;
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+    padding-right: 10px;
+}
+.order_page .user_order .part_one p:hover{
+    user-select: inherit;
+}
+.order_page .user_order .part_one span{
+    color: #d08e0b;
+    user-select: none;
+    font-weight: 600;
+    font-size: 25px;
+    padding-left: 20px;
+}
+.order_page .user_order .part_two{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+    align-items: center;
+}
+.order_page .user_order .part_two p{
+    color: rgb(79, 130, 3);
+    font-size: 16px;
+    margin: 0;
+}
+.order_page .user_order .sub_information{
+    transition: 0.5s;
+    overflow: hidden;
+    height: 0;
+    background-color: rgba(211, 211, 211, 0.206);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.order_page .user_order .button_option{
+    display: grid;
+    margin-left: auto;
+    width: 250px;
+    grid-gap: 10px;
+}
+.order_page .user_order .button_option button{
+    cursor: pointer;
+    background-color: #d08e0b;
+    color: rgb(51, 51, 51);
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    transition: 0.5s;
+    padding: 5px;
+    font-size: 15px;
+    width: 100%;
+}
+.order_page .user_order .button_option button:hover{
+    opacity: 0.7;
+}
+.order_page .files{
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 3px solid rgb(79, 130, 3);
+}
+.order_page .files a{
+    color: #d08e0b;
+    font-size: 17px;
+}

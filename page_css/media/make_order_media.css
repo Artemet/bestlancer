@@ -1,0 +1,9 @@
+/* make_order_media */
+@media only screen and (max-width: 719px){
+    .make_order_container .checkbox_wrapper{
+        display: grid;
+    }
+    .make_order_container .checkbox_sub{
+        position: inherit;
+    }
+}

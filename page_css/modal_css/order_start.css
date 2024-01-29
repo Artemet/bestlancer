@@ -1,0 +1,79 @@
+.start_order_container .start_order{
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    width: 500px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    border: 3px solid rgb(79, 130, 3);
+}
+.start_order_container .close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+}
+.start_order_container .close svg{
+    font-size: 30px;
+    cursor: pointer;
+    fill: rgb(79, 130, 3) !important;
+    transition: 0.5s;
+}
+.start_order_container .close svg:hover{
+    transform: rotate(180deg);
+}
+.start_order_container textarea{
+    resize: none;
+}
+.start_order_container button{
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 2px solid #d08e0b;
+    transition: 0.5s;
+    border-radius: 5px;
+    pointer-events: none;
+    opacity: 0.5;
+    padding: 5px;
+    font-size: 20px;
+}
+.start_order_container button.ready{
+    opacity: 1;
+    pointer-events: all;
+}
+.start_order_container button:hover{
+    opacity: 0.7;
+}
+.start_order_container h4{
+    margin-bottom: 0;
+    color: rgb(79, 130, 3);
+}
+.start_order_container h2{
+    padding-bottom: 19.920px;
+    border-bottom: 3px solid gray;
+}
+.start_order_container .checkbox_agree{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+}
+.start_order_container .start_wrapper{
+    transition: 0.5s;
+}
+.start_order_container .start_wrapper_load{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.start_order_container .checkbox_agree input{
+    pointer-events: none;
+}
+.start_order_container .checkbox_agree p{
+    margin: 0;
+    color: black;
+    font-size: 15px;
+    padding-left: 5px;
+}

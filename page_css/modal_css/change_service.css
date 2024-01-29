@@ -1,0 +1,91 @@
+.change_service button{
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 2px solid #d08e0b;
+    transition: 0.5s;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
+}
+.change_service button:hover{
+    color: #d08e0b;
+}
+.change_service .information_wraper{
+    height: 300px;
+    overflow-x: hidden;
+    padding-right: 15px;
+}
+.change_service .information_wraper::-webkit-scrollbar{
+    background-color: white;
+    width: 3px;
+}
+.change_service .information_wraper::-webkit-scrollbar-thumb{
+    background-color: #d08e0b;
+}
+.change_service .cover{
+    position: relative;
+    height: 200px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+.change_service .cover .file_choice{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    opacity: 0;
+    z-index: 10;
+}
+.change_service .cover .fon{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.687);
+    border-radius: 10px;
+}
+.change_service .cover .file_choice{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
+}
+.change_service .cover .plus{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 75px;
+    margin: auto;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    border: 2px solid #d08e0b;
+}
+.change_service .cover .plus span{
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    user-select: none;
+    width: fit-content;
+}
+.change_service .starting_price{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.change_service .starting_price .money_icon{
+    margin-top: 10px;
+}
+.change_service .starting_price span{
+    color: rgb(79, 130, 3);
+    font-size: 30px;
+    padding-left: 5px;
+    user-select: none;
+}

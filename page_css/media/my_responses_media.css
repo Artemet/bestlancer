@@ -1,0 +1,53 @@
+/* my_responses_medias */
+@media only screen and (max-width: 908px){
+    .my_responses .users_order{
+        border-right: none;
+        padding: 0;
+        margin: 0;
+    }
+    .my_responses .top_part h3{
+        padding: 10px 0;
+        margin: 10px 0;
+        text-align: center;
+        border-top: 3px solid #d08e0b;
+        border-bottom: 3px solid #d08e0b;
+    }
+    .my_responses .top_part{
+        grid-template-columns: 1fr;
+    }
+    .my_responses .response{
+        border-bottom: 3px solid #d08e0b;
+    }
+    .my_responses .response_sub{
+        align-items: normal;
+    }
+}
+@media only screen and (max-width: 558px){
+    .order_information .page_choice{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+    }
+    .order_information .page_choice div{
+        padding: 0 10px;
+    }
+}
+@media only screen and (max-width: 408px){
+    .my_responses .response_sub p.comment{
+        font-size: 15px;
+    }
+    .my_responses .response_sub{
+        grid-template-columns: 1fr;
+    }
+    .my_responses .response_sub .main_information_wrapper{
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+    }
+    .order_information .page_choice{
+        display: none;
+    }
+    .my_responses .mobile_page_choice{
+        display: grid;
+    }
+}

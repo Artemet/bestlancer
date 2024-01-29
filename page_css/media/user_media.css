@@ -1,0 +1,199 @@
+/* user_media */
+@media only screen and (max-width: 1415px){
+    .user_account .card_container{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .service_container{
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+}
+@media only screen and (max-width: 1091px){
+    .user_account .card_container{
+        grid-template-columns: 1fr 1fr;
+    }
+    .user_account .menu_include a{
+        margin: auto;
+    }
+    .service_container{
+        grid-template-columns: 1fr 1fr !important;
+    }
+    .user_account .service{
+        margin: auto;
+    }
+}
+@media only screen and (max-width: 1003px){
+    .user_account .account_redactor{
+        padding-left: 50px;
+    }
+    .user_account .account_redactor .sub_menu{
+        margin-left: 50px;
+    }
+}
+@media only screen and (max-width: 960px){
+    .user_account .account_redactor{
+        padding-left: 15px;
+    }
+    .user_account .account_redactor .sub_menu{
+        margin-left: 15px;
+    }
+}
+@media only screen and (max-width: 900px){
+    .user_account .user_work{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .user_information .account_redactor{
+        display: none;
+    }
+    .user_account .mobile_redactor{
+        display: block;
+    }
+    .user_account .mobile_redactor button{
+        display: grid;
+        grid-template-columns: 1fr auto;
+    }
+    .user_account .account_redactor .sub_menu{
+        width: 100%;
+        border: none;
+        padding: 10px 0;
+        background: none;
+    }
+    .user_account .menu_wrapper{
+        background-color: rgb(53, 52, 52);
+        margin: 0 10px;
+        border-left: 3px solid #d08e0b;
+        border-right: 3px solid #d08e0b;
+    }
+    .user_account .account_redactor{
+        padding-top: 25px;
+        padding-left: 0;
+    }
+    .user_account .account_redactor .sub_menu p{
+        margin: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+    .user_account .account_redactor .sub_menu{
+        margin-left: 0;
+        padding: 0;
+        height: 150px;
+    }
+}
+@media only screen and (max-width: 761px){
+    .user_information .button_choice{
+        display: none;
+    }
+    .user_account .mobile_choice{
+        display: block;
+    }
+}
+@media only screen and (max-width: 745px){
+    .user_account .card_container{
+        grid-template-columns: 1fr;
+    }
+    .service_container{
+        grid-template-columns: 1fr !important;
+    }
+    .user_account .about_user p{
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 580px){
+    .user_account .account_redactor button{
+        justify-content: center;
+    }
+    .user_information img{
+        height: 100px;
+        width: 100px;
+        margin-right: 15px;
+    }
+    .user_information .name{
+        font-size: 16px;
+    }
+    .user_information .information u{
+        font-size: 15px;
+    }
+    .user_account .main_information b{
+        font-size: 14px;
+    }
+    .user_account b.level{
+        font-size: 14px;
+    }
+    .user_information b.reviews{
+        font-size: 14px;
+    }
+    .user_account .level_line{
+        margin-top: 5px;
+    }
+}
+@media only screen and (max-width: 500px){
+    .user_account .user_work{
+        grid-template-columns: 1fr;
+    }
+}
+@media only screen and (max-width: 463px){
+    .user_information img{
+        height: 70px;
+        width: 70px;
+    }
+    .user_information span.nik{
+        padding-left: 10px;
+    }
+}
+@media only screen and (max-width: 433px){
+    .user_information img{
+        margin-right: 7px;
+    }
+    .user_information .name{
+        font-size: 12px;
+    }
+    .user_information span.nik{
+        font-size: 12px;
+    }
+    .user_information .information u{
+        font-size: 11px;
+    }
+    .user_account .main_information b{
+        font-size: 12px;
+    }
+    .user_account b.level{
+        font-size: 12px;
+    }
+    .user_information b.reviews{
+        font-size: 12px;
+    }
+    .user_account .mobile_redactor button{
+        font-size: 14px;
+    }
+    .user_account .mobile_redactor .sub_menu p{
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 427px){
+    .user_account .project_covers .project{
+        width: 100%;
+    }
+    .service_container .service{
+        width: 100% !important;
+    }
+    .service_container .service .img{
+        width: 100% !important;
+    }
+}
+@media only screen and (max-width: 400px){
+    .user_account .account_redactor button{
+        align-items: center;
+    }
+    .user_account .about_user p{
+        padding-right: 0;
+    }
+    .user_account .menu_include{
+        margin-bottom: 30px;
+    }
+}
+@media only screen and (max-width: 339px){
+    .container{
+        margin: 140px 10px;
+    }
+}

@@ -1,0 +1,111 @@
+/* reviews_style */
+.reviews_company{
+    position: relative;
+}
+.reviews_company h2.header_title{
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 25px;
+    justify-content: center;
+}
+.reviews_company .bestlancer_text{
+    padding-left: 10px;
+}
+.reviews_company .line{
+    margin: 0 auto;
+}
+.reviews_company .reviews{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.reviews_company .review{
+    padding: 5px;
+    position: relative;
+    background-color: white;
+    border: 2px solid rgb(79, 130, 3);
+    border-radius: 5px;
+    margin: 20px 0;
+}
+.reviews_company .my_review{
+    background-color: #d08e0b1f;
+}
+.reviews_company .review .user_icon img{
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    border: 3px solid gray;
+    margin-right: 10px;
+}
+.reviews_company .review .time{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-right: 5px;
+}
+.reviews_company .review .time p{
+    font-size: 14px;
+    color: gray;
+}
+.reviews_company .review_user{
+    display: flex;
+    align-items: center;
+}
+.reviews_company .star_number{
+    color: #d08e0b;
+}
+.reviews_company .star_number p{
+    width: fit-content;
+    border-bottom: 1px solid #d08e0b;
+}
+.reviews_company .no_review{
+    padding-top: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+}
+.reviews_company .length_warning{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(255, 99, 71, 0.819);
+    color: white;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: 0.5s;
+}
+.reviews_company .length_warning_close{
+    opacity: 0;
+}
+.reviews_company .length_warning .close_warning{
+    padding-top: 6px;
+    text-align: right;
+    cursor: pointer;
+    padding-left: 5px;
+    margin-left: 5px;
+    border-left: 2px solid white;
+}
+.reviews_company .length_warning svg{
+    fill: white !important;
+    font-size: 20px;
+    transition: 0.5s;
+}
+.reviews_company .length_warning svg:hover{
+    opacity: 0.5;
+    transform: rotate(90deg);
+}
+.reviews_company .length_warning p{
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}

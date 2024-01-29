@@ -1,0 +1,138 @@
+/* home_medias */
+@media only screen and (max-width: 1550px){
+    .catalog_container .categorys{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .catalog_container .category{
+        margin: 10px auto;
+    }
+}
+@media only screen and (max-width: 1250px){
+    .about_us p.about_text{
+        font-size: 18px;
+    }
+}
+@media only screen and (max-width: 1240px){
+    .freelance_container .title_part .part_one .text_container{
+        display: grid;
+    }
+    .freelance_container .title_part .part_one .text_container span{
+        display: none;
+    }
+    .work_subsequence p{
+        font-size: 13px;
+    }
+}
+@media only screen and (max-width: 1160px){
+    .freelance_container .title_part img{
+        width: 340px;
+    }
+}
+@media only screen and (max-width: 1079px){
+    .freelance_container .title_part .part_two{
+        display: none;
+    }
+    .freelance_container .movement_number .movement{
+        padding: 20px 0;
+    }
+    .catalog_container .categorys{
+        grid-template-columns: 1fr 1fr;
+    }
+    .work_subsequence .subsequence_container .subsequence{
+        border-right: 3px solid rgb(79, 130, 3);
+        margin-right: 5px
+    }
+    .bestlancer_about .about{
+        grid-gap: 40px;
+    }
+}
+@media only screen and (max-width: 853px){
+    .work_subsequence .subsequence_container{
+        grid-template-columns: 1fr 1fr;
+    }
+    .work_subsequence .subsequence_container .subsequence{
+        padding-left: 5px;
+    }
+    .freelance_container .movement_number .instruction{
+        grid-template-columns: 1fr;
+        padding-left: 50px;
+    }
+    .freelance_container .movement_number .movement{
+        border-left: 2px solid #d08e0b;
+        padding: 0 10px;
+        margin: 20px 0;
+    }
+    .freelance_container .movement_number .movement .img{
+        display: none;
+    }
+}
+@media only screen and (max-width: 741px){
+    .freelance_container .title_part textarea{
+        width: 340px;
+    }
+    .freelance_container .title_part input{
+        width: 93%;
+    }
+}
+@media only screen and (max-width: 680px){
+    .bestlancer_about .about{
+        grid-template-columns: 1fr;
+    }
+    .bestlancer_about .about div{
+        border-bottom: 3px solid rgb(79, 130, 3);
+    }
+    .catalog_container .categorys{
+        grid-template-columns: 1fr;
+    }
+    .repitation_container .main_reoitation{
+        grid-template-columns: 1fr;
+    }
+}
+@media only screen and (max-width: 585px){
+    .freelance_container .title_part textarea{
+        width: 90%;
+    }
+    .bestlancer_about h2{
+        display: grid;
+        padding-bottom: 40px;
+    }
+}
+@media only screen and (max-width: 503px){
+    .freelance_container .title_part .part_one h2{
+        font-size: 40px;
+    }
+}
+@media only screen and (max-width: 490px){
+    .work_subsequence .subsequence_container{
+        grid-template-columns: 1fr;
+    }
+    .catalog_container .categorys a{
+        margin: auto;
+    }
+    .work_subsequence .subsequence_container .subsequence{
+        border-right: none;
+    }
+    .freelance_container .title_part .part_one{
+        padding: 20px 10px;
+    }
+    .freelance_container .movement_number .instruction{
+        padding-left: 10px;
+    }
+    .about_us .anser div{
+        width: auto;
+        color: #d08e0b;
+        font-size: 20px;
+    }
+    .about_us .anser p{
+        font-size: 16px;
+    }
+    .repitation_container .main_reoitation span{
+        font-size: 30px;
+    }
+    .repitation_container .main_reoitation b{
+        font-size: 30px;
+    }
+    .header .header_title h2{
+        font-size: 22px;
+    }
+}

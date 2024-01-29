@@ -1,0 +1,53 @@
+/* project_page_style */
+.project_container .header_title{
+    padding: 35px 0;
+    position: relative;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.project_container .header_title h2{
+    text-align: center;
+    margin: 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.657);
+    padding: 5px 0;
+}
+.project_container .header_title p{
+    margin: 0;
+    padding-left: 10px;
+    color: rgb(79, 130, 3);
+}
+.project_container h4{
+    font-size: 25px;
+    color: gray;
+    display: flex;
+}
+.project_container h4 p{
+    margin: 0;
+    padding-left: 5px;
+    color: rgb(79, 130, 3);
+}
+.project_container p.video_link{
+    display: none;
+}
+.project_container .cover_part{
+    display: grid;
+}
+.project_container .cover_part .in_cover{
+    margin: 16px 0;
+}
+.project_container .cover_part b{
+    font-size: 26px;
+}
+.project_container .cover_part a{
+    color: white;
+    text-decoration: none;
+}
+.project_container .cover_part span{
+    padding: 5px;
+    background-color: rgb(79, 130, 3);
+    border-radius: 50px;
+}

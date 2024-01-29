@@ -1,0 +1,312 @@
+/* order_progress_style */
+.order_progress{
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: 1fr auto;
+}
+.order_progress .order_users{
+    display: grid;
+    grid-gap: 20px;
+    padding: 35px 0;
+    border-bottom: 1px solid gray;
+}
+.order_progress .order_users b{
+    font-size: 18px;
+}
+.order_progress .user_icon img{
+    height: 60px;
+    width: 60px;
+    border-radius: 5px;
+    border: 3px solid #d08e0b;
+    margin-right: 20px;
+}
+.order_progress .user_row{
+    padding-top: 17.5px;
+    display: flex;
+    align-items: center;
+}
+.order_progress .user_row a{
+    font-size: 18px;
+    text-decoration: none;
+    color: rgb(53, 52, 52);
+}
+.order_progress .order_line{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding-bottom: 40px;
+}
+.order_progress .link_line{
+    display: flex;
+    align-items: center;
+}
+.order_progress .link_line div{
+    padding-right: 10px;
+}
+.order_progress .link_line svg{
+    fill: gray !important;
+    height: 10px;
+}
+.order_progress .link_line a{
+    text-decoration: none;
+    color: #d08e0b;
+}
+.order_progress .link_line a.order_link{
+    color: rgb(53, 52, 52);
+    text-decoration: underline;
+}
+.order_progress .date p{
+    color: gray;
+    font-size: 14px;
+}
+.order_progress .information_part{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0 20px;
+}
+.order_progress .information_part a{
+    text-decoration: none;
+    color: #d08e0b;
+    transition: 0.5s;
+}
+.order_progress .information_part a:hover{
+    opacity: 0.7;
+}
+.order_progress .information_part p{
+    width: fit-content;
+}
+.order_progress .part_one{
+    background-color: lightgray;
+}
+.order_progress .part_one p{
+    font-weight: 600;
+}
+.order_progress .information_part p.price{
+    color: rgb(79, 130, 3);
+}
+.order_progress .time_progress{
+    padding: 40px 0;
+    border-bottom: 1px solid gray;
+}
+.order_progress .time_progress b{
+    font-size: 18px;
+}
+.order_progress .progress_bar{
+    width: 100%;
+    height: 20px;
+    margin-top: 5px;
+    border-radius: 50px;
+    background-color: rgb(226, 224, 224);
+}
+.order_progress .progress_bar .in_bar{
+    height: 20px;
+    border-radius: 50px;
+    max-width: 100%;
+    width: 0%;
+    background-color: rgb(79, 130, 3);
+}
+.order_progress .time_information{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+.order_progress .time_information p{
+    margin: 0;
+    color: gray;
+}
+.order_progress_container{
+    padding: 35px 0;
+}
+.order_progress b.title{
+    font-size: 18px;
+}
+.order_progress .date_row {
+    position: relative;
+    margin-top: 20px;
+}
+.order_progress .date_row .date {
+    position: relative;
+    z-index: 2;
+    width: fit-content;
+    padding: 8px 15px;
+    background-color: rgb(226, 224, 224);
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.order_progress .date_row .date p {
+    margin: 0;
+}
+.order_progress .date_row .date_line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: rgb(226, 224, 224);
+}
+.order_progress .progress_row{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.order_progress .progress_row img{
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
+    margin-right: 20px;
+    border: 3px solid rgb(79, 130, 3);
+}
+.order_progress .progress_row .progress_information{
+    display: flex;
+    align-items: center;
+}
+.order_progress .progress_row p.time{
+    padding-left: 10px;
+    font-size: 12px;
+    color: gray;
+}
+.order_progress .progress_row .progress_information b{
+    font-size: 15px;
+}
+.order_progress .progress_row p.main_information{
+    margin-top: 0;
+}
+.order_progress .progress_row p.under_information{
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+}
+.order_progress .progress_row p.under_information a{
+    color: #d08e0b;
+}
+.order_progress .double_information{
+    background-color: white;
+    height: fit-content;
+    border-radius: 20px;
+    padding: 20px 10px;
+    width: 250px;
+}
+.order_progress .double_information .information_part{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.order_progress .double_information p.information_name{
+    font-size: 14px;
+    color: gray;
+}
+.order_progress .double_information .resolt p{
+    font-size: 14px;
+    margin: 0;
+}
+.order_progress .double_information .status p{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(79, 130, 3);
+    color: white;
+}
+.order_progress .double_information .status p.waiting{
+    background-color: #d08e0b;
+    color: black;
+}
+.order_progress .double_information .main_information{
+    border-bottom: 1px solid gray;
+}
+.order_progress .double_objects{
+    padding: 0 20px;
+}
+.order_progress .double_objects .object{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 10px;
+}
+.order_progress .arrow{
+    margin: 16px 0;
+}
+.order_progress .arrow button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.order_progress .double_objects .object_wrapper{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+.order_progress .double_objects .object_icon svg{
+    height: 18px;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.order_progress .double_objects .object_icon{
+    position: relative;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid rgb(79, 130, 3);
+}
+.order_progress .double_objects .arrow svg{
+    height: 15px;
+    transition: 0.5s;
+    fill: rgb(79, 130, 3) !important;
+}
+.order_progress .double_objects .arrow svg.active{
+    transform: rotate(-180deg);
+}
+.order_progress .object_sub{
+    grid-column: span 2;
+    display: none;
+    padding-left: 7px;
+    border-top: 1px solid #d08e0b;
+}
+.order_progress .object_sub_active{
+    display: block;
+}
+.order_progress .object_sub .file{
+    display: flex;
+    align-items: center;
+}
+.order_progress .object_sub .file svg{
+    height: 25px;
+    fill: gray !important;
+}
+.order_progress .object_sub .file p{
+    padding-left: 10px;
+}
+.order_progress .object_sub .file a{
+    color: rgb(53, 52, 52);
+}
+.order_progress .help b{
+    font-size: 15px;
+}
+.order_progress .help p{
+    font-size: 14px;
+}
+.order_progress .help div{
+    margin-top: 10px;
+    border-bottom: 1px solid #d08e0b;
+}
+.order_progress .help a{
+    color: rgb(79, 130, 3);
+}
+.order_progress .button_option button{
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 2px solid #d08e0b;
+    transition: 0.5s;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+}
+.order_progress .button_option button:hover{
+    color: #d08e0b;
+}

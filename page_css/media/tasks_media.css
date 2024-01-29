@@ -1,0 +1,51 @@
+/* tasks_medias */
+@media only screen and (max-width: 850px){
+    .tasks_container .tasks_wrapper{
+        grid-template-columns: 1fr;
+    }
+    .tasks_container .make_order{
+        width: 100%;
+    }
+    .overlay .loader{
+        display: none;
+    }
+}
+@media only screen and (max-width: 592px){
+    .tasks_container p.price{
+        padding: 0 10px;
+    }
+    .tasks_container .order_part h3{
+        font-size: 16px;
+    }
+    .tasks_container p.user_order_tz{
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width: 498px){
+    .tasks_container .user_order_information .return_date{
+        display: none;
+    }
+}
+@media only screen and (max-width: 385px){
+    .orders .order{
+        grid-template-columns: 1fr;
+    }
+    .tasks_container .order_part{
+        border: none;
+    }
+    .tasks_container p.price{
+        text-align: center;
+    }
+    .tasks_container p.price{
+        padding-top: 10px;
+        margin-top: 10px;
+        box-sizing: border-box;
+        border-top: 2px solid gray;
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 294px){
+    .tasks_container{
+        margin: 140px 10px;
+    }
+}
