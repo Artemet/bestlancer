@@ -1,0 +1,33 @@
+/* messages_style */
+@media only screen and (max-width: 1028px){
+    .chat_row .message{
+        max-width: 80%;
+    }
+}
+@media only screen and (max-width: 834px){
+    .messanger_users{
+        width: 260px;
+    }
+    .user_chat .chat{
+        padding: 0;
+    }
+}
+@media only screen and (max-width: 594px){
+    .messanger_container{
+        display: block;
+        margin-left: 1px;
+        margin-right: 1px;
+        margin-bottom: 0;
+    }
+    .messanger_users{
+        width: 100%;
+        height: auto;
+    }
+    .messanger_users .message_user{
+        width: 100%;
+    }
+    .user_chat{
+        opacity: 0;
+        display: none;
+    }
+}

@@ -56,7 +56,7 @@
 .invite_modal .acquaintance_users .none_acquaintance{
     padding-top: 80px;
     text-align: center;
-    color: rgb(79, 130, 3);
+    color: gray;
 }
 .invite_modal button{
     margin-top: 15px;

@@ -232,6 +232,9 @@
     margin-bottom: 8px;
     color: #d08e0b;
 }
+.order_page .user_order .resolt_application b{
+    color: gray;
+}
 .order_page .user_order .arrow{
     text-align: right;
     font-size: 25px;

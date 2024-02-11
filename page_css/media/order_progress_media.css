@@ -1,0 +1,24 @@
+/* order_progress_media_style */
+@media only screen and (max-width: 891px){
+    .order_progress{
+        grid-template-columns: 1fr;
+    }
+    .order_progress .double_information{
+        grid-row: 1;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+@media only screen and (max-width: 661px){
+    .order_progress .information_part{
+        padding: 0;
+    }
+    .order_progress .information_wrapper p{
+        margin: 16px auto;
+    }
+}
+@media only screen and (max-width: 433px){
+    .order_progress .date{
+        display: none;
+    }
+}

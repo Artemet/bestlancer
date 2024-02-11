@@ -1,0 +1,45 @@
+/* rule_style */
+.rules_wrapper{
+    display: grid;
+    grid-gap: 30px;
+    padding: 20px;
+}
+.rules_wrapper .rule_number{
+    width: 35px;
+    height: 35px;
+    background-color: #d08e0b;
+    border-radius: 50%;
+    position: relative;
+}
+.rules_wrapper .rule_number b{
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    color: white;
+    text-align: center;
+}
+.rules_wrapper .rule{
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+.rules_wrapper .rule h3{
+    margin: 7px 0;
+    padding-left: 20px;
+    color: gray;
+}
+@media only screen and (max-width: 501px){
+    .rules_wrapper{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .rules_wrapper .rule{
+        grid-template-columns: 1fr;
+    }
+    .rules_wrapper .rule h3{
+        padding-left: 10px;
+    }
+    .rules_wrapper .rule ul{
+        padding-left: 30px;
+    }
+}

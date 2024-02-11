@@ -4,6 +4,13 @@
     grid-gap: 25px;
     grid-template-columns: 1fr auto;
 }
+.order_progress .header{
+    position: relative;
+    transition: 0.3s;
+}
+.order_progress .header_load{
+    opacity: 0.5;
+}
 .order_progress .order_users{
     display: grid;
     grid-gap: 20px;
@@ -186,7 +193,7 @@
     height: fit-content;
     border-radius: 20px;
     padding: 20px 10px;
-    width: 250px;
+    width: 300px;
 }
 .order_progress .double_information .information_part{
     display: grid;
@@ -307,6 +314,89 @@
     width: 100%;
     font-size: 15px;
 }
+.order_progress .button_option button.none_active{
+    opacity: 0.7;
+    pointer-events: none;
+}
 .order_progress .button_option button:hover{
     color: #d08e0b;
+}
+.order_progress .review_write{
+    padding-top: 20px;
+    position: relative;
+    border-top: 2px solid rgb(79, 130, 3);
+}
+.order_progress .review_wrapper{
+    transition: 0.3s;
+}
+.order_progress .review_wrapper_load{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.order_progress .review_write h3{
+    font-size: 22px;
+    margin: 10px 0;
+}
+.order_progress .review_write textarea{
+    resize: none;
+}
+.order_progress .review_write .review{
+    position: relative;
+}
+.order_progress .review_write .length_controll{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.order_progress .review_write .length_controll p{
+    margin: 7px;
+    padding: 3px;
+    background-color: white;
+    user-select: none;
+}
+.order_progress .review_write .length_controll p.max_length{
+    color: tomato;
+}
+.order_progress .review_write svg{
+    height: 40px;
+}
+.order_progress .review_write .smiles{
+    display: flex;
+}
+.order_progress .review_write .smiles div{
+    padding-right: 20px;
+}
+.order_progress .review_write .smiles svg{
+    cursor: pointer;
+    fill: rgb(226, 224, 224) !important;
+}
+.order_progress .review_write .smiles svg.good_smile_active{
+    fill: rgb(79, 130, 3) !important;
+}
+.order_progress .review_write .smiles svg.good_smile:hover{
+    fill: rgb(79, 130, 3) !important;
+}
+.order_progress .review_write .smiles svg.bad_smile_active{
+    fill: tomato !important;
+}
+.order_progress .review_write .smiles svg.bad_smile:hover{
+    fill: tomato !important;
+}
+.order_progress .review_write button{
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border: 2px solid #d08e0b;
+    transition: 0.5s;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 18px;
+}
+.order_progress .review_write button.none_ready{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.order_progress .review_write button:hover{
+    opacity: 0.5;
 }

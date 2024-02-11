@@ -145,6 +145,9 @@
     .user_information img{
         margin-right: 7px;
     }
+    .user_account .user_block h2{
+        font-size: 25px;
+    }
     .user_information .name{
         font-size: 12px;
     }

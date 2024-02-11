@@ -1,3 +1,10 @@
+.project_add_container .form_wrapper{
+    transition: 0.5s;
+}
+.project_add_container .form_wrapper_load{
+    opacity: 0.5;
+    pointer-events: none;
+}
 .project_add_container .cover_add{
     margin: 20px 0;
     position: relative;

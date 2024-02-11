@@ -170,6 +170,9 @@
     letter-spacing: 2px;
 }
 /* work_resolt */
+.work_resolt{
+    display: none;
+}
 .work_resolt .works{
     padding-top: 30px;
     display: flex;

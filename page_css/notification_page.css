@@ -175,6 +175,9 @@
     grid-gap: 50px;
     grid-template-columns: 1fr 1fr auto;
 }
+.notification_container .main_notification a{
+    color: rgb(79, 130, 3);
+}
 .notification_container .order_files{
     margin-left: 15px;
     padding-left: 15px;

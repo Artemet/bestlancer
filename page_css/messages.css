@@ -8,10 +8,14 @@ body{
 .messanger_users{
     height: 80vh;
     width: 340px;
+    transition: 0.3s;
     position: relative;
     overflow-x: hidden;
     background-color: lightgray;
     border-right: 1px solid lightgray;
+}
+.messanger_users_hide{
+    display: none;
 }
 .messanger_users .information_line{
     padding-top: 5px;
@@ -140,8 +144,12 @@ body{
     border: 2px solid rgb(79, 130, 3);
 }
 .user_chat{
+    transition: 0.3s;
     position: relative;
     background-color: white;
+}
+.user_chat_active{
+    display: block !important;
 }
 .user_chat .message_user{
     display: grid;
@@ -390,6 +398,7 @@ body{
 .chat_row .message .arrow_options{
     position: absolute;
     right: 0;
+    z-index: 100;
     border-radius: 5px;
     margin-right: 10px;
     margin-left: 10px;
@@ -425,11 +434,18 @@ body{
 .chat_row .message p{
     margin: 0;
     font-size: 14px;
+    transition: 0.3s;
 }
 .chat_row .message p.only_smile{
     font-size: 35px;
     text-align: center;
     user-select: none;
+}
+.chat_row .message p.main_value_wait{
+    opacity: 0.5;
+}
+.chat_row .message:hover p.main_value{
+    opacity: 0.5;
 }
 .chat_row .my_user{
     background-color: rgb(195, 212, 169);
@@ -714,7 +730,7 @@ body{
 .user_chat .document_type svg{
     height: 40px;
 }
-.user_chat .zip_object{
+.user_chat .file_wrapper_object{
     display: grid;
     grid-gap: 10px;
     grid-template-columns: auto 1fr;
@@ -748,4 +764,27 @@ body{
 .user_chat .file_object .file_information p{
     font-size: 12px;
     color: gray;
+}
+.user_chat .back_link{
+    display: flex;
+    padding: 3px 10px;
+    transition: 0.3s;
+    background-color: gray;
+    background-color: lightgray;
+}
+.user_chat .back_link a{
+    color: rgb(79, 130, 3);
+    text-decoration: none;
+    padding-left: 5px;
+    transition: 0.3s;
+}
+.user_chat .back_link:hover{
+    background-color: #d08e0b;
+}
+.user_chat .back_link:hover a{
+    color: black;
+    opacity: 0.7;
+}
+.user_chat .back_link svg{
+    height: 12px;
 }
