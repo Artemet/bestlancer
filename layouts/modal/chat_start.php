@@ -1,5 +1,8 @@
 <div class="user_container start_chat_container">
     <div class="start_chat">
+        <div class="overlay">
+            <div class="loader"></div>
+        </div>
         <div class="close">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                 viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -32,16 +35,11 @@
                     data: { thirst_message: message_value }
                 })
                     .done(function () {
-                        $('button.chat_start').html('Открыть чат');
-                        $('button.chat_start').addClass('chat_link');
-                        $('.start_chat_container')[0].style.opacity = 0;
+                        $('.start_chat_container .overlay').addClass("overlay_active");
+                        $('.start_chat_container button').addClass("load");
                         setTimeout(() => {
-                            $('.start_chat_container')[0].style.display = "none";
-                            alert("Вы успешно начали чат с <?= $user['nik'] ?>");
-                        }, 500);
-                        $('button.chat_start').on('click', function () {
-                            window.location.href = "messages.php";
-                        });
+                            window.location.reload();
+                        }, 800);
                     });
             });
         </script>
