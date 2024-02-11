@@ -22,9 +22,12 @@ if (!isset($_SESSION["nik"])) {
 } else {
     include "../database_connect.php";
     $email = $_SESSION["email"];
+    $my_nik = $_SESSION["nik"];
+    $role = $_SESSION["role"];
     email_warning();
     $review = $_POST["user_review"];
     $stars = $_POST["star_number"];
+    $type = "exchange";
     $date = date("Y-m-d");
     $date_resolt = null;
     list($year, $month, $day) = explode("-", $date);
@@ -36,10 +39,11 @@ if (!isset($_SESSION["nik"])) {
         $date_resolt .= $date_array[$i];
     }
 
-    $sql = "INSERT INTO `reviews` (`id`, `email`, `review`, `star`, `date`) VALUES (NULL, ?, ?, ?, ?)";
+    $sql = "INSERT INTO `reviews` (`id`, `nik`, `email`, `review`, `role`, `star`, `type`, `date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($bd_connect, $sql);
-    mysqli_stmt_bind_param($stmt, "ssis", $email, $review, $stars, $date_resolt);
+    mysqli_stmt_bind_param($stmt, "ssssiss", $my_nik, $email, $review, $role, $stars, $type, $date_resolt);
     mysqli_stmt_execute($stmt);
+
 
     header("Location: ../../pages/reviews.php");
 }
