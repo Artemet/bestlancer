@@ -66,9 +66,12 @@ function icon_choice(){
         get_choice_number.innerHTML = 0;
         this.classList.remove("active");
         get_notififcations.forEach( (item) => {
-            if (item.className.includes("execution") && item.className.includes("choice_notification")){
-                alert("Выбирите действие для заказа!");
-                throw new Error('Выбирите действие для заказа!');
+            const ckeckbox_choice = item.querySelector("input");
+            if (ckeckbox_choice.checked === true){
+                if (item.className.includes("execution") && item.className.includes("choice_notification")){
+                    alert("Выбирите действие для заказа!");
+                    throw new Error('Выбирите действие для заказа!');
+                }
             }
         });
         $.ajax({

@@ -22,7 +22,8 @@ function remove_notification(){
                 $.ajax({
                     url: "../bd_send/order/order_action.php?order_id=" + get_execution_id,
                 })
-                    .done(function (){
+                    .done(function (response){
+                        console.log(response);
                         const get_overlay = get_parent_notification.querySelector(".overlay");
                         const get_wrapper = get_parent_notification.querySelector(".notification_wrapper");
                         get_overlay.classList.add("overlay_active");

@@ -1,4 +1,5 @@
 //registor_script
+let email_agree = false;
 function registor_script(){
     let data_information = []; 
 
@@ -192,7 +193,7 @@ function registor_script(){
                                     }
                                     if (end_register === true){
                                         const get_old_level = document.querySelector(".registor_container .main_registor_question");
-                                        const get_new_level = document.querySelector(".registor_container .end_registor_question");
+                                        const get_new_level = document.querySelector(".registor_container .code_registor_question");
                                         const get_button = document.querySelector(".registor_container .end_registor_question button");
                                         get_old_level.style.opacity = 0;
                                         setTimeout( () => {
@@ -203,13 +204,17 @@ function registor_script(){
                                             }, 100);
                                         }, 500);
                                         //main_logic
-                                        const get_nik_input = get_new_level.querySelector(".right_in");
+                                        const get_nik_level = document.querySelector(".registor_container .end_registor_question");
+                                        const get_nik_input = get_nik_level.querySelector(".right_in");
                                         get_nik_input.addEventListener("input", function (){
                                             const get_button = this.closest(".question").querySelector(".post_button button");
                                             if (this.value.length >= 5){
                                                 get_button.classList.add("active_click");
                                             } else{
-                                                get_button.classList.remove("active_click");
+                                                const parent_question = this.closest(".question");
+                                                if (!parent_question.className.includes("code_registor_question")){
+                                                    get_button.classList.remove("active_click");
+                                                }
                                             }
                                         });
                                         get_button.addEventListener("click", function (){
@@ -243,6 +248,9 @@ function registor_script(){
                             const password = data_information[4];
                             const country = data_information[5];
                             const nik = my_nik;
+                            if (!email_agree){
+                                return;
+                            }
                             $.ajax({
                                 method: "POST",
                                 url: "../bd_send/user_registor.php?main_registor=1",
@@ -378,6 +386,64 @@ function registor_script(){
     back_page();
 }
 registor_script();
+//email_code
+function email_code(){
+    let my_code = null;
+    const get_container = document.querySelector(".registor_container .code_registor_question");
+    const get_input = get_container.querySelector("input");
+    const get_button = get_container.querySelector("button");
+    get_input.addEventListener("input", function (){
+        if (get_input.value.length >= 4){
+            get_button.classList.add("active_click");
+        } else{
+            get_button.classList.remove("active_click");
+        }
+        if (this.value.length > this.maxLength || /\D/g.test(this.value)) {
+            this.value = this.value.slice(0, this.maxLength);
+        }
+    });
+    //email_get
+    let code_temp = 0;
+    const get_old_container_button = document.querySelector(".registor_container .post_button button");
+    get_old_container_button.addEventListener("click", function (){
+        code_temp++;
+        const parent_container = this.closest(".question");
+        const email = parent_container.querySelector("input.email_value").value.trim();
+        if (code_temp === 1){
+            $.ajax({
+                url: "../bd_send/user_registor.php?email_check=" + email,
+            })
+                .done(function (code_catch){
+                    my_code = parseInt(code_catch, 10);
+                    console.log(my_code);
+                });
+        }
+    });
+    //code_check
+    get_button.addEventListener("click", function (){
+        const users_code = parseInt(get_input.value, 10);
+        const get_warning = document.querySelector(".registor_container .code_registor_question u.warning");
+        if (users_code !== my_code){
+            get_warning.innerHTML = "Неправильный код";
+            email_agree = false;
+            return;
+        } else{
+            get_warning.innerHTML = "";
+            email_agree = true;
+        }
+        get_container.style.opacity = 0;
+        setTimeout( () => {
+            const get_last_container = document.querySelector(".registor_container .end_registor_question");
+            get_container.removeAttribute("style");
+            get_last_container.style.display = "block";
+            setTimeout( () => {
+                get_last_container.style.opacity = 1;
+            }, 100);
+        }, 500);
+    });
+}
+email_code();
+
 //storage
 function local_storage_save() {
     const inputs = document.querySelectorAll(".main_registor_question input");

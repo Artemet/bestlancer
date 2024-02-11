@@ -2,49 +2,105 @@
 function application_value(){
     const get_inputs = document.querySelectorAll(".application_page .application_information input");
     const get_max_price = document.querySelector(".application_page p.max_price b.price");
-    if (get_max_price.innerHTML === "0"){
-        const get_max_price_tag = document.querySelector(".application_page p.max_price");
-        get_max_price_tag.remove();
-        get_inputs[0].max = "";
+    const get_order_id = document.querySelector(".application_page noscript.order_id_number");
+    try{
+        if (get_max_price.innerHTML === "0"){
+            const get_max_price_tag = document.querySelector(".application_page p.max_price");
+            get_max_price_tag.remove();
+            get_inputs[0].max = "";
+        }
+    } catch (e){
+        console.log("Цена договорная");
     }
     //input_check
-    const get_send_button = document.querySelector(".application_page form p.form_send");
-    get_send_button.addEventListener("click", function (){
-        const get_warning = document.querySelector(".application_page form u.warning");
-        const get_inputs = document.querySelectorAll(".application_page .application_information input");
-        if (get_inputs[0].value === "" && get_inputs[1].value === ""){
-            get_warning.innerHTML = "Введите цену и сроки!";
-        } else if (get_inputs[0].value === ""){
-            get_warning.innerHTML = "Введите цену!";
-        } else if (get_inputs[0].value < 5){
-            get_warning.innerHTML = "Минимальная цена 5$";
-        } else if (get_inputs[1].value === ""){
-            get_warning.innerHTML = "Введите сроки!";
-        } else if (get_inputs[0].value.includes("-") || get_inputs[1].value.includes("-")){
-            get_warning.innerHTML = "Неальзя использовать минусовые цифры!";
-        } else if (get_inputs[0].value.includes("e") || get_inputs[1].value.includes("e")){
-            get_warning.innerHTML = "Неальзя использовать символы!";
-        } else if (get_inputs[0].value.includes("+") || get_inputs[1].value.includes("+")){
-            get_warning.innerHTML = "Неальзя использовать символы!";
-        } else{
-            get_warning.innerHTML = "";
-            const get_button_block = document.querySelector(".application_page .form_send_block");
-            const change_button = document.createElement("button");
-            change_button.innerHTML = get_send_button.innerHTML;
-            change_button.classList = get_send_button.classList;
-            get_send_button.remove();
-            get_button_block.appendChild(change_button);
-            change_button.click();
+    let value_include = [];
+    const get_post_button = document.querySelector(".application_page .wrapper button");
+    const get_checkable_tags = document.querySelectorAll(".application_page .checkable");
+    get_checkable_tags.forEach( (item) => {
+        value_include.push(item.value.length >= 1);
+        item.addEventListener("input", function (){
+            value_include.splice(0, get_checkable_tags.length);
+            get_checkable_tags.forEach( (item) => {
+                value_include.push(item.value.length >= 1);
+            });
+            if (!value_include.includes(false)){
+                get_post_button.classList.remove("none_ready");
+            } else{
+                get_post_button.classList.add("none_ready");
+            }
+        });
+    });
+    //post_button
+    get_post_button.addEventListener("click", function (){
+        const order_id = parseInt(get_order_id.innerHTML, 10);
+        const get_checkable_tags = document.querySelectorAll(".application_page .checkable");
+        const get_values = document.querySelectorAll(".application_page .right_in");
+        const value_check = (tag_index) => {
+            let warning_find = false;
+            const input = get_checkable_tags[tag_index];
+            const input_warning = input.parentNode.querySelector("u.warning");
+            const value = parseInt(input.value);
+            input.value = value;
+            if (tag_index === 0){
+                //price_check
+                let max_price = null;
+                const get_max_price = document.querySelector(".application_page b.price");
+                try{
+                    max_price = parseInt(get_max_price.innerHTML.trim(), 10);
+                } catch (e){
+                    console.log("Цена договорная.");
+                }
+
+                if (value <= 299){
+                    input_warning.innerHTML = "Минимальная ставка 300 ₽";
+                    warning_find = true;
+                } else if (max_price !== null && value > max_price){
+                    input_warning.innerHTML = "Соблюдайте бюджет";
+                    warning_find = true;
+                } else{
+                    input_warning.innerHTML = "";
+                    warning_find = false;
+                }
+            } else if (tag_index === 1){
+                //day_check
+                if (value <= 0){
+                    input_warning.innerHTML = "Минимальный срок 1 день";
+                    warning_find = true;
+                } else{
+                    input_warning.innerHTML = "";
+                    warning_find = false;
+                }
+            }
+            return warning_find;
         }
+        for (let i = 0; i < get_checkable_tags.length; i++){
+            if (value_check(i) === true){
+                return;
+            }
+        }
+        //application_post
+        $.ajax({
+            method: "POST",
+            url: "../bd_send/order/send_application.php?order_id=" + order_id,
+            data: { price: get_values[0].value, time: get_values[1].value, user_message: get_values[2].value.trim() },
+        })
+            .done(function (response){
+                const get_wrapper = document.querySelector(".application_page .wrapper");
+                const get_overlay = document.querySelector(".application_page .overlay");
+                get_wrapper.classList.add("wrapper_loading");
+                get_overlay.classList.add("overlay_active");
+                setTimeout( () => {
+                    window.location.href = "order_page.php?order_id=" + order_id;
+                }, 800);
+            });
     });
 }
 application_value();
 //value_save
 function value_save(){
     const get_inputs = document.querySelectorAll(".application_page .right_in");
-    const get_order_id = document.querySelector("p.order_id_number");
+    const get_order_id = document.querySelector(".order_id_number");
     const id_convert = parseInt(get_order_id.innerHTML.trim(), 10);
-    console.log(id_convert);
     if (id_convert === id_convert){
         if (localStorage.getItem("order_text")) {
             get_inputs[2].value = localStorage.getItem("order_text");

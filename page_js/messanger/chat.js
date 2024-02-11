@@ -1,14 +1,6 @@
-//chat_scroll
-// function chat_scroll(){
-//     const get_chat = document.querySelector(".user_chat .chat");
-//     get_chat.scrollTop = get_chat.scrollHeight;
-// }
-// document.addEventListener("DOMContentLoaded", function() {
-//     chat_scroll();
-// });
 //time
 window.addEventListener("load", function (){
-    this.document.querySelector(".arrow_up").remove();
+    document.querySelector(".arrow_up").remove();
 });
 function message_time() {
     const messageTime = document.querySelectorAll(".chat_row .message_infrmation p");
@@ -276,3 +268,58 @@ export function delete_chat(){
         }
     });
 }
+//chat_media
+function chat_media(){
+    let back_link_temp = 0;
+    const screen_width = window.innerWidth;
+    if (screen_width <= 594){
+        const get_content = document.querySelector(".content");
+        const get_options_wrapper = document.querySelector(".messanger_users");
+        const get_users = get_options_wrapper.querySelectorAll(".message_user");
+        const get_user_chat = document.querySelector(".user_chat");
+        get_users.forEach( (item) => {
+            item.addEventListener("click", function (){
+                get_options_wrapper.style.opacity = 0;
+                setTimeout( () => {
+                    get_options_wrapper.classList.add("messanger_users_hide");
+                    get_user_chat.classList.add("user_chat_active");
+                    setTimeout( () => {
+                        get_user_chat.style.opacity = 1;
+                    }, 100);
+                }, 300);
+                back_link();
+            });
+        });
+        function back_link(){
+            back_link_temp++;
+            const create_wrapper = document.createElement("div");
+            const html_arr = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>', '<a>Назад</a>'];
+            create_wrapper.classList = "back_link";
+            if (back_link_temp >= 2){
+                return;
+            }
+            get_user_chat.insertBefore(create_wrapper, get_content);
+            for (let i = 0; i < 2; i++){
+                const create_part = document.createElement("div");
+                create_wrapper.appendChild(create_part);
+                create_part.innerHTML = html_arr[i];
+                
+            }
+            //click_logic
+            create_wrapper.addEventListener("click", function (){
+                get_user_chat.style.opacity = 0;
+                setTimeout( () => {
+                    get_options_wrapper.classList.remove("messanger_users_hide");
+                    get_user_chat.classList.remove("user_chat_active");
+                    setTimeout( () => {
+                        get_options_wrapper.style.opacity = 1;
+                        get_users.forEach( (item) => {
+                            item.classList.remove("message_user_active");
+                        });
+                    }, 100);
+                }, 300);
+            });
+        }
+    }
+}
+chat_media();

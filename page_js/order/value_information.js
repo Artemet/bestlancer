@@ -1,3 +1,4 @@
+import { clearLocalStorage } from "./order_values/value_save.js";
 //value_check
 function value_order_check(){
     const get_inputs = document.querySelectorAll(".make_order_container .check_value");
@@ -93,6 +94,7 @@ function value_order_check(){
                             window.location.reload();
                         }
                     } else{
+                        clearLocalStorage();
                         window.location.href = "../pages/my_orders.php";
                     }
                 });

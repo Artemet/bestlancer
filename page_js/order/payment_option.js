@@ -25,19 +25,5 @@ function payment_option(){
             item.style.opacity = 0.5;
         });
     });
-    //payment_choice
-    let payment_choice_temp = 0;
-    const get_payment_choice = document.querySelectorAll(".application_page .payment_choice input");
-    get_payment_choice[0].addEventListener("click", function (){
-        payment_choice_temp++;
-        const get_text = document.querySelector(".application_page .payment_choice p").innerHTML;
-        if (payment_choice_temp === 1){
-            get_payment_choice[1].value = get_text;
-        } else{
-            get_payment_choice[1].value = "";
-            payment_choice_temp = 0;
-        }
-    });
-    //code
 }
 payment_option();

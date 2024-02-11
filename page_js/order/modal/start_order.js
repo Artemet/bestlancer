@@ -46,10 +46,10 @@ function start_order(){
             data: { thirst_message: get_value, order_id: get_order_id }
         })
             .done(function (response){
+                console.log(response);
                 document.querySelector(".start_wrapper").classList.add("start_wrapper_load");
                 document.querySelector(".start_order_container .overlay").classList.add("overlay_active");
                 setTimeout( () => {
-                    console.log(response);
                     window.location.href = "../pages/order_progress.php?order_id=" + get_order_id;
                 }, 1000);
             });

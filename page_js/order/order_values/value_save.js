@@ -15,3 +15,7 @@ function order_value_save(){
     });
 }
 order_value_save();
+//clear_storage
+export function clearLocalStorage() {
+    localStorage.clear();
+}

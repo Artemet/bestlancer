@@ -132,7 +132,10 @@ document.addEventListener("DOMContentLoaded", function (){
         get_arrows.forEach( (item) => {
             item.addEventListener("click", function (){
                 menu_temp++;
-                const message_option = item.closest(".chat_row .message").querySelectorAll(".message_menu p");
+                const main_parent = item.closest(".chat_row .message");
+                const get_value_tag = main_parent.querySelector("p.main_value");
+                const message_option = main_parent.querySelectorAll(".message_menu p");
+                get_value_tag.classList.toggle("main_value_wait");
                 for (let i = 0; i < message_option.length; i++){
                     message_option[i].id = i;
                 }
