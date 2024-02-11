@@ -373,7 +373,7 @@ include "../layouts/header_line.php";
                             <div>
                                 <div><a href="user_page.php?user_id=' . final_user('id', 'user') . '" class="full_name" target="_blank">' . final_user('name', 'user') . ' ' . final_user('family', 'user') . '</a></div>
                                 <div><p class="life_information">' . final_user('age', 'user') . ', ' . final_user('country', 'user') . '</p></div>
-                                <div><p class="reviews">0 отзывов</p></div>
+                                <div><p class="reviews">Выполненых заказов: <b>' . final_user('orders', 'user') . '</b></p></div>
                             </div>
                             <div>
                                 <div><p class="price">' . final_user('price', 'application') . '₽</p></div>

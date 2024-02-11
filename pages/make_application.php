@@ -27,7 +27,7 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
         }
         if ($user_responses >= 1) {
             header("Location: home.php");
-            exit();
+            exit;
         }
     } else {
         $order_name = "<title>Заказ не найден</title>";
@@ -38,9 +38,9 @@ if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
 include "../layouts/header_line.php";
 ?>
 <div class="application_page container">
-    <p class="order_id_number">
+    <noscript class="order_id_number">
         <?= $order_id ?>
-    </p>
+    </noscript>
     <div class="header">
         <div class="header_title">
             <h2>Ваша заявка к заказу №
@@ -62,8 +62,10 @@ include "../layouts/header_line.php";
             }
             if ($user_blocked == false):
                 ?>
-                <form action="<?= "../bd_send/order/send_application.php?order_id=" . $order_id . "" ?>" method="post">
-                    <u class="warning"></u>
+                <div class="overlay">
+                    <div class="loader"></div>
+                </div>
+                <div class="wrapper">
                     <?php
                     if ($order_price == 0) {
                         echo "<p class='max_price'>Заказчик поставил договорную цену</p>";
@@ -74,13 +76,14 @@ include "../layouts/header_line.php";
                     <div class="part_wrapper">
                         <div>
                             <div class="application_price application_information">
-                                <div>
+                                <div class="value_wrapper">
+                                    <u class="warning"></u>
                                     <?php
                                     if ($order_price == 0) {
-                                        echo "<input type='number' name='price' min='5' class='right_in'
+                                        echo "<input type='number' name='price' min='300' class='right_in checkable'
                                         placeholder='Цена'>";
                                     } else {
-                                        echo "<input type='number' name='price' min='5' max='$order_price' class='right_in'
+                                        echo "<input type='number' name='price' min='300' max='$order_price' class='right_in checkable'
                                         placeholder='Цена'>";
                                     }
                                     ?>
@@ -90,8 +93,9 @@ include "../layouts/header_line.php";
                                 </div>
                             </div>
                             <div class="application_time application_information">
-                                <div>
-                                    <input type="number" name="time" min="1" class="right_in" placeholder="Сроки">
+                                <div class="value_wrapper">
+                                    <u class="warning"></u>
+                                    <input type="number" name="time" min="1" class="right_in checkable" placeholder="Сроки">
                                 </div>
                                 <div>
                                     <p>суток</p>
@@ -122,22 +126,16 @@ include "../layouts/header_line.php";
                                     <input type="text" name="payment_option" class="option_resolt" readonly>
                                 </div>
                             </div>
-                            <div class="payment_choice">
-                                <div><input type="checkbox"></div>
-                                <div>
-                                    <p>Безопасный платеж обязателен</p>
-                                </div>
-                                <input type="text" name="payment_choice" class="bd_information" readonly>
-                            </div>
                         </div>
                     </div>
-                    <textarea name="user_message" class="right_in" placeholder="Сообщение заказчику..." id="" cols="30"
-                        rows="10"></textarea>
-                    <div class="form_send_block">
-                        <!-- <p class="form_send">Отправить</p> -->
-                        <button class="form_send">Отправить</button>
+                    <div>
+                        <textarea name="user_message" class="right_in" placeholder="Сообщение заказчику..." id="" cols="30"
+                            rows="10"></textarea>
                     </div>
-                </form>
+                    <div class="form_send_block">
+                        <button class="form_send none_ready">Отправить</button>
+                    </div>
+                </div>
                 <?php
             endif;
             ?>

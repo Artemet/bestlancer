@@ -110,6 +110,16 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                     $notificationBlocks = array();
 
                     if ($page >= 1):
+                        function messenger_contact($value)
+                        {
+                            global $row, $bd_connect, $user_nik;
+                            $companion_nik = $row['nik'];
+                            $chat_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' AND `nik_two` = '$companion_nik') OR (`nik_one` = '$companion_nik' AND `nik_two` = '$user_nik')";
+                            $chat_query = mysqli_query($bd_connect, $chat_sql);
+                            if ($value == 1) {
+                                return mysqli_fetch_assoc($chat_query)['chat_id'];
+                            }
+                        }
                         while ($row = mysqli_fetch_assoc($page_query)):
                             $notification_temp++;
                             $order_id = $row['id'];
@@ -225,6 +235,31 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                 </div>
                                 <?php
                             endif;
+                            if ($order_type == 'review'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $nik ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Написал(а) отзыв</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
                             if ($order_type == 'execution'):
                                 ?>
                                 <div class="notification execution" id="<?= $row['id'] ?>">
@@ -274,7 +309,7 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                             endif;
                             if ($order_type == 'refusal'):
                                 ?>
-                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                <div class="notification" id="<?= $row['id'] ?>">
                                     <noscript class="execution_id">
                                         <?= $row['order_information'] ?>
                                     </noscript>
@@ -314,11 +349,292 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                 </div>
                                 <?php
                             endif;
+                            if ($order_type == 'payment_ask'):
+                                messenger_contact(0);
+                                ?>
+                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="overlay">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Запрос оплаты</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Исполнитель сделал определённую часть работы и показал вам результат.
+                                                        Так же исполнитель создал запрос на сумму
+                                                        <?= $row['payment_sum'] ?>₽. Как только часть работы будет вами
+                                                        проверина и
+                                                        оплачена,
+                                                        исполнитель продолжит выполнение.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
+                                                            в заказ</button></a></div>
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
+                                                            чат</button></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'payment_disagree'):
+                                messenger_contact(0);
+                                ?>
+                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="overlay">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Ожидание оплаты</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Продовцу не пришли средства за выполненый этап работы, пока оплата не будет
+                                                        сделана и подтверждена продавцом, заказ будет приостановлен.</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
+                                                            в заказ</button></a></div>
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
+                                                            чат</button></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'payment_check'):
+                                messenger_contact(0);
+                                ?>
+                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="overlay">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Проверка оплаты</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Заказчик проверил ваш этап на работе и перевёл вам сумму на указанные в
+                                                        настройках реквезиты в размере
+                                                        <?= $row['payment_sum'] ?>₽. Подтвердите действие в заказе.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
+                                                            в заказ</button></a></div>
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
+                                                            чат</button></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'order_finish'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Завершение заказа</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Покупатель успешно одобрил и оплатил выполнение заказа. Напишите <a
+                                                            href="order_progress.php?order_id=<?= $row['order_information'] ?>#review">отзыв
+                                                            о сотрудничестве</a>.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'payment_agree'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Подтверждение оплаты</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Продавец успешно подтвердил приход средств на кошелёк, и уже продолжает
+                                                        работу над заказом.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'order_start'):
+                                ?>
+                                <div class="notification" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Приступление к заказу</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Исполнитель приступил к работе над заказом. Вскоре продавец скринит вам
+                                                        первые результаты работы которые вы должны проверить и оплатить.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
                             if ($order_type == 'order_check'):
-                                $companion_nik = $row['nik'];
-                                $chat_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' AND `nik_two` = '$companion_nik') OR (`nik_one` = '$companion_nik' AND `nik_two` = '$user_nik')";
-                                $chat_query = mysqli_query($bd_connect, $chat_sql);
-                                $chat_resolt = mysqli_fetch_assoc($chat_query)['chat_id'];
+                                messenger_contact(0);
                                 ?>
                                 <div class="notification execution" id="<?= $row['id'] ?>">
                                     <noscript class="execution_id">
@@ -359,7 +675,107 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                             <div>
                                                 <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
                                                             в заказ</button></a></div>
-                                                <div><a href="messages.php?chat_id=<?= $chat_resolt ?>"><button>Открыть
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
+                                                            чат</button></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'order_return'):
+                                messenger_contact(0);
+                                ?>
+                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="overlay">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Возврат на доработку</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Покупатель вернул заказ на доработку</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
+                                                            в заказ</button></a></div>
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
+                                                            чат</button></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            endif;
+                            if ($order_type == 'order_ask'):
+                                messenger_contact(0);
+                                ?>
+                                <div class="notification execution" id="<?= $row['id'] ?>">
+                                    <noscript class="execution_id">
+                                        <?= $row['order_information'] ?>
+                                    </noscript>
+                                    <div class="overlay">
+                                        <div class="loader"></div>
+                                    </div>
+                                    <div class="notification_wrapper">
+                                        <input type="checkbox" class="checkbox">
+                                        <div class="top_part">
+                                            <div class="user_notification">
+                                                <div class="img">
+                                                    <img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt=""
+                                                        draggable="false">
+                                                </div>
+                                                <div>
+                                                    <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                        <?= $row['nik'] ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3>Запрос работы</h3>
+                                            </div>
+                                        </div>
+                                        <div class="main_notification">
+                                            <div>
+                                                <div>
+                                                    <h3>
+                                                        <?= $row['order_name'] ?>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p>Покупатель запросил у вас работу, дайте ему обратную связь.</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div><a href="order_progress.php?order_id=<?= $row['order_information'] ?>"><button>Перейти
+                                                            в заказ</button></a></div>
+                                                <div><a href="messages.php?chat_id=<?= messenger_contact(1); ?>"><button>Открыть
                                                             чат</button></a></div>
                                             </div>
                                         </div>

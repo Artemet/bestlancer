@@ -7,7 +7,11 @@ if (!isset($_SESSION["nik"])) {
 $my_nik = $_SESSION["nik"];
 include "../layouts/header.php";
 include "../bd_send/database_connect.php";
+echo "<link rel='stylesheet' href='../page_css/modal_css/order_done.css'>";
+echo "<link rel='stylesheet' href='../page_css/modal_css/payment_ask.css'>";
+echo "<link rel='stylesheet' href='../page_css/modal_css/pay.css'>";
 echo "<link rel='stylesheet' href='../page_css/order_progress.css'>";
+echo "<link rel='stylesheet' href='../page_css/media/order_progress_media.css'>";
 //order_check
 $order_id = null;
 if (isset($_GET["order_id"]) && is_numeric($_GET["order_id"])) {
@@ -79,6 +83,23 @@ $orderer_nik = order_bd('nik');
 $orderer_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$orderer_nik'";
 $orderer_query = mysqli_query($bd_connect, $orderer_sql);
 $orderer_resolt = mysqli_fetch_assoc($orderer_query);
+
+function response_bd($table)
+{
+    global $bd_connect, $order_id, $orderer_nik;
+    $order_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = $order_id AND `orderer_nik` = '$orderer_nik' ORDER BY `id` DESC LIMIT 1";
+    $order_query = mysqli_query($bd_connect, $order_sql);
+    $order_resolt = mysqli_fetch_assoc($order_query)[$table];
+    return $order_resolt;
+}
+
+if ($my_nik == $orderer_nik) {
+    //modal_connect
+    include "../layouts/modal/order/order_done.php";
+    include "../layouts/modal/order/pay.php";
+} else {
+    include "../layouts/modal/order/payment_ask.php";
+}
 include "../layouts/header_line.php";
 ?>
 <div class="order_progress container">
@@ -86,6 +107,9 @@ include "../layouts/header_line.php";
         <?= order_bd('id') ?>
     </noscript>
     <div class="header">
+        <div class="overlay">
+            <div class="loader"></div>
+        </div>
         <div class="header_title">
             <h2>Заказ №
                 <?= order_bd('id') ?>
@@ -171,7 +195,7 @@ include "../layouts/header_line.php";
                     <p>Срок</p>
                 </div>
                 <div>
-                    <p>Стоимость</p>
+                    <p>Остаток цены</p>
                 </div>
             </div>
             <div class="information_part">
@@ -320,7 +344,7 @@ include "../layouts/header_line.php";
 
                 $previous_date = $current_date;
 
-                if (strpos($notification_resolt['type'], "order") !== false):
+                if (strpos($notification_resolt['type'], "order") !== false || strpos($notification_resolt['type'], "payment") !== false):
                     $notification_nik = $notification_resolt['nik'];
                     $user_information_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$notification_nik'";
                     $user_information_query = mysqli_query($bd_connect, $user_information_sql);
@@ -337,6 +361,22 @@ include "../layouts/header_line.php";
                                     <?php
                                     if ($notification_resolt['type'] == "order_check") {
                                         echo "<b>Сдача работы</b>";
+                                    } elseif ($notification_resolt['type'] == "order_return") {
+                                        echo "<b>Возврат работы на доработку</b>";
+                                    } elseif ($notification_resolt['type'] == "order_ask") {
+                                        echo "<b>Запрос работы</b>";
+                                    } elseif ($notification_resolt['type'] == "order_finish") {
+                                        echo "<b>Завершение заказа</b>";
+                                    } elseif ($notification_resolt['type'] == "order_start") {
+                                        echo "<b>Приступление к заказу</b>";
+                                    } elseif ($notification_resolt['type'] == "payment_ask") {
+                                        echo "<b>Сдача на оплату</b>";
+                                    } elseif ($notification_resolt['type'] == "payment_check") {
+                                        echo "<b>Оплата за пройденный этап</b>";
+                                    } elseif ($notification_resolt['type'] == "payment_agree") {
+                                        echo "<b>Подтверждение оплаты за пройденный этап</b>";
+                                    } elseif ($notification_resolt['type'] == "payment_disagree") {
+                                        echo "<b>Ожидание оплаты</b>";
                                     }
                                     ?>
                                 </div>
@@ -355,8 +395,25 @@ include "../layouts/header_line.php";
                                 if ($notification_resolt['type'] == "order_check") {
                                     echo '<p class="main_information">Продавец сдал работу на проверку. Вскоре покупатель проверит работу и примит решение. Срок будет увеличен на время проверки работы.</p>';
                                     if ($orderer_resolt['nik'] != $my_nik) {
-                                        echo '<p class="main_information under_information">Если ' . $orderer_resolt['name'], ' ', $orderer_resolt['family'] . ' не будет давать обратную связь в тячении суток или больше, обратитесь в <a href="support_user.php">службу поддержки</a></p>';
+                                        echo '<p class="main_information under_information">Если ' . $orderer_resolt['name'], ' ', $orderer_resolt['family'] . ' не будет давать обратную связь в течении суток или больше, обратитесь в <a href="support_user.php">службу поддержки</a></p>';
                                     }
+                                } elseif ($notification_resolt['type'] == "order_return") {
+                                    echo '<p class="main_information">Покупатель вернул заказ на доработку.</p>';
+                                } elseif ($notification_resolt['type'] == "order_ask") {
+                                    echo '<p class="main_information">Покупатель запросил результат работы</p>';
+                                } elseif ($notification_resolt['type'] == "order_finish") {
+                                    echo '<p class="main_information">Покупатель завершил заказ</p>';
+                                } elseif ($notification_resolt['type'] == "order_start") {
+                                    echo '<p class="main_information">Продавец одобрил условия заказа и уже приступил к работе над заказом.</p>';
+                                } elseif ($notification_resolt['type'] == "payment_ask") {
+                                    echo '<p class="main_information">Продавец выполнил определённый этап работы, и создал запрос на сумму ' . $notification_resolt['payment_sum'] . '₽ от заказа.</p>';
+                                } elseif ($notification_resolt['type'] == "payment_check") {
+                                    echo '<p class="main_information">Покупатель адобрил этап работы, и оплатил часть суммы продавцу на кашелёк.</p>';
+                                } elseif ($notification_resolt['type'] == "payment_agree") {
+                                    echo '<p class="main_information">Продавец подтвердил приход средств на кошелёк, и уже продолжает работу над заказом.</p>';
+                                } elseif ($notification_resolt['type'] == "payment_disagree") {
+                                    echo '<p class="main_information">Продавцу не пришли средства за выполненый этап работы, пока оплата не будет
+                                    сделана и подтверждена продавцом, заказ будет приостановлен.</p>';
                                 }
                                 ?>
                             </div>
@@ -367,6 +424,71 @@ include "../layouts/header_line.php";
             endwhile;
             ?>
         </div>
+        <?php
+        if (order_bd('progress') == 3):
+            function review_check()
+            {
+                global $bd_connect, $orderer_resolt, $responsible_resolt, $order_id, $my_nik;
+                $resolt = false;
+                $orderer_nik = $orderer_resolt["nik"];
+                $orderer_email = $orderer_resolt["email"];
+
+                $responsible_nik = $responsible_resolt["nik"];
+                $responsible_email = $responsible_resolt["email"];
+                $review_sql = "SELECT * FROM `reviews` WHERE (`nik` = '$orderer_nik' AND `email` = '$responsible_email') OR (`nik` = '$responsible_nik' AND `email` = '$orderer_email')";
+                $review_query = mysqli_query($bd_connect, $review_sql);
+                while ($review_resolt = mysqli_fetch_assoc($review_query)) {
+                    if ($review_resolt['nik'] == $my_nik) {
+                        $resolt = true;
+                    }
+                }
+
+                return $resolt;
+            }
+            if (review_check() == false):
+                ?>
+                <div class="review_write" id="review">
+                    <div class="overlay">
+                        <div class="loader"></div>
+                    </div>
+                    <h3>Заказ выполнен, вы можете оставить отзыв</h3>
+                    <div class="review_wrapper">
+                        <div class="smiles">
+                            <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    class="good_smile"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path
+                                        d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                </svg></div>
+                            <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    class="bad_smile"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path
+                                        d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                </svg></div>
+                        </div>
+                        <div class="review">
+                            <div>
+                                <u class="warning"></u>
+                                <?php
+                                if (order_bd('nik') == $my_nik) {
+                                    echo '<textarea name="" placeholder="Напишите отзыв продавцу, это поможет облегчить выбор другим покупателям." id="" cols="30" rows="10" class="right_in" maxlength="500"></textarea>';
+                                } else {
+                                    echo '<textarea name="" placeholder="Напишите отзыв заказчику, это поможет облегчить выбор другим исполнителям." id="" cols="30" rows="10" class="right_in" maxlength="500"></textarea>';
+                                }
+                                ?>
+                            </div>
+                            <div class="length_controll">
+                                <p><span>0</span>/500</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="none_ready">Отправить отзыв</button>
+                    </div>
+                </div>
+                <?php
+            endif;
+        endif;
+        ?>
     </div>
     <div class="double_information">
         <div class="main_information">
@@ -376,12 +498,16 @@ include "../layouts/header_line.php";
                 </div>
                 <div class="resolt status">
                     <?php
-                    if (order_bd('time') == 0) {
+                    if (order_bd('time') == 0 && order_bd('progress') == 0) {
                         echo "<p title='Исполнитель должен приступить к выполнению' class='waiting'>Ожидание</p>";
                     } elseif (order_bd('time') == 1) {
                         echo "<p title='Исполнитель уже работает над заказом'>В работе</p>";
-                    } elseif (order_bd('time') == 2) {
+                    } elseif (order_bd('time') == 2 || order_bd('time') == 3) {
                         echo "<p title='Исполнитель ждёт вашу проверку' class='waiting'>На проверке</p>";
+                    } elseif (order_bd('time') == 4) {
+                        echo "<p title='Исполнитель подтверждает вашу оплату' class='waiting'>Проверка оплаты</p>";
+                    } elseif (order_bd('time') == 5) {
+                        echo "<p title='Исполнитель ждёт вашу оплату' class='waiting'>Ожидание оплаты</p>";
                     } else {
                         echo "<p>Завершён</p>";
                     }
@@ -390,7 +516,7 @@ include "../layouts/header_line.php";
             </div>
             <div class="information_part">
                 <div>
-                    <p class="information_name">Цена заказа:</p>
+                    <p class="information_name">Остаток цены:</p>
                 </div>
                 <div class="resolt">
                     <p>
@@ -484,15 +610,30 @@ include "../layouts/header_line.php";
                 if (order_bd('progress') == 2):
                     if ($orderer_resolt['nik'] !== $my_nik) {
                         if (order_bd('time') == 1) {
-                            echo '<button id="0">Сдать работу</button>';
+                            if (response_bd('price') == 0) {
+                                echo '<button id="0">Завершить заказ</button>';
+                            } else {
+                                echo '<button class="none_active" title="Завершить работу можно только после того, как весь заказ будет выполнен и цена в остатке будет 0 рублей">Завершить заказ</button>';
+                                echo '<button id="4">Сдать этап работы</button>';
+                            }
+                        } else if (order_bd('time') == 4) {
+                            echo '<button id="6">Получил оплату</button>';
+                            echo '<button id="7">Не получал средств</button>';
+                        } else if (order_bd('time') == 5) {
+                            echo '<button id="6">Получил оплату</button>';
                         }
                     }
                     if ($orderer_resolt['nik'] == $my_nik) {
                         if (order_bd('time') == 1) {
                             echo '<button id="1">Запросить работу</button>';
-                        } else if (order_bd('time') == 2) {
-                            echo '<button>Принять работу</button>';
+                        } else if (order_bd('time') == 3) {
+                            echo '<button id="2">Принять работу</button>';
                             echo '<button id="3">Отправить на доработку</button>';
+                        } else if (order_bd('time') == 2) {
+                            echo '<button id="5">Оплатить</button>';
+                            echo '<button id="3">Отправить на доработку</button>';
+                        } else if (order_bd('time') == 5) {
+                            echo '<button id="5">Оплатить</button>';
                         }
                     }
                     ?>

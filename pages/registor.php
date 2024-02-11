@@ -67,7 +67,7 @@ include "../layouts/header_line.php";
                 <h3>Email</h3>
                 <u class="warning"></u>
                 <input type="text" name="user_email" id="email" placeholder="Рабочий email адрес"
-                    class="right_in checking_value">
+                    class="right_in checking_value email_value">
             </div>
             <div class="input_part password_value">
                 <h3>Пароль</h3>
@@ -747,11 +747,38 @@ include "../layouts/header_line.php";
                 </div>
             </div>
             <div class="post_button">
+                <button>Подтвердить email</button>
+            </div>
+        </div>
+    </div>
+    <div class="code_registor_question question" id="2">
+        <div class="back_move">
+            <div><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10"
+                    viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                </svg></div>
+            <div>
+                <p>Назад</p>
+            </div>
+        </div>
+        <h2>Код проверки</h2>
+        <div class="email_code">
+            <div class="input_part">
+                <h3>Код проверки</h3>
+                <u class="warning"></u>
+                <input type="number" placeholder="Ваш цифравой код" class="right_in checking_value" maxlength="4">
+            </div>
+            <div>
+                <p class="information_text">На вашу почту поступило письмо, в нём 4 цифарный код. Введите код в поле для
+                    подтверждения Email.</p>
+            </div>
+            <div class="post_button">
                 <button>Сделать последний шаг</button>
             </div>
         </div>
     </div>
-    <div class="end_registor_question question" id="2">
+    <div class="end_registor_question question" id="3">
         <div class="overlay">
             <div class="loader"></div>
         </div>

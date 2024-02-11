@@ -60,7 +60,7 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
             </div>
-            <div class="form_part">
+            <div class="form_part" style="display: none">
                 <b class="input_name">Оплата</b>
                 <input type="text" name="payment_option" readonly class="payment_option">
                 <div class="option_choice">
@@ -189,8 +189,8 @@ include "../layouts/footer.php";
 <script src="../page_js/order/user_email.js"></script>
 <script src="../page_js/order/checkbox_choice.js"></script>
 <script src="../page_js/order/category_menu.js"></script>
-<script src="../page_js/order/value_information.js"></script>
-<script src="../page_js/order/order_values/value_save.js"></script>
+<script src="../page_js/order/value_information.js" type="module"></script>
+<script src="../page_js/order/order_values/value_save.js" type="module"></script>
 </body>
 
 </html>

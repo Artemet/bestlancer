@@ -33,6 +33,7 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         exit;
     }
     $user_nik = $user['nik'];
+    $user_email = $user["email"];
     $user_block_resolt = null;
     if (isset($_SESSION['nik'])) {
         $my_nik = $_SESSION["nik"];
@@ -180,8 +181,26 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     if ($role_option == "buyer") {
                         echo "<br>";
                     }
+                    function review_length()
+                    {
+                        global $bd_connect, $user_email;
+                        $length = 0;
+                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
+                        $review_query = mysqli_query($bd_connect, $review_sql);
+                        while (mysqli_fetch_assoc($review_query)) {
+                            $length++;
+                        }
+
+                        if ($length == 0 || $length >= 10) {
+                            return $length .= " отзывов";
+                        } elseif ($length == 1) {
+                            return $length .= " отзыв";
+                        } elseif ($length >= 2) {
+                            return $length .= " отзыва";
+                        }
+                    }
                     ?>
-                    0 отзывов
+                    <?= review_length() ?>
                 </b>
             </div>
             <?php
@@ -206,14 +225,15 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     if ($friend_find == false) {
                         echo '<div><button class="chat_start" title="Связаться с ' . $user_nik . '">Связаться</button></div>';
                     } else {
-                        function chat_id_get(){
+                        function chat_id_get()
+                        {
                             global $bd_connect, $user_nik, $my_nik;
                             $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' OR `nik_two` = '$user_nik') AND (`nik_one` = '$my_nik' OR `nik_two` = '$my_nik')";
                             $chat_id_query = mysqli_query($bd_connect, $chat_id_sql);
                             return mysqli_fetch_assoc($chat_id_query)['chat_id'];
                         }
-                        echo "<noscript class='chat_id'>".chat_id_get()."</noscript>";
-                        echo '<div><a href="messages.php?chat_id='.chat_id_get().'"><button title="Открыть чат с ' . $user_nik . '" class="chat_button">Открыть чат</button></a></div>';
+                        echo "<noscript class='chat_id'>" . chat_id_get() . "</noscript>";
+                        echo '<div><a href="messages.php?chat_id=' . chat_id_get() . '"><button title="Открыть чат с ' . $user_nik . '" class="chat_button">Открыть чат</button></a></div>';
                     }
                     ?>
                     <?php
@@ -292,11 +312,13 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
         <div class="about_user user_block">
             <h2>Обо мне</h2>
             <div>
-                <p>
-                    <?php
-                    echo $user['about'];
-                    ?>
-                </p>
+                <?php
+                if (!empty($user["about"])) {
+                    echo "<p>" . $user["about"] . "</p>";
+                } else {
+                    echo "<p class='no_information'>Нет информации</p>";
+                }
+                ?>
             </div>
         </div>
         <?php
@@ -310,14 +332,18 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                 </div>
                 <div class="skill_wrapper sub_menu">
                     <div class="include">
-                        <p class="skill_text">
-                            <?php
-                            $skills = explode(" ", $user['skills']);
+                        <?php
+                        $skills = explode(" ", $user["skills"]);
+                        if (!empty($user["skills"])) {
+                            echo "<p class='skill_text'>";
                             foreach ($skills as $skill) {
                                 echo "<span>$skill</span> ";
                             }
-                            ?>
-                        </p>
+                            echo "</p>";
+                        } else {
+                            echo "<p class='no_information'>Нет информации</p>";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -432,10 +458,89 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                 } else {
                     echo '';
                 }
-                mysqli_close($bd_connect);
                 ?>
             </div>
             <?php
+            function review_check()
+            {
+                global $bd_connect, $user_email;
+                $review_include = false;
+                $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
+                $review_query = mysqli_query($bd_connect, $review_sql);
+                while (mysqli_fetch_assoc($review_query)) {
+                    $review_include = true;
+                }
+                return $review_include;
+            }
+            if (review_check() == true):
+                ?>
+                <div class="user_reviews user_block">
+                    <h2>Мои отзывы</h2>
+                    <div class="reviews_wrapper">
+                        <?php
+                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
+                        $review_query = mysqli_query($bd_connect, $review_sql);
+                        function buyer_bd($buyer_nik, $table)
+                        {
+                            global $bd_connect;
+                            $user_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$buyer_nik'";
+                            $user_query = mysqli_query($bd_connect, $user_sql);
+                            return mysqli_fetch_assoc($user_query)[$table];
+                        }
+                        while ($review_resolt = mysqli_fetch_assoc($review_query)):
+                            ?>
+                            <div class="review ">
+                                <div class="review_user">
+                                    <div class="user_icon">
+                                        <img src="../bd_send/user/user_icons/<?= buyer_bd($review_resolt['nik'], 'icon_path') ?>"
+                                            alt="" draggable="false">
+                                    </div>
+                                    <div>
+                                        <p class="name">
+                                            <?= buyer_bd($review_resolt['nik'], 'name') ?>
+                                            <?= buyer_bd($review_resolt['nik'], 'family') ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="review_date">
+                                    <p>
+                                        <?= $review_resolt['date'] ?>
+                                    </p>
+                                </div>
+                                <div class="review_part">
+                                    <p>
+                                        <?= $review_resolt['review'] ?>
+                                    </p>
+                                </div>
+                                <div class="line line_no_animation" style="width:100%; background: rgb(79, 130, 3);"></div>
+                                <div class="review_quality">
+                                    <?php
+                                    if ($review_resolt["star"] == 0):
+                                        ?>
+                                        <div class="circle good"></div>
+                                        <div>
+                                            <p>Позитивный</p>
+                                        </div>
+                                        <?php
+                                    endif;
+                                    if ($review_resolt["star"] == 1):
+                                        ?>
+                                        <div class="circle bad"></div>
+                                        <div>
+                                            <p>Негативный</p>
+                                        </div>
+                                        <?php
+                                    endif;
+                                    ?>
+                                </div>
+                            </div>
+                            <?php
+                        endwhile;
+                        ?>
+                    </div>
+                </div>
+                <?php
+            endif;
         endif;
         ?>
     </div>

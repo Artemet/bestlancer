@@ -149,129 +149,129 @@ include "../layouts/header_line.php";
             <h2>Обо мне</h2>
             <div>
                 <?php
-                        if (!empty($user_resolt["about"])){
-                            echo "<p>" . $user_resolt["about"] . "</p>";
-                        } else{
-                            echo "<p class='no_information'>Нет информации</p>";
-                        }
-                    ?>
+                if (!empty($user_resolt["about"])) {
+                    echo "<p>" . $user_resolt["about"] . "</p>";
+                } else {
+                    echo "<p class='no_information'>Нет информации</p>";
+                }
+                ?>
             </div>
         </div>
         <?php
         if ($user_resolt["role"] == "seller"):
-        ?>
-        <div class="user_skills menu_include user_block">
-            <div class="menu_block">
-                <div>
-                    <h2>Мои умения</h2>
+            ?>
+            <div class="user_skills menu_include user_block">
+                <div class="menu_block">
+                    <div>
+                        <h2>Мои умения</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="skill_wrapper sub_menu">
-                <div class="include">
-                    <?php
+                <div class="skill_wrapper sub_menu">
+                    <div class="include">
+                        <?php
                         $skills = explode(" ", $user_resolt["skills"]);
-                        if (!empty($user_resolt["skills"])){
+                        if (!empty($user_resolt["skills"])) {
                             echo "<p class='skill_text'>";
                             foreach ($skills as $skill) {
                                 echo "<span>$skill</span> ";
                             }
                             echo "</p>";
-                        } else{
+                        } else {
                             echo "<p class='no_information'>Нет информации</p>";
                         }
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="user_projects menu_include user_block">
-            <div class="menu_block">
-                <div>
-                    <h2>Мои проекты</h2>
-                </div>
-            </div>
-            <div class="projects_wrapper sub_menu">
-                <div class="include">
-                    <div class="project_covers card_container">
-                        <?php
-                        $project_temp = 0;
-                        $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
-                        $cover_query = mysqli_query($bd_connect, $cover_sql);
-                        while ($row = mysqli_fetch_assoc($cover_query)):
-                            $project_temp++;
-                            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                            ?>
-                            <a href="project_page.php?project_id=<?= $row['id'] ?>" id="<?= $row['id'] ?>">
-                                <div class="project">
-                                    <div class="img">
-                                        <img src="../bd_send/user/project_cover/<?= $row["cover_href"] ?>" alt=""
-                                            draggable="false">
-                                    </div>
-                                    <div>
-                                        <div class="user_information">
-                                            <div>
-                                                <img src="../bd_send/user/user_icons/<?= $user_resolt["icon_path"] ?>"
-                                                    alt="" draggable="false">
-                                            </div>
-                                            <b class="user_name">
-                                                <?= $row["nik"] ?>
-                                            </b>
-                                        </div>
-                                    </div>
-                                    <p class="date">
-                                        <?= $row["date"] ?>
-                                    </p>
-                                </div>
-                            </a>
-                            <?php
-                        endwhile;
-                        if ($project_temp === 0 && $user_resolt["role"] == "buyer") {
-                            echo "Нет проектов";
-                        }
-                        if ($user_resolt["role"] !== "buyer"):
-                            ?>
-                            <a href="add_project.php" title="Добавить проект" class="add_project_link">
-                                <div class="project add_project">
-                                    <div class="plus"><b>+</b></div>
-                                </div>
-                            </a>
-                            <?php
-                        endif;
                         ?>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="user_services user_block">
-            <div>
-                <h2>Мои услуги</h2>
+            <div class="user_projects menu_include user_block">
+                <div class="menu_block">
+                    <div>
+                        <h2>Мои проекты</h2>
+                    </div>
+                </div>
+                <div class="projects_wrapper sub_menu">
+                    <div class="include">
+                        <div class="project_covers card_container">
+                            <?php
+                            $project_temp = 0;
+                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
+                            $cover_query = mysqli_query($bd_connect, $cover_sql);
+                            while ($row = mysqli_fetch_assoc($cover_query)):
+                                $project_temp++;
+                                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                                ?>
+                                <a href="project_page.php?project_id=<?= $row['id'] ?>" id="<?= $row['id'] ?>">
+                                    <div class="project">
+                                        <div class="img">
+                                            <img src="../bd_send/user/project_cover/<?= $row["cover_href"] ?>" alt=""
+                                                draggable="false">
+                                        </div>
+                                        <div>
+                                            <div class="user_information">
+                                                <div>
+                                                    <img src="../bd_send/user/user_icons/<?= $user_resolt["icon_path"] ?>"
+                                                        alt="" draggable="false">
+                                                </div>
+                                                <b class="user_name">
+                                                    <?= $row["nik"] ?>
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <p class="date">
+                                            <?= $row["date"] ?>
+                                        </p>
+                                    </div>
+                                </a>
+                                <?php
+                            endwhile;
+                            if ($project_temp === 0 && $user_resolt["role"] == "buyer") {
+                                echo "Нет проектов";
+                            }
+                            if ($user_resolt["role"] !== "buyer"):
+                                ?>
+                                <a href="add_project.php" title="Добавить проект" class="add_project_link">
+                                    <div class="project add_project">
+                                        <div class="plus"><b>+</b></div>
+                                    </div>
+                                </a>
+                                <?php
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="service_container card_container">
-                <?php
-                $nik = $_SESSION['nik'];
+            <div class="user_services user_block">
+                <div>
+                    <h2>Мои услуги</h2>
+                </div>
+                <div class="service_container card_container">
+                    <?php
+                    $nik = $_SESSION['nik'];
 
-                $sql = "SELECT * FROM services WHERE nik = '$nik'";
-                $query = mysqli_query($bd_connect, $sql);
+                    $sql = "SELECT * FROM services WHERE nik = '$nik'";
+                    $query = mysqli_query($bd_connect, $sql);
 
-                if (!$query) {
-                    die("Query failed: " . mysqli_error($bd_connect));
-                }
+                    if (!$query) {
+                        die("Query failed: " . mysqli_error($bd_connect));
+                    }
 
-                if (mysqli_num_rows($query) > 0) {
-                    while ($row = mysqli_fetch_assoc($query)) {
-                        $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-                        $service_nik = $row['nik'];
-                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
-                        $icon_result = mysqli_query($connection, $icon_query);
+                    if (mysqli_num_rows($query) > 0) {
+                        while ($row = mysqli_fetch_assoc($query)) {
+                            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+                            $service_nik = $row['nik'];
+                            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
+                            $icon_result = mysqli_query($connection, $icon_query);
 
-                        if (!$icon_result) {
-                            die("Query failed: " . mysqli_error($connection));
-                        }
+                            if (!$icon_result) {
+                                die("Query failed: " . mysqli_error($connection));
+                            }
 
-                        $icon_row = mysqli_fetch_assoc($icon_result);
-                        $user_icon = $icon_row['icon_path'];
-                        mysqli_close($connection);
+                            $icon_row = mysqli_fetch_assoc($icon_result);
+                            $user_icon = $icon_row['icon_path'];
+                            mysqli_close($connection);
 
-                        echo '<div class="service">
+                            echo '<div class="service">
                                 <a href="service_page.php?service_id=' . $row['id'] . '">
                                     <div class="img">
                                         <img src="../bd_send/services/service_files/' . $row['file_path'] . '" alt="" class="services_image" draggable="false">
@@ -293,17 +293,15 @@ include "../layouts/header_line.php";
                                     </div>
                                 </a>
                             </div>';
+                        }
+                    } else {
+                        echo '<a href="make_services.php" class="make_service" title="Создать свою услугу">Создать услугу</a>';
                     }
-                } else {
-                    echo '<a href="make_services.php" class="make_service" title="Создать свою услугу">Создать услугу</a>';
-                }
-
-                mysqli_close($bd_connect);
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-        <?php
-            endif;
+            <?php
+        endif;
         ?>
     </div>
 </div>

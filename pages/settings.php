@@ -109,10 +109,10 @@ include "../layouts/header_line.php";
                 <div class="setting_sub">
                     <form action="../bd_send/settings/payment_option.php" method="post">
                         <?php
-                        $payment_information_arr = array("", "");
+                        $payment_information_arr = array();
                         if (!empty($user_resolt["payment_methods"])) {
-                            $payment_information_arr[0] = explode(',', $user_resolt["payment_methods"])[0];
-                            $payment_information_arr[1] = explode(',', $user_resolt["payment_methods"])[1];
+                            array_push($payment_information_arr, explode(',', $user_resolt["payment_methods"])[0]);
+                            array_push($payment_information_arr, explode(',', $user_resolt["payment_methods"])[1]);
                         }
                         ?>
                         <div class="payment_value">

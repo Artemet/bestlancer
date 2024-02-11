@@ -179,7 +179,6 @@ include "../layouts/header_line.php";
             </div>
         </div>
     </div>
-    <div class="line"></div>
     <div class="work_resolt">
         <h2>Топ примеров работ наших фрилансеров</h2>
         <div class="works">
@@ -438,7 +437,7 @@ include "../layouts/header_line.php";
             <h2>
                 <div class="bestlancer_text">
                     <p>BEST</p>LANCER
-                </div> Профессиональные услуги
+                </div> Новая биржа
             </h2>
             <p class="under_header">Доводить дело до конца еще никогда не было так просто.</p>
         </div>

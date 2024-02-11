@@ -6,7 +6,6 @@ if (!isset($_SESSION["nik"])) {
 }
 $user_nik = $_SESSION["nik"];
 include "../bd_send/database_connect.php";
-date_default_timezone_set('Europe/Moscow');
 $chat_bg = $user_resolt['chat_bg'];
 //notification_remove
 $notification_sql = "UPDATE `user_notification` SET `messages` = 0 WHERE `nik` = '$user_nik'";
@@ -14,6 +13,7 @@ $notification_query = mysqli_query($bd_connect, $notification_sql);
 
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/messages.css'>";
+echo "<link rel='stylesheet' href='../page_css/media/messages_media.css'>";
 echo "<link rel='stylesheet' href='../page_css/modal_css/report_modal.css'>";
 echo '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@1&display=swap" rel="stylesheet">';
 echo "<title>Мессенджер</title>";
@@ -405,6 +405,10 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
 
                             if ($message_resolt['task'] == 1) {
                                 $task_message_temp++;
+                            } elseif ($message_resolt['task'] == 2) {
+                                $task_message_temp = 2;
+                            } elseif ($message_resolt['task'] == 3) {
+                                $task_message_temp = 3;
                             } else {
                                 $task_message_temp = 0;
                             }
@@ -425,11 +429,19 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                                     $message_class .= " deleted_row";
                                 }
                                 if (!empty($message_resolt['message_value']) || $message_resolt['file'] >= 1):
-                                    if ($task_message_temp == 1):
+                                    if ($task_message_temp == 1 || $task_message_temp == 2 || $task_message_temp == 3):
                                         ?>
                                         <div class="order_line">
                                             <div>
-                                                <p>Выполнение заказа</p>
+                                                <?php
+                                                if ($task_message_temp == 1) {
+                                                    echo "<p>Выполнение заказа</p>";
+                                                } elseif ($task_message_temp == 2) {
+                                                    echo "<p>Заказ завершён</p>";
+                                                } elseif ($task_message_temp == 3) {
+                                                    echo "<p>Заказ отменён</p>";
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                         <?php
@@ -528,7 +540,7 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                                                         $file_class = null;
                                                         $file_title = null;
                                                         if ($message_resolt['deleted'] == 0):
-                                                            if (strpos($message_resolt['file_path'], ".zip") == true) {
+                                                            if (strpos($message_resolt['file_path'], ".zip") == true || strpos($message_resolt['file_path'], ".txt") == true || strpos($message_resolt['file_path'], ".pdf") == true) {
                                                                 $file_class = "file_download";
                                                                 $file_title = "Скачать";
                                                             }
@@ -544,8 +556,24 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                                                                     echo '<img src="../bd_send/user/messanger_files/' . $message_resolt['file_path'] . '"
                                                                     alt="" draggable="false">';
                                                                 } elseif (strpos($message_resolt['file_path'], ".zip") == true) {
-                                                                    echo '<div class="zip_object">
+                                                                    echo '<div class="file_wrapper_object">
                                                                         <div><svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8h14.8c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4c0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5 .7-11.1 2.1-16.4l23.5-88.2zM112 336c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H112z"/></svg></div>
+                                                                        <div class="file_information">
+                                                                            <div><b>' . $message_resolt['file_path'] . '</b></div>
+                                                                            <div><p>' . $fileSize . ' Кб</p></div>
+                                                                        </div>
+                                                                    </div>';
+                                                                } elseif (strpos($message_resolt['file_path'], ".txt") == true) {
+                                                                    echo '<div class="file_wrapper_object">
+                                                                        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg></div>
+                                                                        <div class="file_information">
+                                                                            <div><b>' . $message_resolt['file_path'] . '</b></div>
+                                                                            <div><p>' . $fileSize . ' Кб</p></div>
+                                                                        </div>
+                                                                    </div>';
+                                                                } elseif (strpos($message_resolt['file_path'], ".pdf") == true) {
+                                                                    echo '<div class="file_wrapper_object">
+                                                                        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 144-208 0c-35.3 0-64 28.7-64 64l0 144-48 0c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/></svg></div>
                                                                         <div class="file_information">
                                                                             <div><b>' . $message_resolt['file_path'] . '</b></div>
                                                                             <div><p>' . $fileSize . ' Кб</p></div>

@@ -18,7 +18,7 @@ include "../layouts/header_line.php";
         </div>
         <?php
         $emailsCount = array();
-        $sql = "SELECT * FROM reviews";
+        $sql = "SELECT * FROM `reviews` WHERE `type` = 'exchange'";
         $query = mysqli_query($bd_connect, $sql);
 
         $loggedInEmail = "";
