@@ -6,6 +6,7 @@ if (isset($_SESSION["nik"])) {
 }
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/registor.css'>";
+echo "<link rel='stylesheet' href='../page_css/media/registor_media.css'>";
 echo "<title>Создание Аккаунта - Bestlancer</title>";
 include "../layouts/header_line.php";
 ?>

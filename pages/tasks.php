@@ -2,25 +2,23 @@
 session_start();
 $filter = null;
 $filter_number = null;
-$medium_filter_number = null;
-$final_filter_number = null;
 $filter_reset = null;
 $pagination_href = "tasks.php?";
 if (isset($_GET['filter']) && is_numeric($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $filter_number = $filter;
+    $filter_number = intval($filter);
     $filter_reset = "<a href='tasks.php' class='filter_none' style='visibility: unset; opacity: 1;'>Сбросить фильтор</a>";
     $pagination_href = "tasks.php?filter=$filter_number&";
 }
 if (isset($_GET['medium_category']) && is_numeric($_GET['medium_category'])) {
     $medium_category = $_GET['medium_category'];
-    $medium_filter_number = $medium_category;
+    $filter_number = intval($medium_category);
     $filter_reset = "<a href='tasks.php' class='filter_none' style='visibility: unset; opacity: 1;'>Сбросить фильтор</a>";
     $pagination_href = "tasks.php?medium_category=$medium_category&";
 }
 if (isset($_GET['final_category']) && is_numeric($_GET['final_category'])) {
     $final_category = $_GET['final_category'];
-    $final_filter_number = $final_category;
+    $filter_number = intval($final_category);
     $filter_reset = "<a href='tasks.php' class='filter_none' style='visibility: unset; opacity: 1;'>Сбросить фильтор</a>";
     $pagination_href = "tasks.php?final_category=$final_category&";
 }
@@ -54,19 +52,31 @@ include "../layouts/modal/corect_order.php";
                         $my_nik = $_SESSION["nik"];
 
                         //order
-                        $order_sql = "SELECT * FROM `orders` WHERE `nik` = '$my_nik' AND `progress` = 2";
-                        $order_query = mysqli_query($bd_connect, $order_sql);
+                        $order_progress = 2;
+                        $order_sql = "SELECT * FROM `orders` WHERE `nik` = ? AND `progress` = ?";
+                        $order_stmt = mysqli_prepare($bd_connect, $order_sql);
+                        mysqli_stmt_bind_param($order_stmt, "si", $my_nik, $order_progress);
+                        mysqli_stmt_execute($order_stmt);
+                        $order_query = mysqli_stmt_get_result($order_stmt);
+
+                        $order_length_temp = 0;
                         while (mysqli_fetch_assoc($order_query)) {
                             $order_length_temp++;
                         }
                         array_push($active_order_arr, $order_length_temp);
 
                         //application
-                        $application_sql = "SELECT * FROM `orders` WHERE `responsible_id` = '$my_id' AND `progress` = 2";
-                        $application_query = mysqli_query($bd_connect, $application_sql);
+                        $application_progress = 2;
+                        $application_sql = "SELECT * FROM `orders` WHERE `responsible_id` = ? AND `progress` = ?";
+                        $application_stmt = mysqli_prepare($bd_connect, $application_sql);
+                        mysqli_stmt_bind_param($application_stmt, "si", $my_id, $application_progress);
+                        mysqli_stmt_execute($application_stmt);
+                        $application_query = mysqli_stmt_get_result($application_stmt);
+
                         while (mysqli_fetch_assoc($application_query)) {
                             $application_length_temp++;
                         }
+
                         array_push($active_order_arr, $application_length_temp);
 
                         if ($type == "order") {
@@ -152,9 +162,17 @@ include "../layouts/modal/corect_order.php";
                                 <div class="icon save_filter">
                                     <div class="icon_svg">
                                         <?php
-                                        $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                                        $project_filter_query = mysqli_query($bd_connect, $project_filter);
-                                        $project_filter_resolt = mysqli_fetch_assoc($project_filter_query)['filter'];
+                                        $project_filter_resolt = null;
+                                        $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = ?";
+                                        $stmt = mysqli_prepare($bd_connect, $project_filter);
+                                        mysqli_stmt_bind_param($stmt, "s", $my_nik);
+                                        mysqli_stmt_execute($stmt);
+                                        $result = mysqli_stmt_get_result($stmt);
+
+                                        if ($result && mysqli_num_rows($result) > 0) {
+                                            $row = mysqli_fetch_assoc($result);
+                                            $project_filter_resolt = $row['filter'];
+                                        }
                                         if (empty($project_filter_resolt)):
                                             ?>
                                             <div title="Сохранить" class="none_use">
@@ -815,35 +833,39 @@ include "../layouts/modal/corect_order.php";
             <?php
             if (isset($_SESSION["nik"])):
                 if ($user_resolt["role"] == "seller"):
+                    $max_date_resolt = null;
+
                     //max_date_push
-                    $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                    $max_date_query = mysqli_query($bd_connect, $max_date_sql);
-                    $max_date_resolt = mysqli_fetch_assoc($max_date_query)['application_date'];
+                    $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $max_date_sql);
+                    mysqli_stmt_bind_param($stmt, "s", $my_nik);
+                    mysqli_stmt_execute($stmt);
+                    $max_date_result = mysqli_stmt_get_result($stmt);
+
+                    if ($max_date_result && mysqli_num_rows($max_date_result) > 0) {
+                        $max_date_resolt = mysqli_fetch_assoc($max_date_result)['application_date'];
+                    }
 
                     // application_count
                     $application_limit = false;
-                    $application_count_sql = "SELECT * FROM `orders_responses` WHERE `nik` = '$my_nik' AND `max_date` = '$max_date_resolt'";
-                    $application_count_query = mysqli_query($bd_connect, $application_count_sql);
+                    $application_count_sql = "SELECT * FROM `orders_responses` WHERE `nik` = ? AND `max_date` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $application_count_sql);
+                    mysqli_stmt_bind_param($stmt, "ss", $my_nik, $max_date_resolt);
+                    mysqli_stmt_execute($stmt);
+                    $application_count_result = mysqli_stmt_get_result($stmt);
+
                     $occurrences_count = 0;
 
                     //moment_date
-                    $date = date("Y.m");
-                    $date_result = null;
-                    list($year, $month) = explode(".", $date);
-                    $date_array = array($year, $month);
+                    $date_result = date("Y.m");
 
-                    for ($i = 0; $i < count($date_array); $i++) {
-                        if ($i >= 1) {
-                            $date_result .= ".";
-                        }
-                        $date_result .= sprintf("%02d", $date_array[$i]);
-                    }
-
-                    while ($application_count = mysqli_fetch_assoc($application_count_query)) {
-                        $occurrences_count += substr_count($application_count['response_date'], $date_result);
-                        if ($occurrences_count >= 30) {
-                            $application_limit = true;
-                            break;
+                    if ($application_count_result) {
+                        while ($application_count = mysqli_fetch_assoc($application_count_result)) {
+                            $occurrences_count += substr_count($application_count['response_date'], $date_result);
+                            if ($occurrences_count >= 30) {
+                                $application_limit = true;
+                                break;
+                            }
                         }
                     }
 
@@ -877,8 +899,10 @@ include "../layouts/modal/corect_order.php";
 
                     if ($occurrences_count == 0) {
                         //date_push
-                        $new_application_date = "UPDATE `user_registoring` SET `application_date` = '$updatedFormattedDate' WHERE `nik` = '$my_nik'";
-                        $new_application_query = mysqli_query($bd_connect, $new_application_date);
+                        $new_application_date = "UPDATE `user_registoring` SET `application_date` = ? WHERE `nik` = ?";
+                        $new_application_stmt = mysqli_prepare($bd_connect, $new_application_date);
+                        mysqli_stmt_bind_param($new_application_stmt, "ss", $updatedFormattedDate, $my_nik);
+                        mysqli_stmt_execute($new_application_stmt);
                     }
                     ?>
                     <div class="user_order_information">
@@ -902,9 +926,16 @@ include "../layouts/modal/corect_order.php";
                         <div class="return_date">
                             <p>Дата пополнения</p>
                             <?php
-                            $new_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                            $new_date_query = mysqli_query($bd_connect, $new_date_sql);
-                            $new_date_resolt = mysqli_fetch_assoc($new_date_query)['application_date'];
+                            $new_date_resolt = null;
+                            $new_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = ?";
+                            $stmt = mysqli_prepare($bd_connect, $new_date_sql);
+                            mysqli_stmt_bind_param($stmt, "s", $my_nik);
+                            mysqli_stmt_execute($stmt);
+                            $result = mysqli_stmt_get_result($stmt);
+
+                            if ($result && mysqli_num_rows($result) > 0) {
+                                $new_date_resolt = mysqli_fetch_assoc($result)['application_date'];
+                            }
                             if (!empty($new_date_resolt)) {
                                 echo "<b>$new_date_resolt</b>";
                             } else {
@@ -927,40 +958,33 @@ include "../layouts/modal/corect_order.php";
                 $startFrom = ($page - 1) * $ordersPerPage;
                 $orders = array();
                 $sql = null;
+
+                $pin_exceptions = 1;
+                $table_category = null;
                 $order_num = 0;
-                if ($filter_number == 0) {
-                    $sql = "SELECT * FROM orders ORDER BY id DESC LIMIT $startFrom, $ordersPerPage";
-                } elseif ($filter_number !== 0) {
-                    $filter_number = intval($filter_number);
-                    $sql = "SELECT * FROM `orders` WHERE `main_category` = '$filter_number' ORDER BY id DESC LIMIT $startFrom, $ordersPerPage";
-                    //page_sql
-                    $page_sql = "SELECT `main_category` FROM `orders` WHERE `main_category` = '$filter_number'";
-                    $page_query = mysqli_query($bd_connect, $page_sql);
-                    while ($page_row = mysqli_fetch_assoc($page_query)) {
-                        $order_num++;
-                    }
+                if ($filter_number == null) {
+                    $sql = "SELECT * FROM `orders` ORDER BY CASE WHEN `pin` = ? THEN 0 ELSE 1 END, id DESC LIMIT $startFrom, $ordersPerPage";
+                } else {
+                    $table_category = "main_category";
                 }
 
                 if (isset($_GET['medium_category']) && is_numeric($_GET['medium_category'])) {
-                    $medium_filter_number = intval($medium_filter_number);
-                    $sql = "SELECT * FROM `orders` WHERE `medium_category` = '$medium_filter_number' ORDER BY id DESC LIMIT $startFrom, $ordersPerPage";
+                    $table_category = "medium_category";
                     echo "<p class='medium_number category_number'>$medium_category</p>";
-                    //page_sql
-                    $page_sql = "SELECT `medium_category` FROM `orders` WHERE `medium_category` = '$medium_filter_number'";
-                    $page_query = mysqli_query($bd_connect, $page_sql);
-                    while ($page_row = mysqli_fetch_assoc($page_query)) {
-                        $order_num++;
-                    }
+                } elseif (isset($_GET['final_category']) && is_numeric($_GET['final_category'])) {
+                    $table_category = "final_category";
+                    echo "<p class='final_number category_number'>$final_category</p>";
                 }
 
-                if (isset($_GET['final_category']) && is_numeric($_GET['final_category'])) {
-                    $final_filter_number = intval($final_filter_number);
-                    $sql = "SELECT * FROM `orders` WHERE `final_category` = '$final_filter_number' ORDER BY id DESC LIMIT $startFrom, $ordersPerPage";
-                    echo "<p class='final_number category_number'>$final_category</p>";
+                if (isset($_GET['filter']) || isset($_GET['medium_category']) || isset($_GET['final_category'])) {
+                    $sql = "SELECT * FROM `orders` WHERE `$table_category` = ? AND `pin` != ? ORDER BY id DESC LIMIT $startFrom, $ordersPerPage";
                     //page_sql
-                    $page_sql = "SELECT `final_category` FROM `orders` WHERE `final_category` = '$final_filter_number'";
-                    $page_query = mysqli_query($bd_connect, $page_sql);
-                    while ($page_row = mysqli_fetch_assoc($page_query)) {
+                    $page_sql = "SELECT `final_category` FROM `orders` WHERE `$table_category` = ? AND `pin` != ?";
+                    $page_stmt = mysqli_prepare($bd_connect, $page_sql);
+                    mysqli_stmt_bind_param($page_stmt, "ii", $filter_number, $pin_exceptions);
+                    mysqli_stmt_execute($page_stmt);
+                    $page_resolt = mysqli_stmt_get_result($page_stmt);
+                    while ($page_row = mysqli_fetch_assoc($page_resolt)) {
                         $order_num++;
                     }
                 }
@@ -976,11 +1000,17 @@ include "../layouts/modal/corect_order.php";
                     $date_resolt .= $date_array[$i];
                 }
 
-                $query = mysqli_query($bd_connect, $sql);
-
+                $category_stmt = mysqli_prepare($bd_connect, $sql);
+                if ($filter_number == null) {
+                    mysqli_stmt_bind_param($category_stmt, "i", $pin_exceptions);
+                } else {
+                    mysqli_stmt_bind_param($category_stmt, "ii", $filter_number, $pin_exceptions);
+                }
+                mysqli_stmt_execute($category_stmt);
+                $category_resolt = mysqli_stmt_get_result($category_stmt);
 
                 $all_order_sql = "SELECT * FROM `orders`";
-                if ($filter_number == null && $medium_filter_number == null && $final_filter_number == null) {
+                if (!isset($_GET["filter"]) && !isset($_GET["medium_category"]) && !isset($_GET["final_category"])) {
                     $all_order_query = mysqli_query($bd_connect, $all_order_sql);
                     while ($order_row = mysqli_fetch_assoc($all_order_query)) {
                         $order_num++;
@@ -988,17 +1018,21 @@ include "../layouts/modal/corect_order.php";
                 }
                 $totalPages = ceil($order_num / $ordersPerPage);
 
-                while ($row = mysqli_fetch_assoc($query)) {
+                while ($row = mysqli_fetch_assoc($category_resolt)) {
                     $nik = $row['nik'];
                     $order_num++;
-                    $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                    $id_result = mysqli_query($bd_connect, $id_query);
-                    $id_row = mysqli_fetch_assoc($id_result);
-                    $user_id = $id_row['id'];
-                    $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                    $icon_resolt = mysqli_query($bd_connect, $icon_query);
-                    $icon_row = mysqli_fetch_assoc($icon_resolt);
-                    $user_icon = $icon_row['icon_path'];
+                    $row_resolt = null;
+                    $row_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                    $row_stmt = mysqli_prepare($bd_connect, $row_sql);
+                    mysqli_stmt_bind_param($row_stmt, "s", $nik);
+                    mysqli_stmt_execute($row_stmt);
+                    $result = mysqli_stmt_get_result($row_stmt);
+
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row_resolt = mysqli_fetch_assoc($result);
+                    }
+                    $user_id = $row_resolt['id'];
+                    $user_icon = $row_resolt['icon_path'];
                     $category_arr = array("Без категорий", "Дизайн", "Разработка и IT", "Тексты и переводы", "SEO и трафик", "Соцсети и реклама", "Аудио, видео, съемка", "Бизнес и жизнь", "Учеба и репетиторство");
 
                     $orders[] = [
@@ -1026,9 +1060,16 @@ include "../layouts/modal/corect_order.php";
                     if (!isset($_SESSION["nik"])) {
                         $my_nik = "Guest";
                     }
-                    $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$my_nik'";
-                    $unblock_query = mysqli_query($bd_connect, $unblock_sql);
-                    $unblock_resolt = mysqli_fetch_assoc($unblock_query);
+                    $unblock_resolt = null;
+                    $unblock_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = ?";
+                    $unblock_stmt = mysqli_prepare($bd_connect, $unblock_sql);
+                    mysqli_stmt_bind_param($unblock_stmt, "s", $my_nik);
+                    mysqli_stmt_execute($unblock_stmt);
+                    $result = mysqli_stmt_get_result($unblock_stmt);
+
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $unblock_resolt = mysqli_fetch_assoc($result);
+                    }
                     if (!empty($unblock_resolt['main_block'])) {
                         if ($unblock_resolt['nik_one'] == $unblock_resolt['main_block']) {
                             $final_assoc = $unblock_resolt['nik_two'];
@@ -1046,8 +1087,26 @@ include "../layouts/modal/corect_order.php";
                             }
                             if ($row['date'] == $date):
                                 ?>
-                                <div class="new_cover">
+                                <div class="cover new_cover">
                                     <p>НОВЫЙ</p>
+                                </div>
+                                <?php
+                            endif;
+                            if ($row['date'] != $date && $row['type'] == 1):
+                                ?>
+                                <div class="cover vacancy_cover">
+                                    <p>Вакансия</p>
+                                </div>
+                                <?php
+                            endif;
+                            if ($row['pin'] == 1):
+                                ?>
+                                <div class="pin_icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        <path
+                                            d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" />
+                                    </svg>
                                 </div>
                                 <?php
                             endif;
@@ -1110,16 +1169,24 @@ include "../layouts/modal/corect_order.php";
                                 <?php
                                 $application_number = 0;
                                 $order_id = $row["id"];
-                                $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id'";
-                                $application_query = mysqli_query($bd_connect, $application_sql);
+                                $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ?";
+                                $application_stmt = mysqli_prepare($bd_connect, $application_sql);
+                                mysqli_stmt_bind_param($application_stmt, "s", $order_id);
+                                mysqli_stmt_execute($application_stmt);
+                                $application_query = mysqli_stmt_get_result($application_stmt);
+
                                 while ($application_resolt = mysqli_fetch_assoc($application_query)) {
                                     $application_number++;
                                 }
                                 if ($application_number !== 0):
                                     //application_check
                                     $application_check_count = false;
-                                    $application_check_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id' AND `nik` = '$my_nik'";
-                                    $application_check_query = mysqli_query($bd_connect, $application_check_sql);
+                                    $application_check_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ? AND `nik` = ?";
+                                    $application_stmt = mysqli_prepare($bd_connect, $application_check_sql);
+                                    mysqli_stmt_bind_param($application_stmt, "ss", $order_id, $my_nik);
+                                    mysqli_stmt_execute($application_stmt);
+                                    $application_check_query = mysqli_stmt_get_result($application_stmt);
+
                                     while ($application_check_resolt = mysqli_fetch_assoc($application_check_query)) {
                                         $application_check_count = true;
                                     }

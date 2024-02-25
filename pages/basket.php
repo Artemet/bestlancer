@@ -16,19 +16,23 @@ include "../layouts/header_line.php";
         <div class="basket_wrapper">
             <?php
             $user_nik = $_SESSION["nik"];
-            $sql = "SELECT * FROM basket WHERE nik = '$user_nik'";
-            $query = mysqli_query($bd_connect, $sql);
+            $sql = "SELECT * FROM `basket` WHERE `nik` = ?";
+            $stmt = mysqli_prepare($bd_connect, $sql);
+            mysqli_stmt_bind_param($stmt, "s", $user_nik);
+            mysqli_stmt_execute($stmt);
+            $query = mysqli_stmt_get_result($stmt);
             $basket_length = 0;
             while ($row = mysqli_fetch_assoc($query)):
                 $basket_length++;
-                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                 $author_nik = $row['author_nik'];
                 //users_icons
-                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$author_nik'";
-                $icon_resolt = mysqli_query($connection, $icon_query);
-                $icon_row = mysqli_fetch_assoc($icon_resolt);
+                $$icon_sql = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                $icon_stmt = mysqli_prepare($bd_connect, $icon_sql);
+                mysqli_stmt_bind_param($icon_stmt, "s", $author_nik);
+                mysqli_stmt_execute($icon_stmt);
+                $icon_query = mysqli_stmt_get_result($icon_stmt);
+                $icon_row = mysqli_fetch_assoc($icon_query);
                 $user_icon = $icon_row['icon_path'];
-                mysqli_close($connection);
                 ?>
                 <div class="basket_product">
                     <div class="product_id">

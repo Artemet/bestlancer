@@ -18,8 +18,12 @@ include "../layouts/header_line.php";
         </div>
         <?php
         $emailsCount = array();
-        $sql = "SELECT * FROM `reviews` WHERE `type` = 'exchange'";
-        $query = mysqli_query($bd_connect, $sql);
+        $review_type = "exchange";
+        $sql = "SELECT * FROM `reviews` WHERE `type` = ?";
+        $stmt = mysqli_prepare($bd_connect, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $review_type);
+        mysqli_stmt_execute($stmt);
+        $query = mysqli_stmt_get_result($stmt);
 
         $loggedInEmail = "";
         if (isset($_SESSION["nik"])) {
@@ -29,10 +33,13 @@ include "../layouts/header_line.php";
 
         while ($row = mysqli_fetch_assoc($query)):
             $email = $row['email'];
-            //user_info
-            $info_sql = "SELECT * FROM `user_registoring` WHERE `email` = '$email'";
-            $info_query = mysqli_query($bd_connect, $info_sql);
-            //info_resolt
+
+            $info_sql = "SELECT * FROM `user_registoring` WHERE `email` = ?";
+            $info_stmt = mysqli_prepare($bd_connect, $info_sql);
+            mysqli_stmt_bind_param($info_stmt, "s", $email);
+            mysqli_stmt_execute($info_stmt);
+            $info_query = mysqli_stmt_get_result($info_stmt);
+
             $info_resolt = mysqli_fetch_assoc($info_query);
 
             $review_class = null;

@@ -12,13 +12,16 @@ echo "<link rel='stylesheet' href='../page_css/services.css'>";
 echo "<link rel='stylesheet' href='../page_css/modal_css/chat_start_modal.css'>";
 if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
-    $sql = "SELECT * FROM user_registoring WHERE id = $user_id";
-    $query = mysqli_query($bd_connect, $sql);
+    $sql = "SELECT * FROM `user_registoring` WHERE `id` = ?";
+    $stmt = mysqli_prepare($bd_connect, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $query = mysqli_stmt_get_result($stmt);
     $user = mysqli_fetch_assoc($query);
-    if ($user) {
+    if ($stmt) {
         if (isset($_SESSION["nik"])) {
-            if ($_SESSION["nik"] === $user["nik"]) {
-                header("Location: user.php");
+            if ($_SESSION["nik"] == $user["nik"]) {
+                echo "<script>window.location.href = 'user.php';</script>";
             }
         }
         echo "<title>Профиль " . $user['nik'] . "</title>";
@@ -38,19 +41,23 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
     if (isset($_SESSION['nik'])) {
         $my_nik = $_SESSION["nik"];
         //friend_find
-        $friend_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
-        $friend_query = mysqli_query($bd_connect, $friend_sql);
+        $friend_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = ? AND `nik_two` = ?) OR (`nik_two` = ? AND `nik_one` = ?)";
+        $stmt = mysqli_prepare($bd_connect, $friend_sql);
+        mysqli_stmt_bind_param($stmt, "ssss", $my_nik, $user_nik, $my_nik, $user_nik);
+        mysqli_stmt_execute($stmt);
+        $friend_query = mysqli_stmt_get_result($stmt);
         while ($friend_resolt = mysqli_fetch_assoc($friend_query)) {
             $friend_find = true;
         }
         //user_status
         if ($friend_find == true) {
-            $status_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
-            $user_block_sql = "SELECT `main_block` FROM `messenger_users` WHERE `nik_one` = '$my_nik' AND `nik_two` = '$user_nik' OR `nik_two` = '$my_nik' AND `nik_one` = '$user_nik'";
-            $status_query = mysqli_query($bd_connect, $status_sql);
-            $user_block_query = mysqli_query($bd_connect, $user_block_sql);
+            $status_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = ? AND `nik_two` = ?) OR (`nik_two` = ? AND `nik_one` = ?)";
+            $stmt = mysqli_prepare($bd_connect, $status_sql);
+            mysqli_stmt_bind_param($stmt, "ssss", $my_nik, $user_nik, $my_nik, $user_nik);
+            mysqli_stmt_execute($stmt);
+            $status_query = mysqli_stmt_get_result($stmt);
             $status_resolt = mysqli_fetch_assoc($status_query)['status'];
-            $user_block_resolt = mysqli_fetch_assoc($user_block_query)['main_block'];
+            $user_block_resolt = mysqli_fetch_assoc($status_query)['main_block'];
         }
     }
 } else {
@@ -167,8 +174,47 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                             ?>
                         </b>
                     </div>
+                    <?php
+                    $level_count = 1;
+                    $order_length = $user['orders'];
+                    if ($order_length <= 3) {
+                        $level_count = 1;
+                    } elseif ($order_length <= 6) {
+                        $level_count = 2;
+                    } elseif ($order_length <= 11) {
+                        $level_count = 3;
+                    } elseif ($order_length <= 16) {
+                        $level_count = 4;
+                    } elseif ($order_length <= 21) {
+                        $level_count = 5;
+                    } elseif ($order_length <= 26) {
+                        $level_count = 6;
+                    } elseif ($order_length <= 31) {
+                        $level_count = 7;
+                    } elseif ($order_length <= 36) {
+                        $level_count = 8;
+                    } elseif ($order_length <= 41) {
+                        $level_count = 9;
+                    } elseif ($order_length <= 46) {
+                        $level_count = 10;
+                    } elseif ($order_length <= 51) {
+                        $level_count = 11;
+                    } elseif ($order_length <= 56) {
+                        $level_count = 12;
+                    } elseif ($order_length <= 61) {
+                        $level_count = 13;
+                    } elseif ($order_length <= 66) {
+                        $level_count = 14;
+                    } elseif ($order_length <= 71) {
+                        $level_count = 15;
+                    }
+                    ?>
                     <div>
-                        <b class="level">Уровень 1</b>
+                        <b class="level">Уровень
+                            <span>
+                                <?= $level_count ?>
+                            </span>
+                        </b>
                         <div class="level_line">
                             <div class="level"></div>
                         </div>
@@ -185,8 +231,13 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     {
                         global $bd_connect, $user_email;
                         $length = 0;
-                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
-                        $review_query = mysqli_query($bd_connect, $review_sql);
+                        $review_type = "user";
+                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = ? AND `type` = ?";
+                        $review_stmt = mysqli_prepare($bd_connect, $review_sql);
+                        mysqli_stmt_bind_param($review_stmt, "ss", $user_email, $review_type);
+                        mysqli_stmt_execute($review_stmt);
+
+                        $review_query = mysqli_stmt_get_result($review_stmt);
                         while (mysqli_fetch_assoc($review_query)) {
                             $length++;
                         }
@@ -228,8 +279,11 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                         function chat_id_get()
                         {
                             global $bd_connect, $user_nik, $my_nik;
-                            $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' OR `nik_two` = '$user_nik') AND (`nik_one` = '$my_nik' OR `nik_two` = '$my_nik')";
-                            $chat_id_query = mysqli_query($bd_connect, $chat_id_sql);
+                            $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = ? OR `nik_two` = ?) AND (`nik_one` = ? OR `nik_two` = ?)";
+                            $stmt = mysqli_prepare($bd_connect, $chat_id_sql);
+                            mysqli_stmt_bind_param($stmt, "ssss", $user_nik, $user_nik, $my_nik, $my_nik);
+                            mysqli_stmt_execute($stmt);
+                            $chat_id_query = mysqli_stmt_get_result($stmt);
                             return mysqli_fetch_assoc($chat_id_query)['chat_id'];
                         }
                         echo "<noscript class='chat_id'>" . chat_id_get() . "</noscript>";
@@ -358,11 +412,13 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                         <div class="project_covers card_container">
                             <?php
                             $cover_temp = 0;
-                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
-                            $cover_query = mysqli_query($bd_connect, $cover_sql);
-                            while ($row = mysqli_fetch_assoc($cover_query)):
+                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = ?";
+                            $cover_query = mysqli_prepare($bd_connect, $cover_sql);
+                            mysqli_stmt_bind_param($cover_query, "s", $user_nik);
+                            mysqli_stmt_execute($cover_query);
+                            $result = mysqli_stmt_get_result($cover_query);
+                            while ($row = mysqli_fetch_assoc($result)):
                                 $cover_temp++;
-                                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                                 ?>
                                 <a href='project_page.php?project_id=<?= $row['id'] ?>'>
                                     <div class="project">
@@ -400,34 +456,34 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                 <?php
                 $nik = $user['nik'];
 
-                $bd_connect = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
-
-                if (!$bd_connect) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-                $sql = "SELECT * FROM services WHERE nik = '$nik'";
-                $query = mysqli_query($bd_connect, $sql);
+                $sql = "SELECT * FROM `services` WHERE `nik` = ?";
+                $query = mysqli_prepare($bd_connect, $sql);
+                mysqli_stmt_bind_param($query, "s", $nik);
+                mysqli_stmt_execute($query);
+                $resolt = mysqli_stmt_get_result($query);
 
                 if (!$query) {
                     die("Query failed: " . mysqli_error($bd_connect));
                 }
 
-                if (mysqli_num_rows($query) > 0) {
+                if (mysqli_num_rows($resolt) > 0) {
                     echo '<div>
                         <h2>Мои услуги</h2>
                     </div>';
                     echo '<div class="service_container">';
-                    while ($row = mysqli_fetch_assoc($query)) {
+                    while ($row = mysqli_fetch_assoc($resolt)) {
                         $service_nik = $row['nik'];
-                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
-                        $icon_result = mysqli_query($bd_connect, $icon_query);
+                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                        $icon_stmt = mysqli_prepare($bd_connect, $icon_query);
+                        mysqli_stmt_bind_param($icon_stmt, "s", $service_nik);
+                        $icon_resolt = mysqli_stmt_execute($icon_stmt);
 
                         if (!$icon_result) {
                             die("Query failed: " . mysqli_error($bd_connect));
                         }
 
-                        $icon_row = mysqli_fetch_assoc($icon_result);
+                        $icon_information = mysqli_stmt_get_result($icon_stmt);
+                        $icon_row = mysqli_fetch_assoc($icon_information);
                         $user_icon = $icon_row['icon_path'];
 
                         echo '
@@ -465,8 +521,12 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
             {
                 global $bd_connect, $user_email;
                 $review_include = false;
-                $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
-                $review_query = mysqli_query($bd_connect, $review_sql);
+                $review_type = "user";
+                $review_sql = "SELECT * FROM `reviews` WHERE `email` = ? AND `type` = ?";
+                $stmt = mysqli_prepare($bd_connect, $review_sql);
+                mysqli_stmt_bind_param($stmt, "ss", $user_email, $review_type);
+                mysqli_stmt_execute($stmt);
+                $review_query = mysqli_stmt_get_result($stmt);
                 while (mysqli_fetch_assoc($review_query)) {
                     $review_include = true;
                 }
@@ -478,14 +538,22 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                     <h2>Мои отзывы</h2>
                     <div class="reviews_wrapper">
                         <?php
-                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = '$user_email' AND `type` = 'user'";
-                        $review_query = mysqli_query($bd_connect, $review_sql);
+                        $review_type = "user";
+                        $review_sql = "SELECT * FROM `reviews` WHERE `email` = ? AND `type` = ?";
+                        $review_stmt = mysqli_prepare($bd_connect, $review_sql);
+                        mysqli_stmt_bind_param($review_stmt, "ss", $user_email, $review_type);
+                        mysqli_stmt_execute($review_stmt);
+                        $review_query = mysqli_stmt_get_result($review_stmt);
                         function buyer_bd($buyer_nik, $table)
                         {
                             global $bd_connect;
-                            $user_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$buyer_nik'";
-                            $user_query = mysqli_query($bd_connect, $user_sql);
-                            return mysqli_fetch_assoc($user_query)[$table];
+                            $user_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                            $stmt = mysqli_prepare($bd_connect, $user_sql);
+                            mysqli_stmt_bind_param($stmt, "s", $buyer_nik);
+                            mysqli_stmt_execute($stmt);
+                            $user_query = mysqli_stmt_get_result($stmt);
+                            $user_row = mysqli_fetch_assoc($user_query);
+                            return $user_row[$table];
                         }
                         while ($review_resolt = mysqli_fetch_assoc($review_query)):
                             ?>

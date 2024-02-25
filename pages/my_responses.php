@@ -35,9 +35,13 @@ include "../layouts/header_line.php";
             <div class="response_container">
                 <?php
                 $user_nik = $_SESSION["nik"];
+                $user_nik = $_SESSION["nik"];
                 $response_temp = 0;
-                $sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik'";
-                $query = mysqli_query($bd_connect, $sql);
+                $sql = "SELECT * FROM orders_responses WHERE nik = ?";
+                $stmt = mysqli_prepare($bd_connect, $sql);
+                mysqli_stmt_bind_param($stmt, "s", $user_nik);
+                $query = mysqli_stmt_execute($stmt);
+                mysqli_stmt_get_result($stmt);
                 //page
                 $responses_per_page = 8;
 
@@ -45,40 +49,65 @@ include "../layouts/header_line.php";
 
                 $offset = ($page - 1) * $responses_per_page;
 
-                $page_sql = "SELECT * FROM orders_responses WHERE nik = '$user_nik' LIMIT $offset, $responses_per_page";
-                $page_query = mysqli_query($bd_connect, $page_sql);
+                $user_nik = $_SESSION["nik"];
+                $response_temp = 0;
+                $sql = "SELECT * FROM orders_responses WHERE nik = ? LIMIT ?, ?";
+                $stmt = mysqli_prepare($bd_connect, $sql);
+                $offset = (int) $offset;
+                $responses_per_page = (int) $responses_per_page;
+                mysqli_stmt_bind_param($stmt, "sii", $user_nik, $offset, $responses_per_page);
+                mysqli_stmt_execute($stmt);
+                $page_query = mysqli_stmt_get_result($stmt);
 
                 if ($page >= 1):
                     while ($row = mysqli_fetch_assoc($page_query)):
                         //max_price
                         $order_id = $row["order_id"];
-                        $max_price_sql = "SELECT `order_price` FROM `orders` WHERE `id` = '$order_id'";
-                        $max_price_query = mysqli_query($bd_connect, $max_price_sql);
+                        $max_price_sql = "SELECT `order_price` FROM `orders` WHERE `id` = ?";
+                        $stmt_max_price = mysqli_prepare($bd_connect, $max_price_sql);
+                        mysqli_stmt_bind_param($stmt_max_price, "i", $order_id);
+                        mysqli_stmt_execute($stmt_max_price);
+                        $max_price_query = mysqli_stmt_get_result($stmt_max_price);
                         $max_price_resolt = mysqli_fetch_assoc($max_price_query)['order_price'];
+
                         //users_nik
                         $response_temp++;
                         $orderer_nik = $row['order_name'];
-                        $order_sql = "SELECT * FROM orders WHERE order_name = '$orderer_nik'";
+                        $order_sql = "SELECT * FROM orders WHERE order_name = ?";
                         $order_niks = array();
-                        $order_query = mysqli_query($bd_connect, $order_sql);
+                        $stmt_order = mysqli_prepare($bd_connect, $order_sql);
+                        mysqli_stmt_bind_param($stmt_order, "s", $orderer_nik);
+                        mysqli_stmt_execute($stmt_order);
+                        $order_query = mysqli_stmt_get_result($stmt_order);
                         $order_row = mysqli_fetch_assoc($order_query);
                         $row_nik_content = $order_row['nik'];
                         $nik = $row_nik_content;
+
                         //users_id
-                        $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                        $id_result = mysqli_query($bd_connect, $id_query);
+                        $id_query = "SELECT id FROM user_registoring WHERE nik = ?";
+                        $stmt_id = mysqli_prepare($bd_connect, $id_query);
+                        mysqli_stmt_bind_param($stmt_id, "s", $nik);
+                        mysqli_stmt_execute($stmt_id);
+                        $id_result = mysqli_stmt_get_result($stmt_id);
                         $id_row = mysqli_fetch_assoc($id_result);
                         $user_id = $id_row['id'];
+
                         //users_icons
-                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                        $icon_resolt = mysqli_query($bd_connect, $icon_query);
+                        $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                        $stmt_icon = mysqli_prepare($bd_connect, $icon_query);
+                        mysqli_stmt_bind_param($stmt_icon, "s", $nik);
+                        mysqli_stmt_execute($stmt_icon);
+                        $icon_resolt = mysqli_stmt_get_result($stmt_icon);
                         $icon_row = mysqli_fetch_assoc($icon_resolt);
                         $user_icon = $icon_row['icon_path'];
 
                         //active_response
                         $response_class = null;
-                        $response_sql = "SELECT `progress` FROM `orders` WHERE `id` = $order_id";
-                        $response_query = mysqli_query($bd_connect, $response_sql);
+                        $response_sql = "SELECT `progress` FROM `orders` WHERE `id` = ?";
+                        $stmt_response = mysqli_prepare($bd_connect, $response_sql);
+                        mysqli_stmt_bind_param($stmt_response, "i", $order_id);
+                        mysqli_stmt_execute($stmt_response);
+                        $response_query = mysqli_stmt_get_result($stmt_response);
                         $response_resolt = mysqli_fetch_assoc($response_query)['progress'];
                         if ($response_resolt == 2) {
                             $response_class = "active_response";
@@ -132,7 +161,7 @@ include "../layouts/header_line.php";
                                     </div>
                                     <div>
                                         <a href="order_progress.php?order_id=<?= $order_id ?>">Заказ №
-                                            <?= $row['id'] ?>
+                                            <?= $row['order_id'] ?>
                                         </a>
                                     </div>
                                 </div>
@@ -163,8 +192,12 @@ include "../layouts/header_line.php";
                 }
 
                 // Pagination links
-                $total_responses_sql = "SELECT COUNT(*) as total FROM orders_responses WHERE nik = '$user_nik'";
-                $total_responses_query = mysqli_query($bd_connect, $total_responses_sql);
+                $user_nik = $_SESSION["nik"];
+                $total_responses_sql = "SELECT COUNT(*) as total FROM orders_responses WHERE nik = ?";
+                $stmt = mysqli_prepare($bd_connect, $total_responses_sql);
+                mysqli_stmt_bind_param($stmt, "s", $user_nik);
+                mysqli_stmt_execute($stmt);
+                $total_responses_query = mysqli_stmt_get_result($stmt);
                 $total_responses = mysqli_fetch_assoc($total_responses_query)['total'];
                 $total_pages = ceil($total_responses / $responses_per_page);
                 if ($total_pages !== 1 && $total_pages >= 2):

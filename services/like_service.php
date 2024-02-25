@@ -12,15 +12,19 @@ if (isset($_GET['like_id']) && is_numeric($_GET['like_id'])) {
 } else {
     exit("Услуга не найдена!");
 }
-$repetition_check = "SELECT * FROM `service_likes` WHERE `nik` = '$user_nik' AND `service_id` = '$like_id'";
-$repetition_query = mysqli_query($bd_connect, $repetition_check);
-while ($repetition_row = mysqli_fetch_assoc($repetition_query)) {
+$repetition_check_sql = "SELECT * FROM `service_likes` WHERE `nik` = ? AND `service_id` = ?";
+$repetition_stmt = mysqli_prepare($bd_connect, $repetition_check_sql);
+mysqli_stmt_bind_param($repetition_stmt, "si", $user_nik, $like_id);
+mysqli_stmt_execute($repetition_stmt);
+$repetition_result = mysqli_stmt_get_result($repetition_stmt);
+while ($repetition_row = mysqli_fetch_assoc($repetition_result)) {
     $like_repetition++;
     if ($like_repetition == 1) {
-        $delete_sql = "DELETE FROM `service_likes` WHERE `nik` = '$user_nik' AND `service_id` = '$like_id'";
-        $delete_query = mysqli_query($bd_connect, $delete_sql);
-
-        if (!$delete_query) {
+        $delete_sql = "DELETE FROM `service_likes` WHERE `nik` = ? AND `service_id` = ?";
+        $delete_stmt = mysqli_prepare($bd_connect, $delete_sql);
+        mysqli_stmt_bind_param($delete_stmt, "si", $user_nik, $like_id);
+        mysqli_stmt_execute($delete_stmt);
+        if (!$delete_stmt) {
             header("Location: ../warnings/web_error.php");
         } else {
             header("Location: ../../pages/service_page.php?service_id=$like_id");
@@ -29,9 +33,11 @@ while ($repetition_row = mysqli_fetch_assoc($repetition_query)) {
     }
 }
 
-$like_sql = "INSERT INTO `service_likes` (`id`, `service_id`, `nik`) VALUES (NULL, '$like_id', '$user_nik')";
-$like_query = mysqli_query($bd_connect, $like_sql);
-if (!$like_query) {
+$like_sql = "INSERT INTO `service_likes` (`id`, `service_id`, `nik`) VALUES (NULL, ?, ?)";
+$like_stmt = mysqli_prepare($bd_connect, $like_sql);
+mysqli_stmt_bind_param($like_stmt, "is", $like_id, $user_nik);
+mysqli_stmt_execute($like_stmt);
+if (!$like_stmt) {
     header("Location: ../warnings/web_error.php");
 } else {
     header("Location: ../../pages/service_page.php?service_id=$like_id");

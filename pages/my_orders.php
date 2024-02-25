@@ -41,8 +41,11 @@ include "../layouts/header_line.php";
 
                 $start_from = ($page - 1) * $orders_per_page;
 
-                $sql = "SELECT * FROM orders WHERE nik = '$user_nik' ORDER BY id DESC LIMIT $start_from, $orders_per_page";
-                $query = mysqli_query($bd_connect, $sql);
+                $sql = "SELECT * FROM orders WHERE nik = ? ORDER BY id DESC LIMIT ?, ?";
+                $stmt = mysqli_prepare($bd_connect, $sql);
+                mysqli_stmt_bind_param($stmt, "sii", $user_nik, $start_from, $orders_per_page);
+                mysqli_stmt_execute($stmt);
+                $query = mysqli_stmt_get_result($stmt);
 
                 while ($row = mysqli_fetch_assoc($query)):
                     $order_temp++;
@@ -124,8 +127,11 @@ include "../layouts/header_line.php";
                 }
 
                 // Pagination links
-                $sql_count = "SELECT COUNT(*) as total FROM orders WHERE nik = '$user_nik'";
-                $count_query = mysqli_query($bd_connect, $sql_count);
+                $sql_count = "SELECT COUNT(*) as total FROM orders WHERE nik = ?";
+                $stmt_count = mysqli_prepare($bd_connect, $sql_count);
+                mysqli_stmt_bind_param($stmt_count, "s", $user_nik);
+                mysqli_stmt_execute($stmt_count);
+                $count_query = mysqli_stmt_get_result($stmt_count);
                 $count_row = mysqli_fetch_assoc($count_query);
                 $total_orders = $count_row['total'];
                 $total_pages = ceil($total_orders / $orders_per_page);

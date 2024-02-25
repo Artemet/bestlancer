@@ -18,10 +18,13 @@ if (isset($_GET['service_id']) && is_numeric($_GET['service_id'])) {
     warning_teleport();
 }
 //cheat_check
-$cheat_sql = "SELECT `nik` FROM `services` WHERE `id` = '$service_id'";
-$cheat_query = mysqli_query($bd_connect, $cheat_sql);
-$cheat_nik = mysqli_fetch_assoc($cheat_query)['nik'];
-if ($my_nik !== $cheat_nik) {
+$cheat_sql = "SELECT `nik` FROM `services` WHERE `id` = ?";
+$cheat_stmt = mysqli_prepare($bd_connect, $cheat_sql);
+mysqli_stmt_bind_param($cheat_stmt, "i", $service_id);
+mysqli_stmt_execute($cheat_stmt);
+$cheat_result = mysqli_stmt_get_result($cheat_stmt);
+$cheat_row = mysqli_fetch_assoc($cheat_result);
+if (!$cheat_row || $my_nik !== $cheat_row['nik']) {
     warning_teleport();
 }
 
@@ -41,9 +44,11 @@ if (empty($service_name) || empty($service_price) || empty($service_context) || 
     header("Location: ../../pages/service_page.php?service_id=$service_id");
     exit;
 }
-$update_sql = "UPDATE `services` SET `name` = '$service_name', `price` = '$service_price', `information` = '$service_context' WHERE `id` = '$service_id'";
-$update_query = mysqli_query($bd_connect, $update_sql);
-if (!$update_query) {
+$update_sql = "UPDATE `services` SET `name` = ?, `price` = ?, `information` = ? WHERE `id` = ?";
+$update_stmt = mysqli_prepare($bd_connect, $update_sql);
+mysqli_stmt_bind_param($update_stmt, "sdsi", $service_name, $service_price, $service_context, $service_id);
+$update_result = mysqli_stmt_execute($update_stmt);
+if (!$update_result) {
     warning_teleport();
 }
 header("Location: ../../pages/service_page.php?service_id=$service_id");

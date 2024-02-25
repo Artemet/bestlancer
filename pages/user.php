@@ -194,11 +194,13 @@ include "../layouts/header_line.php";
                         <div class="project_covers card_container">
                             <?php
                             $project_temp = 0;
-                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = '$user_nik'";
-                            $cover_query = mysqli_query($bd_connect, $cover_sql);
+                            $cover_sql = "SELECT * FROM `project_cover` WHERE nik = ?";
+                            $cover_stmt = mysqli_prepare($bd_connect, $cover_sql);
+                            mysqli_stmt_bind_param($cover_stmt, "s", $user_nik);
+                            mysqli_stmt_execute($cover_stmt);
+                            $cover_query = mysqli_stmt_get_result($cover_stmt);
                             while ($row = mysqli_fetch_assoc($cover_query)):
                                 $project_temp++;
-                                $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                                 ?>
                                 <a href="project_page.php?project_id=<?= $row['id'] ?>" id="<?= $row['id'] ?>">
                                     <div class="project">
@@ -249,8 +251,11 @@ include "../layouts/header_line.php";
                     <?php
                     $nik = $_SESSION['nik'];
 
-                    $sql = "SELECT * FROM services WHERE nik = '$nik'";
-                    $query = mysqli_query($bd_connect, $sql);
+                    $sql = "SELECT * FROM `services` WHERE `nik` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $nik);
+                    mysqli_stmt_execute($stmt);
+                    $query = mysqli_stmt_get_result($stmt);
 
                     if (!$query) {
                         die("Query failed: " . mysqli_error($bd_connect));
@@ -258,18 +263,19 @@ include "../layouts/header_line.php";
 
                     if (mysqli_num_rows($query) > 0) {
                         while ($row = mysqli_fetch_assoc($query)) {
-                            $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
                             $service_nik = $row['nik'];
-                            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$service_nik'";
-                            $icon_result = mysqli_query($connection, $icon_query);
+                            $icon_sql = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                            $icon_stmt = mysqli_prepare($bd_connect, $icon_sql);
+                            mysqli_stmt_bind_param($icon_stmt, "s", $service_nik);
+                            $icon_result = mysqli_stmt_execute($icon_stmt);
 
                             if (!$icon_result) {
-                                die("Query failed: " . mysqli_error($connection));
+                                die("Query failed: " . mysqli_error($bd_connect));
                             }
 
-                            $icon_row = mysqli_fetch_assoc($icon_result);
+                            $get_row = mysqli_stmt_get_result($icon_stmt);
+                            $icon_row = mysqli_fetch_assoc($get_row);
                             $user_icon = $icon_row['icon_path'];
-                            mysqli_close($connection);
 
                             echo '<div class="service">
                                 <a href="service_page.php?service_id=' . $row['id'] . '">

@@ -11,8 +11,11 @@ include "../bd_send/database_connect.php";
 include "../layouts/header.php";
 if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
     $order_id = $_GET['order_id'];
-    $sql = "SELECT * FROM orders WHERE id = $order_id";
-    $query = mysqli_query($bd_connect, $sql);
+    $sql = "SELECT * FROM `orders` WHERE `id` = ?";
+    $order_stmt = mysqli_prepare($bd_connect, $sql);
+    mysqli_stmt_bind_param($order_stmt, "i", $order_id);
+    mysqli_stmt_execute($order_stmt);
+    $query = mysqli_stmt_get_result($order_stmt);
     $order = mysqli_fetch_assoc($query);
     if (isset($_SESSION["nik"])) {
         if ($order["nik"] === $nik) {
@@ -95,11 +98,12 @@ include "../layouts/header_line.php";
             <div class="header_wrapper">
                 <?php
                 //icon_connect
-                $query = mysqli_query($bd_connect, $sql);
-                $row = mysqli_fetch_assoc($query);
-                $nik = $row['nik'];
-                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                $icon_resolt = mysqli_query($bd_connect, $icon_query);
+                $nik = $order['nik'];
+                $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                $stmt = mysqli_prepare($bd_connect, $icon_query);
+                mysqli_stmt_bind_param($stmt, "s", $nik);
+                mysqli_stmt_execute($stmt);
+                $icon_resolt = mysqli_stmt_get_result($stmt);
                 $icon_row = mysqli_fetch_assoc($icon_resolt);
                 $user_icon = $icon_row['icon_path'];
                 ?>
@@ -108,8 +112,11 @@ include "../layouts/header_line.php";
                     <div>
                         <?php
                         $nik = $order['nik'];
-                        $query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                        $result = mysqli_query($bd_connect, $query);
+                        $query = "SELECT id FROM user_registoring WHERE nik = ?";
+                        $stmt = mysqli_prepare($bd_connect, $query);
+                        mysqli_stmt_bind_param($stmt, "s", $nik);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
                         if ($result && mysqli_num_rows($result) > 0) {
                             $row = mysqli_fetch_assoc($result);
                         }
@@ -119,13 +126,16 @@ include "../layouts/header_line.php";
                 </div>
                 <?php
                 $order_name = $order['order_name'];
-                $sql = "SELECT * FROM `orders_responses` WHERE `order_id` = '$order_id'";
-                $query = mysqli_query($bd_connect, $sql);
+                $sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ?";
+                $stmt = mysqli_prepare($bd_connect, $sql);
+                mysqli_stmt_bind_param($stmt, "i", $order_id);
+                mysqli_stmt_execute($stmt);
+                $query = mysqli_stmt_get_result($stmt);
+
                 if (isset($_SESSION["nik"])) {
+                    $user_order = false;
                     if ($order['nik'] === $_SESSION["nik"]) {
-                        $user_order = TRUE;
-                    } else {
-                        $user_order = FALSE;
+                        $user_order = true;
                     }
                 }
 
@@ -133,8 +143,11 @@ include "../layouts/header_line.php";
                     $user_responses = 0;
                     $response_class = null;
                     $response_nik = $_SESSION["nik"];
-                    $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = $order_id AND nik = '$response_nik'";
-                    $existingApplicationQuery = mysqli_query($bd_connect, $existingApplicationSql);
+                    $existingApplicationSql = "SELECT * FROM orders_responses WHERE order_id = ? AND nik = ?";
+                    $stmt = mysqli_prepare($bd_connect, $existingApplicationSql);
+                    mysqli_stmt_bind_param($stmt, "is", $order_id, $response_nik);
+                    mysqli_stmt_execute($stmt);
+                    $existingApplicationQuery = mysqli_stmt_get_result($stmt);
                     while ($existingApplication = mysqli_fetch_assoc($existingApplicationQuery)) {
                         $user_responses++;
                     }
@@ -148,8 +161,11 @@ include "../layouts/header_line.php";
                         //block_check
                         $my_nik = $_SESSION["nik"];
                         $user_blocked = false;
-                        $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = '$my_nik' AND `nik_two` = '$orderer_nik') OR (`nik_one` = '$orderer_nik' AND `nik_two` = '$my_nik')) AND `status` = 'block'";
-                        $block_query = mysqli_query($bd_connect, $block_sql);
+                        $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = ? AND `nik_two` = ?) OR (`nik_one` = ? AND `nik_two` = ?)) AND `status` = 'block'";
+                        $stmt = mysqli_prepare($bd_connect, $block_sql);
+                        mysqli_stmt_bind_param($stmt, "ssss", $my_nik, $orderer_nik, $orderer_nik, $my_nik);
+                        mysqli_stmt_execute($stmt);
+                        $block_query = mysqli_stmt_get_result($stmt);
                         while ($block_resolt = mysqli_fetch_assoc($block_query)) {
                             $user_blocked = true;
                             $response_class = "ready_application";
@@ -158,14 +174,20 @@ include "../layouts/header_line.php";
                                 <div class="' . $response_class . '">';
                         if ($user_blocked == false) {
                             //max_date_push
-                            $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                            $max_date_query = mysqli_query($bd_connect, $max_date_sql);
+                            $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = ?";
+                            $stmt = mysqli_prepare($bd_connect, $max_date_sql);
+                            mysqli_stmt_bind_param($stmt, "s", $my_nik);
+                            mysqli_stmt_execute($stmt);
+                            $max_date_query = mysqli_stmt_get_result($stmt);
                             $max_date_resolt = mysqli_fetch_assoc($max_date_query)['application_date'];
 
                             //application_limit_check
                             $limit_temp = 0;
-                            $limit_sql = "SELECT * FROM `orders_responses` WHERE `nik` = '$my_nik' AND `max_date` = '$max_date_resolt'";
-                            $limit_query = mysqli_query($bd_connect, $limit_sql);
+                            $limit_sql = "SELECT * FROM `orders_responses` WHERE `nik` = ? AND `max_date` = ?";
+                            $stmt = mysqli_prepare($bd_connect, $limit_sql);
+                            mysqli_stmt_bind_param($stmt, "ss", $my_nik, $max_date_resolt);
+                            mysqli_stmt_execute($stmt);
+                            $limit_query = mysqli_stmt_get_result($stmt);
                             //moment_date
                             $date = date("Y.m");
                             $date_result = null;
@@ -223,6 +245,15 @@ include "../layouts/header_line.php";
     </div>
     <div class="line" style="width: 80%"></div>
     <div class="users_applications">
+        <div class="type_information">
+            <?php
+            if ($order['type'] == 0) {
+                echo "<p>Тип: Заказ</p>";
+            } else if ($order['type'] == 1) {
+                echo "<p>Тип: Вакансия</p>";
+            }
+            ?>
+        </div>
         <div class="application_number_wrapper">
             <div>
                 <?php
@@ -262,127 +293,195 @@ include "../layouts/header_line.php";
             ?>
         </div>
         <div class="applications">
-            <?php
-            if ($order['progress'] == 1) {
-                while ($row = mysqli_fetch_assoc($query)) {
-                    $connection = mysqli_connect("localhost", $bd_login, $bd_password, $bd_name);
+            <?php if ($order['progress'] == 1): ?>
+                <?php while ($row = mysqli_fetch_assoc($query)): ?>
+                    <?php
                     $nik = $row['nik'];
-                    $id_query = "SELECT `id` FROM `user_registoring` WHERE nik = '$nik'";
-                    $id_result = mysqli_query($connection, $id_query);
-                    $id_row = mysqli_fetch_assoc($id_result);
-                    $user_id = $id_row['id'];
+                    $user_information_sql = "SELECT * FROM `user_registoring` WHERE nik = ?";
+                    $user_information_stmt = mysqli_prepare($bd_connect, $user_information_sql);
+                    mysqli_stmt_bind_param($user_information_stmt, "s", $nik);
+                    mysqli_stmt_execute($user_information_stmt);
+                    $user_information_query = mysqli_stmt_get_result($user_information_stmt);
+                    $user_information_row = mysqli_fetch_assoc($user_information_query);
+
+                    $user_id = $user_information_row['id'];
+                    $user_icon = $user_information_row["icon_path"];
                     //user_icon
-                    $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                    $icon_resolt = mysqli_query($connection, $icon_query);
-                    $icon_row = mysqli_fetch_assoc($icon_resolt);
-                    $user_icon = $icon_row['icon_path'];
-                    mysqli_close($connection);
                     $web_payment = "";
                     $user_message = $row["user_message"];
                     if (empty($user_message)) {
                         $user_message = "<b class='no_message'>Нет сообщения</b>";
                     }
-                    if ($row['order_name'] === $order_name) {
+                    if ($row['order_name'] === $order_name):
                         $payment_text = $row["payment_choice"];
                         $application_nik = $row["nik"];
-                        $user_nik_sql = "SELECT `name` FROM `user_registoring` WHERE `nik` = '$application_nik'";
-                        $user_nik_query = mysqli_query($bd_connect, $user_nik_sql);
+
+                        $user_nik_sql = "SELECT `name` FROM `user_registoring` WHERE `nik` = ?";
+                        $user_nik_stmt = mysqli_prepare($bd_connect, $user_nik_sql);
+                        mysqli_stmt_bind_param($user_nik_stmt, "s", $application_nik);
+                        mysqli_stmt_execute($user_nik_stmt);
+                        $user_nik_query = mysqli_stmt_get_result($user_nik_stmt);
+
                         $user_application_name = mysqli_fetch_assoc($user_nik_query)['name'];
                         if (!empty($row["payment_choice"])) {
                             $web_payment = "| $payment_text";
                         }
-                        if ($user_order === TRUE) {
-                            echo '
-                                <div class="application user_order">
-                                    <noscript class="user_id">' . $user_id . '</noscript>
-                                    <div class="application_part">
-                                        <div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div>
+                        if ($user_order === TRUE):
+                            ?>
+                            <div class="application user_order">
+                                <noscript class="user_id">
+                                    <?= $user_id ?>
+                                </noscript>
+                                <div class="application_part">
+                                    <div><img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false"></div>
+                                    <div>
+                                        <a href="user_page.php?user_id=<?= $user_id ?>">
+                                            <?= $row["nik"] ?>
+                                        </a>
+                                    </div>
+                                    <div class="arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                            <path
+                                                d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="sub_information">
+                                    <div class="part_one part">
                                         <div>
-                                            <a href="user_page.php?user_id=' . $user_id . '">' . $row["nik"] . '</a>
+                                            <p>
+                                                <?= $user_message ?>
+                                            </p>
                                         </div>
-                                        <div class="arrow">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/>
-                                            </svg>
-                                        </div>
+                                        <div class="user_price"><span>
+                                                <?= $row["price"] ?>₽
+                                            </span></div>
                                     </div>
-                                    <div class="sub_information">
-                                        <div class="part_one part">
-                                            <div><p>' . $user_message . '</p></div>
-                                            <div class="user_price"><span>' . $row["price"] . '₽</span></div>
+                                    <div class="part_two part">
+                                        <div>
+                                            <?php
+                                            if ($order["type"] == 0):
+                                                ?>
+                                                <p>
+                                                    <?= $row["time"] ?> суток
+                                                </p>
+                                                <?php
+                                            endif;
+                                            ?>
                                         </div>
-                                        <div class="part_two part">
-                                            <div><p>' . $row["time"] . ' суток</p></div>
-                                            <div><p>' . $row["payment_option"] . '' . $web_payment . '</p></div>
-                                            <div class="button_option">
+                                        <div>
+                                            <p>
+                                                <?= $row["payment_option"] ?>
+                                                <?= $web_payment ?>
+                                            </p>
+                                        </div>
+                                        <div class="button_option">
+                                            <?php
+                                            if ($order["type"] == 0):
+                                                ?>
                                                 <button class="start_order_button">Назначить исполнителем</button>
-                                                <a href="user_page.php?user_id=' . $user_id . '"><button>Посмотреть профиль</button></a>
-                                            </div>
+                                                <?php
+                                            endif;
+                                            ?>
+                                            <a href="user_page.php?user_id=<?= $user_id ?>"><button>Посмотреть профиль</button></a>
                                         </div>
                                     </div>
-                                </div>';
-                        } else {
+                                </div>
+                            </div>
+                        <?php else:
                             $application_nik_assoc = $row['nik'];
                             $invite_user_temp = 0;
-                            $invite_sql = "SELECT `type` FROM `notifications` WHERE `order_nik` = '$application_nik_assoc' AND `type` = 'invite' AND `order_information` = '$order_id'";
-                            $invite_query = mysqli_query($bd_connect, $invite_sql);
+                            $invite_type = "invite";
+
+                            $invite_sql = "SELECT `type` FROM `notifications` WHERE `order_nik` = ? AND `type` = ? AND `order_information` = ?";
+                            $stmt = mysqli_prepare($bd_connect, $invite_sql);
+                            mysqli_stmt_bind_param($stmt, "sss", $application_nik_assoc, $invite_type, $order_id);
+                            mysqli_stmt_execute($stmt);
+                            $invite_query = mysqli_stmt_get_result($stmt);
+
                             while ($invite_resolt = mysqli_fetch_assoc($invite_query)) {
                                 $invite_user_temp++;
                             }
-                            echo '<div class="application"><div class="application_part"><div><img src="../bd_send/user/user_icons/' . $user_icon . '" alt="" draggable="false"></div><div>';
-                            if ($invite_user_temp >= 1) {
-                                echo '<div class="invite_text"><p>Приглашён в заказ</p></div>';
-                            }
-                            if (isset($_SESSION["nik"])) {
-                                if ($user_application_name == $_SESSION["name"]) {
-                                    echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . ' <b class="my_order_mark">(вы)</b></a>';
-                                } else {
-                                    echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . '</a>';
-                                }
-                            } else {
-                                echo '<a href="user_page.php?user_id=' . $user_id . '">' . $user_application_name . '</a>';
-                            }
-                            echo '</div></div></div>';
-                        }
-                    }
-                }
-            } else {
+                            ?>
+                            <div class="application">
+                                <div class="application_part">
+                                    <div><img src="../bd_send/user/user_icons/<?= $user_icon ?>" alt="" draggable="false"></div>
+                                    <div>
+                                        <?php if ($invite_user_temp >= 1): ?>
+                                            <div class="invite_text">
+                                                <p>Приглашён в заказ</p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if (isset($_SESSION["nik"])): ?>
+                                            <?php if ($user_application_name == $_SESSION["name"]): ?>
+                                                <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                    <?= $user_application_name ?> <b class="my_order_mark">(вы)</b>
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                    <?= $user_application_name ?>
+                                                </a>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <a href="user_page.php?user_id=<?= $user_id ?>">
+                                                <?= $user_application_name ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <?php
                 function final_user($table, $place)
                 {
                     global $bd_connect, $order, $order_id;
                     $responsible_id = $order['responsible_id'];
-                    $user_sql = "SELECT * FROM `user_registoring` WHERE `id` = $responsible_id";
-                    $user_query = mysqli_query($bd_connect, $user_sql);
+                    $user_sql = "SELECT * FROM `user_registoring` WHERE `id` = ?";
+
+                    $stmt = mysqli_prepare($bd_connect, $user_sql);
+                    mysqli_stmt_bind_param($stmt, "i", $responsible_id);
+                    mysqli_stmt_execute($stmt);
+                    $user_query = mysqli_stmt_get_result($stmt);
+
                     if ($place == "user") {
                         $user_resolt = mysqli_fetch_assoc($user_query)[$table];
                         return $user_resolt;
                     } elseif ($place == "application") {
                         $user_resolt = mysqli_fetch_assoc($user_query)['nik'];
-                        $executor_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = $order_id AND `nik` = '$user_resolt'";
-                        $executor_query = mysqli_query($bd_connect, $executor_sql);
+                        $executor_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ? AND `nik` = ?";
+
+                        $stmt = mysqli_prepare($bd_connect, $executor_sql);
+                        mysqli_stmt_bind_param($stmt, "is", $order_id, $user_resolt);
+                        mysqli_stmt_execute($stmt);
+
+                        $executor_query = mysqli_stmt_get_result($stmt);
                         $executor_resolt = mysqli_fetch_assoc($executor_query)[$table];
                         return $executor_resolt;
                     }
                 }
+
                 echo '
-                    <div class="application user_order">
-                        <noscript class="user_id">' . final_user('id', 'user') . '</noscript>
-                        <div class="application_part resolt_application">
-                            <div><img src="../bd_send/user/user_icons/' . final_user('icon_path', 'user') . '" alt="" draggable="false"></div>
-                            <div>
-                                <div><a href="user_page.php?user_id=' . final_user('id', 'user') . '" class="full_name" target="_blank">' . final_user('name', 'user') . ' ' . final_user('family', 'user') . '</a></div>
-                                <div><p class="life_information">' . final_user('age', 'user') . ', ' . final_user('country', 'user') . '</p></div>
-                                <div><p class="reviews">Выполненых заказов: <b>' . final_user('orders', 'user') . '</b></p></div>
-                            </div>
-                            <div>
-                                <div><p class="price">' . final_user('price', 'application') . '₽</p></div>
-                                <div><p class="time">' . final_user('time', 'application') . ' суток</p></div>
-                            </div>
-                        </div>
-                    </div>';
-            }
-            ?>
+        <div class="application user_order">
+            <noscript class="user_id">' . final_user('id', 'user') . '</noscript>
+            <div class="application_part resolt_application">
+                <div><img src="../bd_send/user/user_icons/' . final_user('icon_path', 'user') . '" alt="" draggable="false"></div>
+                <div>
+                    <div><a href="user_page.php?user_id=' . final_user('id', 'user') . '" class="full_name" target="_blank">' . final_user('name', 'user') . ' ' . final_user('family', 'user') . '</a></div>
+                    <div><p class="life_information">' . final_user('age', 'user') . ', ' . final_user('country', 'user') . '</p></div>
+                    <div><p class="reviews">Выполненых заказов: <b>' . final_user('orders', 'user') . '</b></p></div>
+                </div>
+                <div>
+                    <div><p class="price">' . final_user('price', 'application') . '₽</p></div>
+                    <div><p class="time">' . final_user('time', 'application') . ' суток</p></div>
+                </div>
+            </div>
+        </div>';
+                ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

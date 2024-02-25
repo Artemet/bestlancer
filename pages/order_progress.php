@@ -19,8 +19,11 @@ if (isset($_GET["order_id"]) && is_numeric($_GET["order_id"])) {
     function order_check()
     {
         global $bd_connect, $order_id, $my_nik;
-        $order_sql = "SELECT * FROM `orders` WHERE `id` = $order_id";
-        $order_query = mysqli_query($bd_connect, $order_sql);
+        $order_sql = "SELECT * FROM `orders` WHERE `id` = ?";
+        $stmt_order = mysqli_prepare($bd_connect, $order_sql);
+        mysqli_stmt_bind_param($stmt_order, "i", $order_id);
+        mysqli_stmt_execute($stmt_order);
+        $order_query = mysqli_stmt_get_result($stmt_order);
         $order_resolt = mysqli_fetch_assoc($order_query);
         if ($order_resolt == null) {
             header("Location: home.php");
@@ -41,8 +44,11 @@ if (isset($_GET["order_id"]) && is_numeric($_GET["order_id"])) {
 function order_bd($table)
 {
     global $bd_connect, $order_id;
-    $order_sql = "SELECT * FROM `orders` WHERE `id` = $order_id";
-    $order_query = mysqli_query($bd_connect, $order_sql);
+    $order_sql = "SELECT `$table` FROM `orders` WHERE `id` = ?";
+    $stmt_order = mysqli_prepare($bd_connect, $order_sql);
+    mysqli_stmt_bind_param($stmt_order, "i", $order_id);
+    mysqli_stmt_execute($stmt_order);
+    $order_query = mysqli_stmt_get_result($stmt_order);
     $order_resolt = mysqli_fetch_assoc($order_query)[$table];
     return $order_resolt;
 }
@@ -60,36 +66,55 @@ if (order_bd('time') == 0) {
         }
         $date_resolt .= $date_array[$i];
     }
-    $date_sql = "UPDATE `orders` SET `date` = '$date_resolt' WHERE `id` = $order_id";
-    $date_query = mysqli_query($bd_connect, $date_sql);
+    $date_sql = "UPDATE `orders` SET `date` = ? WHERE `id` = ?";
+    $stmt = mysqli_prepare($bd_connect, $date_sql);
+    mysqli_stmt_bind_param($stmt, "si", $date_resolt, $order_id);
+    mysqli_stmt_execute($stmt);
 }
-//responsible_information
+
 $responsible_id = order_bd('responsible_id');
+
 function responsible_nik()
 {
     global $bd_connect, $responsible_id;
-    $nik_sql = "SELECT `nik` FROM `user_registoring` WHERE `id` = $responsible_id";
-    $nik_query = mysqli_query($bd_connect, $nik_sql);
-    return mysqli_fetch_assoc($nik_query)['nik'];
+    $nik_sql = "SELECT `nik` FROM `user_registoring` WHERE `id` = ?";
+    $stmt = mysqli_prepare($bd_connect, $nik_sql);
+    mysqli_stmt_bind_param($stmt, "i", $responsible_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($result)['nik'];
 }
+
 $responsible_nik = responsible_nik();
-$responsible_sql = "SELECT * FROM `user_registoring` WHERE `id` = $responsible_id";
-$responsible_query = mysqli_query($bd_connect, $responsible_sql);
+
+$responsible_sql = "SELECT * FROM `user_registoring` WHERE `id` = ?";
+$stmt = mysqli_prepare($bd_connect, $responsible_sql);
+mysqli_stmt_bind_param($stmt, "i", $responsible_id);
+mysqli_stmt_execute($stmt);
+$responsible_query = mysqli_stmt_get_result($stmt);
 $responsible_resolt = mysqli_fetch_assoc($responsible_query);
 $responsible_nik = $responsible_resolt["nik"];
 
-//orderer_information
 $orderer_nik = order_bd('nik');
-$orderer_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$orderer_nik'";
-$orderer_query = mysqli_query($bd_connect, $orderer_sql);
+$orderer_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+$stmt = mysqli_prepare($bd_connect, $orderer_sql);
+mysqli_stmt_bind_param($stmt, "s", $orderer_nik);
+mysqli_stmt_execute($stmt);
+$orderer_query = mysqli_stmt_get_result($stmt);
 $orderer_resolt = mysqli_fetch_assoc($orderer_query);
 
 function response_bd($table)
 {
     global $bd_connect, $order_id, $orderer_nik;
-    $order_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = $order_id AND `orderer_nik` = '$orderer_nik' ORDER BY `id` DESC LIMIT 1";
-    $order_query = mysqli_query($bd_connect, $order_sql);
-    $order_resolt = mysqli_fetch_assoc($order_query)[$table];
+
+    $order_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ? AND `orderer_nik` = ? ORDER BY `id` DESC LIMIT 1";
+    $stmt = mysqli_prepare($bd_connect, $order_sql);
+    mysqli_stmt_bind_param($stmt, "is", $order_id, $orderer_nik);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $order_resolt = $row[$table];
+
     return $order_resolt;
 }
 
@@ -103,6 +128,8 @@ if ($my_nik == $orderer_nik) {
 include "../layouts/header_line.php";
 ?>
 <div class="order_progress container">
+    <?php
+    ?>
     <noscript class="order_id">
         <?= order_bd('id') ?>
     </noscript>
@@ -182,8 +209,11 @@ include "../layouts/header_line.php";
         <div class="information_wrapper">
             <?php
             //application_information
-            $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = $order_id AND `nik` = '$responsible_nik'";
-            $application_query = mysqli_query($bd_connect, $application_sql);
+            $application_sql = "SELECT * FROM `orders_responses` WHERE `order_id` = ? AND `nik` = ?";
+            $stmt_application = mysqli_prepare($bd_connect, $application_sql);
+            mysqli_stmt_bind_param($stmt_application, "ss", $order_id, $responsible_nik);
+            mysqli_stmt_execute($stmt_application);
+            $application_query = mysqli_stmt_get_result($stmt_application);
             $application_resolt = mysqli_fetch_assoc($application_query);
             $category_arr = array("Без категорий", "Дизайн", "Разработка и IT", "Тексты и переводы", "SEO и трафик", "Соцсети и реклама", "Аудио, видео, съемка", "Бизнес и жизнь", "Учеба и репетиторство");
             ?>
@@ -300,8 +330,11 @@ include "../layouts/header_line.php";
                             </div>
                             <div>
                                 <?php
-                                $first_time_sql = "SELECT `time` FROM `notifications` WHERE `order_information` = $order_id";
-                                $first_time_query = mysqli_query($bd_connect, $first_time_sql);
+                                $first_time_sql = "SELECT `time` FROM `notifications` WHERE `order_information` = ?";
+                                $stmt_first_time = mysqli_prepare($bd_connect, $first_time_sql);
+                                mysqli_stmt_bind_param($stmt_first_time, "s", $order_id);
+                                mysqli_stmt_execute($stmt_first_time);
+                                $first_time_query = mysqli_stmt_get_result($stmt_first_time);
                                 $first_time_resolt = substr(mysqli_fetch_assoc($first_time_query)['time'], 0, 5);
                                 ?>
                                 <p class="time">
@@ -320,36 +353,34 @@ include "../layouts/header_line.php";
             $is_first_iteration = true;
             $previous_date = null;
 
-            $notification_sql = "SELECT * FROM `notifications` WHERE (`order_nik` = '$orderer_nik' OR `order_nik` = '$responsible_nik') AND (`nik` = '$orderer_nik' OR `nik` = '$responsible_nik') AND `order_information` = $order_id";
-            $notification_query = mysqli_query($bd_connect, $notification_sql);
+            $notification_sql = "SELECT * FROM `notifications` WHERE (`order_nik` = ? OR `order_nik` = ?) AND (`nik` = ? OR `nik` = ?) AND `order_information` = ?";
+            $stmt_notification = mysqli_prepare($bd_connect, $notification_sql);
+            mysqli_stmt_bind_param($stmt_notification, "sssss", $orderer_nik, $responsible_nik, $orderer_nik, $responsible_nik, $order_id);
+            mysqli_stmt_execute($stmt_notification);
+            $notification_query = mysqli_stmt_get_result($stmt_notification);
 
             while ($notification_resolt = mysqli_fetch_assoc($notification_query)):
                 $current_date = $notification_resolt["date"];
-
-                if ($current_date != $previous_date || $is_first_iteration):
-                    if (!$is_first_iteration) {
-                        ?>
-                        <div class="date_row">
-                            <div class="date">
-                                <p>
-                                    <?= $current_date ?>
-                                </p>
-                            </div>
-                            <div class="date_line"></div>
-                        </div>
-                        <?php
-                    }
-                    $is_first_iteration = false;
-                endif;
 
                 $previous_date = $current_date;
 
                 if (strpos($notification_resolt['type'], "order") !== false || strpos($notification_resolt['type'], "payment") !== false):
                     $notification_nik = $notification_resolt['nik'];
-                    $user_information_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$notification_nik'";
-                    $user_information_query = mysqli_query($bd_connect, $user_information_sql);
+                    $user_information_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                    $stmt_user_information = mysqli_prepare($bd_connect, $user_information_sql);
+                    mysqli_stmt_bind_param($stmt_user_information, "s", $notification_nik);
+                    mysqli_stmt_execute($stmt_user_information);
+                    $user_information_query = mysqli_stmt_get_result($stmt_user_information);
                     $user_information_resolt = mysqli_fetch_assoc($user_information_query);
                     ?>
+                    <div class="date_row">
+                        <div class="date">
+                            <p>
+                                <?= $previous_date ?>
+                            </p>
+                        </div>
+                        <div class="date_line"></div>
+                    </div>
                     <div class="progress_row">
                         <div>
                             <img src="../bd_send/user/user_icons/<?= $user_information_resolt['icon_path'] ?>" alt=""
@@ -408,9 +439,9 @@ include "../layouts/header_line.php";
                                 } elseif ($notification_resolt['type'] == "payment_ask") {
                                     echo '<p class="main_information">Продавец выполнил определённый этап работы, и создал запрос на сумму ' . $notification_resolt['payment_sum'] . '₽ от заказа.</p>';
                                 } elseif ($notification_resolt['type'] == "payment_check") {
-                                    echo '<p class="main_information">Покупатель адобрил этап работы, и оплатил часть суммы продавцу на кашелёк.</p>';
+                                    echo '<p class="main_information">Покупатель адобрил этап работы, и оплатил часть суммы продавцу на кошелек.</p>';
                                 } elseif ($notification_resolt['type'] == "payment_agree") {
-                                    echo '<p class="main_information">Продавец подтвердил приход средств на кошелёк, и уже продолжает работу над заказом.</p>';
+                                    echo '<p class="main_information">Продавец подтвердил приход средств на кошелёк, и уже продолжает работу над заказом. Пришедшая сумма снялась состатка цены в заказе. Как только остаток дойдёт до нуля, можно будет падать заявление покупателю на завершение заказа.</p>';
                                 } elseif ($notification_resolt['type'] == "payment_disagree") {
                                     echo '<p class="main_information">Продавцу не пришли средства за выполненый этап работы, пока оплата не будет
                                     сделана и подтверждена продавцом, заказ будет приостановлен.</p>';
@@ -435,8 +466,11 @@ include "../layouts/header_line.php";
 
                 $responsible_nik = $responsible_resolt["nik"];
                 $responsible_email = $responsible_resolt["email"];
-                $review_sql = "SELECT * FROM `reviews` WHERE (`nik` = '$orderer_nik' AND `email` = '$responsible_email') OR (`nik` = '$responsible_nik' AND `email` = '$orderer_email')";
-                $review_query = mysqli_query($bd_connect, $review_sql);
+                $review_sql = "SELECT * FROM `reviews` WHERE (`nik` = ? AND `email` = ?) OR (`nik` = ? AND `email` = ?)";
+                $stmt_review = mysqli_prepare($bd_connect, $review_sql);
+                mysqli_stmt_bind_param($stmt_review, "ssss", $orderer_nik, $responsible_email, $responsible_nik, $orderer_email);
+                mysqli_stmt_execute($stmt_review);
+                $review_query = mysqli_stmt_get_result($stmt_review);
                 while ($review_resolt = mysqli_fetch_assoc($review_query)) {
                     if ($review_resolt['nik'] == $my_nik) {
                         $resolt = true;
@@ -498,7 +532,7 @@ include "../layouts/header_line.php";
                 </div>
                 <div class="resolt status">
                     <?php
-                    if (order_bd('time') == 0 && order_bd('progress') == 0) {
+                    if (order_bd('time') == 0 && order_bd('progress') == 2) {
                         echo "<p title='Исполнитель должен приступить к выполнению' class='waiting'>Ожидание</p>";
                     } elseif (order_bd('time') == 1) {
                         echo "<p title='Исполнитель уже работает над заказом'>В работе</p>";
@@ -631,6 +665,7 @@ include "../layouts/header_line.php";
                             echo '<button id="3">Отправить на доработку</button>';
                         } else if (order_bd('time') == 2) {
                             echo '<button id="5">Оплатить</button>';
+                            echo '<button id="1">Запросить этап</button>';
                             echo '<button id="3">Отправить на доработку</button>';
                         } else if (order_bd('time') == 5) {
                             echo '<button id="5">Оплатить</button>';

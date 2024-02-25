@@ -20,7 +20,6 @@ include "../layouts/header_line.php";
             <h2>Разместите вашу задачу</h2>
         </div>
         <div class="main_make">
-            <!-- <form action="../bd_send/order/send_order.php" method="post" enctype="multipart/form-data"> -->
             <div class="form_part">
                 <b class="input_name">Название заказа</b>
                 <u class="warning"></u>
@@ -83,7 +82,7 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
             </div>
-            <div class="form_part">
+            <div class="form_part payment_do">
                 <b class="input_name">Тип</b>
                 <u class="warning"></u>
                 <input type="text" name="order_type" class="check_value right_order type_input" readonly>
@@ -103,10 +102,10 @@ include "../layouts/header_line.php";
                     </div>
                     <div class="type_options">
                         <div class="type_options">
-                            <p>Заказ</p>
+                            <p id="0">Заказ</p>
                         </div>
                         <div class="type_options last_option">
-                            <p>Вакансия</p>
+                            <p id="1">Вакансия</p>
                         </div>
                     </div>
                 </div>
@@ -177,9 +176,102 @@ include "../layouts/header_line.php";
                 </div>
             </div>
             <div class="button_wrapper">
-                <button class="none_active">Разместить задачу</button>
+                <button class="none_active">Продолжить</button>
             </div>
-            <!-- </form> -->
+        </div>
+    </div>
+</div>
+<div class="order_double_container container">
+    <div class="overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="header">
+        <div class="back_link">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                </svg>
+            </div>
+            <div>
+                <p>Назад</p>
+            </div>
+        </div>
+        <div class="header_title">
+            <h2>Дополнение к заказу</h2>
+        </div>
+        <div class="doubles_wrapper">
+            <div class="option">
+                <div>
+                    <div class="checkbox" id="0">
+                        <input type="checkbox">
+                    </div>
+                </div>
+                <div class="option_text">
+                    <div class="text" id="0">
+                        <p>Закрепление в топе заказов
+                        <p class="price" id="300">( 300₽ )</p>
+                    </div>
+                    <div class="description">
+                        <p class="description">Ваш заказ будет закреплен в топе заказов на странице биржи. Все
+                            пользователи которые будут
+                            посищать биржу будут первым заказом видить ваш, и у вас будет больше выбора среди опытных
+                            специалистов. Заказ будет закреплён до выбора исполнителя.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="option">
+                <div>
+                    <div class="checkbox" id="1">
+                        <input type="checkbox">
+                    </div>
+                </div>
+                <div class="option_text">
+                    <div class="text" id="1">
+                        <p>Фильтрация хороших заявок</p>
+                        <p class="price" id="250">( 250₽ )</p>
+                    </div>
+                    <div class="description">
+                        <p class="description">При покупке данного дополнения к вам в заказ могут подовать пользователи
+                            только
+                            у которых как минимум 3 уровень выполнения заказов на бирже. Это ускорит ваш выбор и поможет
+                            выбрать хорошего исполнителя, который знает своё дело.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="option">
+                <div>
+                    <div class="checkbox" id="2">
+                        <input type="checkbox">
+                    </div>
+                </div>
+                <div class="option_text">
+                    <div class="text" id="2">
+                        <p>Фильтрация знакомых заявок</p>
+                        <p class="price" id="200">( 200₽ )</p>
+                    </div>
+                    <div class="description">
+                        <p class="description">У вас есть количество знакомых людей каторые работуют на Bestlancer?
+                            Тогда
+                            это дополнение для
+                            вас, в заказ могут подавать заявки только люди с которыми вы контактируете на бирже. Это
+                            облегчит вам поиск новых сотрудников, так как вы уже знаете на что способен ваш товаришь.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="payment_count">
+            <div>
+                <p>К оплате:</p>
+            </div>
+            <div>
+                <p class="pay_sum">0₽</p>
+            </div>
+        </div>
+        <div class="send_order">
+            <button>Разместить задачу</button>
         </div>
     </div>
 </div>

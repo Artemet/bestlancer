@@ -8,7 +8,7 @@ if (!isset($_SESSION["nik"])) {
 include "../layouts/header.php";
 include "../bd_send/database_connect.php";
 echo "<link rel='stylesheet' href='../page_css/settings.css'>";
-echo "<title>О бирже Bestlancer</title>";
+echo "<title>Настройки аккаунта</title>";
 include "../layouts/header_line.php";
 ?>
 <div class="settings_container container">
@@ -93,7 +93,7 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
             </div>
-            <div class="setting_option normal_option menu_option">
+            <div class="setting_option normal_option payment_option menu_option">
                 <div class="menu_header">
                     <div>
                         <a>Реквизиты оплаты</a>
@@ -107,12 +107,16 @@ include "../layouts/header_line.php";
                     </div>
                 </div>
                 <div class="setting_sub">
-                    <form action="../bd_send/settings/payment_option.php" method="post">
+                    <div class="overlay">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="requisites_wrapper">
+                        <!-- <form action="../bd_send/settings/payment_option.php" method="post"> -->
                         <?php
-                        $payment_information_arr = array();
+                        $payment_information_arr = array("", "");
                         if (!empty($user_resolt["payment_methods"])) {
-                            array_push($payment_information_arr, explode(',', $user_resolt["payment_methods"])[0]);
-                            array_push($payment_information_arr, explode(',', $user_resolt["payment_methods"])[1]);
+                            $payment_information_arr[0] = explode(',', $user_resolt["payment_methods"])[0];
+                            $payment_information_arr[1] = explode(',', $user_resolt["payment_methods"])[1];
                         }
                         ?>
                         <div class="payment_value">
@@ -190,7 +194,8 @@ include "../layouts/header_line.php";
                             </div>
                         </div>
                         <button>Сохранить</button>
-                    </form>
+                    </div>
+                    <!-- </form> -->
                 </div>
             </div>
             <div class="setting_option normal_option menu_option">
@@ -210,8 +215,11 @@ include "../layouts/header_line.php";
                     <div class="background_choice">
                         <!-- chat_bg -->
                         <?php
-                        $bg_sql = "SELECT `chat_bg` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                        $bg_query = mysqli_query($bd_connect, $bg_sql);
+                        $bg_sql = "SELECT `chat_bg` FROM `user_registoring` WHERE `nik` = ?";
+                        $bg_stmt = mysqli_prepare($bd_connect, $bg_sql);
+                        mysqli_stmt_bind_param($bg_stmt, "s", $my_nik);
+                        mysqli_stmt_execute($bg_stmt);
+                        $bg_query = mysqli_stmt_get_result($bg_stmt);
                         $bg_resolt = mysqli_fetch_assoc($bg_query)['chat_bg'];
                         ?>
                         <p class="active_bg">

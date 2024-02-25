@@ -2,8 +2,11 @@
 session_start();
 include "../bd_send/database_connect.php";
 $project_id = $_GET['project_id'];
-$sql = "SELECT * FROM project_cover WHERE id = $project_id";
-$query = mysqli_query($bd_connect, $sql);
+$sql = "SELECT * FROM project_cover WHERE id = ?";
+$stmt = mysqli_prepare($bd_connect, $sql);
+mysqli_stmt_bind_param($stmt, "i", $project_id);
+mysqli_stmt_execute($stmt);
+$query = mysqli_stmt_get_result($stmt);
 $project_cover = mysqli_fetch_assoc($query);
 $project_nik = $project_cover['nik'];
 $project_name = $project_cover['project_name'];

@@ -25,48 +25,48 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Арт и иллюстрации <b>(3$)</b></p>
+                        <p>Арт и иллюстрации <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Веб и мобильный дизайн <b>(3$)</b></p>
+                        <p>Веб и мобильный дизайн <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
                         <p>
-                            Интерьер и экстерьер <b>(3$)</b></p>
+                            Интерьер и экстерьер <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Логотип и брендинг <b>(3$)</b></p>
+                        <p>Логотип и брендинг <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Маркетплейсы и соцсети <b>(3$)</b></p>
+                        <p>Маркетплейсы и соцсети <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Наружная реклама <b>(3$)</b></p>
+                        <p>Наружная реклама <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Обработка и редактирование <b>(3$)</b></p>
+                        <p>Обработка и редактирование <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Полиграфия <b>(3$)</b></p>
+                        <p>Полиграфия <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Презентации и инфографика <b>(3$)</b></p>
+                        <p>Презентации и инфографика <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Промышленный дизайн <b>(3$)</b></p>
+                        <p>Промышленный дизайн <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Промышленный дизайн <b>(3$)</b></p>
+                        <p>Промышленный дизайн <b>(300₽)</b></p>
                     </div>
                     <div class="special_choice">
                         <input type="checkbox">
@@ -87,39 +87,39 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Верстка <b>(3$)</b></p>
+                        <p>Верстка <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Десктоп программирование <b>(3$)</b></p>
+                        <p>Десктоп программирование <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Доработка и настройка сайта <b>(3$)</b></p>
+                        <p>Доработка и настройка сайта <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Игры <b>(3$)</b></p>
+                        <p>Игры <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Мобильные приложения <b>(3$)</b></p>
+                        <p>Мобильные приложения <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Сервера и хостинг <b>(3$)</b></p>
+                        <p>Сервера и хостинг <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Скрипты и боты <b>(3$)</b></p>
+                        <p>Скрипты и боты <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Создание сайта <b>(3$)</b></p>
+                        <p>Создание сайта <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Юзабилити, тесты и помощь <b>(3$)</b></p>
+                        <p>Юзабилити, тесты и помощь <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -137,19 +137,19 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Набор текста <b>(3$)</b></p>
+                        <p>Набор текста <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Переводы <b>(3$)</b></p>
+                        <p>Переводы <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Продающие и бизнес-тексты <b>(3$)</b></p>
+                        <p>Продающие и бизнес-тексты <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Тексты и наполнение сайта <b>(3$)</b></p>
+                        <p>Тексты и наполнение сайта <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -167,31 +167,31 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>SEO аудиты, консультации <b>(3$)</b></p>
+                        <p>SEO аудиты, консультации <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Внутренняя оптимизация <b>(3$)</b></p>
+                        <p>Внутренняя оптимизация <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Продвижение сайта в топ <b>(3$)</b></p>
+                        <p>Продвижение сайта в топ <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Семантическое ядро <b>(3$)</b></p>
+                        <p>Семантическое ядро <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Ссылки <b>(3$)</b></p>
+                        <p>Ссылки <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Статистика и аналитика <b>(3$)</b></p>
+                        <p>Статистика и аналитика <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Трафик <b>(3$)</b></p>
+                        <p>Трафик <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -209,27 +209,27 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>E-mail маркетинг и рассылки <b>(3$)</b></p>
+                        <p>E-mail маркетинг и рассылки <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Базы данных и клиентов <b>(3$)</b></p>
+                        <p>Базы данных и клиентов <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Контекстная реклама <b>(3$)</b></p>
+                        <p>Контекстная реклама <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Маркетплейсы и доски объявлений <b>(3$)</b></p>
+                        <p>Маркетплейсы и доски объявлений <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Реклама и PR <b>(3$)</b></p>
+                        <p>Реклама и PR <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Соцсети и SMM <b>(3$)</b></p>
+                        <p>Соцсети и SMM <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -247,27 +247,27 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Аудиозапись и озвучка <b>(3$)</b></p>
+                        <p>Аудиозапись и озвучка <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Видеоролики <b>(3$)</b></p>
+                        <p>Видеоролики <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Видеосъемка и монтаж <b>(3$)</b></p>
+                        <p>Видеосъемка и монтаж <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Интро и анимация логотипа <b>(3$)</b></p>
+                        <p>Интро и анимация логотипа <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Музыка и песни <b>(3$)</b></p>
+                        <p>Музыка и песни <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Редактирование аудио <b>(3$)</b></p>
+                        <p>Редактирование аудио <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -285,35 +285,35 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Бухгалтерия и налоги <b>(3$)</b></p>
+                        <p>Бухгалтерия и налоги <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Обзвоны и продажи <b>(3$)</b></p>
+                        <p>Обзвоны и продажи <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Обучение и консалтинг <b>(3$)</b></p>
+                        <p>Обучение и консалтинг <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Персональный помощник <b>(3$)</b></p>
+                        <p>Персональный помощник <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Подбор персонала <b>(3$)</b></p>
+                        <p>Подбор персонала <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Продажа сайтов <b>(3$)</b></p>
+                        <p>Продажа сайтов <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Стройка и ремонт <b>(3$)</b></p>
+                        <p>Стройка и ремонт <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Юридическая помощь <b>(3$)</b></p>
+                        <p>Юридическая помощь <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
@@ -331,25 +331,26 @@ include "../layouts/header_line.php";
                 <div class="option_sub">
                     <div>
                         <input type="checkbox">
-                        <p>Репетитор на дом <b>(3$)</b></p>
+                        <p>Репетитор на дом <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Репетитор онлайн <b>(3$)</b></p>
+                        <p>Репетитор онлайн <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Школьный репетитор <b>(3$)</b></p>
+                        <p>Школьный репетитор <b>(300₽)</b></p>
                     </div>
                     <div>
                         <input type="checkbox">
-                        <p>Репетитор в университете <b>(3$)</b></p>
+                        <p>Репетитор в университете <b>(300₽)</b></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="price">
             <p>К оплате: <b class="price">0</b><b>₽</b></p>
+            <p>Количество заявок: <b class="applications">0</b><b></b></p>
         </div>
         <div class="line" style="width: 100%;"></div>
         <div class="button">

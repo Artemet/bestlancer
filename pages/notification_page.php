@@ -6,24 +6,32 @@ if (!isset($user_nik)) {
     header("Location: home.php");
 } else {
     //notification_clean
-    $none_notification = mysqli_real_escape_string($bd_connect, 0);
-    $none_notification_sql = "UPDATE `user_notification` SET `bell` = '$none_notification' WHERE `nik` = '$user_nik'";
-    $none_notification_query = mysqli_query($bd_connect, $none_notification_sql);
+    $none_notification = 0;
+    $none_notification_sql = "UPDATE `user_notification` SET `bell` = ? WHERE `nik` = ?";
+    $stmt_none_notification = mysqli_prepare($bd_connect, $none_notification_sql);
+    mysqli_stmt_bind_param($stmt_none_notification, "is", $none_notification, $user_nik);
+    mysqli_stmt_execute($stmt_none_notification);
 }
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/notification_page.css'>";
-echo "<title>Мои увидомления</title>";
+echo "<title>Мои уведомления</title>";
 include "../layouts/header_line.php";
 
 //page_system
 $notifications_per_page = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $notifications_per_page;
-$page_sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik' LIMIT $offset, $notifications_per_page";
-$page_query = mysqli_query($bd_connect, $page_sql);
+$page_sql = "SELECT * FROM `notifications` WHERE `order_nik` = ? LIMIT ?, ?";
+$stmt_page = mysqli_prepare($bd_connect, $page_sql);
+mysqli_stmt_bind_param($stmt_page, "sii", $user_nik, $offset, $notifications_per_page);
+mysqli_stmt_execute($stmt_page);
+$page_query = mysqli_stmt_get_result($stmt_page);
 
-$sql_count = "SELECT COUNT(*) as total FROM `notifications` WHERE `order_nik` = '$user_nik'";
-$count_query = mysqli_query($bd_connect, $sql_count);
+$sql_count = "SELECT COUNT(*) as total FROM `notifications` WHERE `order_nik` = ?";
+$stmt_count = mysqli_prepare($bd_connect, $sql_count);
+mysqli_stmt_bind_param($stmt_count, "s", $user_nik);
+mysqli_stmt_execute($stmt_count);
+$count_query = mysqli_stmt_get_result($stmt_count);
 $count_row = mysqli_fetch_assoc($count_query);
 $total_notifications = $count_row['total'];
 $total_pages = ceil($total_notifications / $notifications_per_page);
@@ -105,38 +113,51 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                 <div class="notifications_wrapper">
                     <?php
                     $notification_temp = 0;
-                    $sql = "SELECT * FROM `notifications` WHERE `order_nik` = '$user_nik'";
-                    $query = mysqli_query($bd_connect, $sql);
+                    $sql = "SELECT * FROM `notifications` WHERE `order_nik` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $user_nik);
+                    mysqli_stmt_execute($stmt);
+                    $query = mysqli_stmt_get_result($stmt);
                     $notificationBlocks = array();
 
                     if ($page >= 1):
                         function messenger_contact($value)
                         {
-                            global $row, $bd_connect, $user_nik;
+                            global $bd_connect, $user_nik, $row;
                             $companion_nik = $row['nik'];
-                            $chat_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' AND `nik_two` = '$companion_nik') OR (`nik_one` = '$companion_nik' AND `nik_two` = '$user_nik')";
-                            $chat_query = mysqli_query($bd_connect, $chat_sql);
+                            $chat_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = ? AND `nik_two` = ?) OR (`nik_one` = ? AND `nik_two` = ?)";
+                            $stmt_chat = mysqli_prepare($bd_connect, $chat_sql);
+                            mysqli_stmt_bind_param($stmt_chat, "ssss", $user_nik, $companion_nik, $companion_nik, $user_nik);
+                            mysqli_stmt_execute($stmt_chat);
+                            $chat_query = mysqli_stmt_get_result($stmt_chat);
                             if ($value == 1) {
                                 return mysqli_fetch_assoc($chat_query)['chat_id'];
                             }
                         }
-                        while ($row = mysqli_fetch_assoc($page_query)):
+                        while ($row = mysqli_fetch_assoc($query)):
                             $notification_temp++;
                             $order_id = $row['id'];
                             $nik = $row['nik'];
                             $order_type = $row['type'];
 
                             //user_id
-                            $id_query = "SELECT id FROM user_registoring WHERE nik = '$nik'";
-                            $id_result = mysqli_query($bd_connect, $id_query);
+                            $id_query = "SELECT id FROM user_registoring WHERE nik = ?";
+                            $stmt_id = mysqli_prepare($bd_connect, $id_query);
+                            mysqli_stmt_bind_param($stmt_id, "s", $nik);
+                            mysqli_stmt_execute($stmt_id);
+                            $id_result = mysqli_stmt_get_result($stmt_id);
                             $id_row = mysqli_fetch_assoc($id_result);
                             $user_id = $id_row['id'];
 
                             //user_icon
-                            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = '$nik'";
-                            $icon_resolt = mysqli_query($bd_connect, $icon_query);
+                            $icon_query = "SELECT icon_path FROM user_registoring WHERE nik = ?";
+                            $stmt_icon = mysqli_prepare($bd_connect, $icon_query);
+                            mysqli_stmt_bind_param($stmt_icon, "s", $nik);
+                            mysqli_stmt_execute($stmt_icon);
+                            $icon_resolt = mysqli_stmt_get_result($stmt_icon);
                             $icon_row = mysqli_fetch_assoc($icon_resolt);
                             $user_icon = $icon_row['icon_path'];
+
 
                             if ($order_type == 'invite' || $order_type == 'personal'):
                                 ?>
@@ -165,7 +186,13 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="main_notification">
+                                        <?php
+                                        $notification_file_class = null;
+                                        if (empty($row["order_file"])) {
+                                            $notification_file_class = "no_file";
+                                        }
+                                        ?>
+                                        <div class="main_notification <?= $notification_file_class ?>">
                                             <div>
                                                 <div>
                                                     <h4>
@@ -492,7 +519,7 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                                     </h3>
                                                 </div>
                                                 <div>
-                                                    <p>Заказчик проверил ваш этап на работе и перевёл вам сумму на указанные в
+                                                    <p>Заказчик проверил ваш этап работы и перевёл вам сумму на указанные в
                                                         настройках реквезиты в размере
                                                         <?= $row['payment_sum'] ?>₽. Подтвердите действие в заказе.
                                                     </p>
@@ -769,7 +796,10 @@ $total_pages = ceil($total_notifications / $notifications_per_page);
                                                     </h3>
                                                 </div>
                                                 <div>
-                                                    <p>Покупатель запросил у вас работу, дайте ему обратную связь.</p>
+                                                    <p>Покупатель запросил у вас работу, дайте ему обратную связь. Будте осторожны,
+                                                        не давайте покупателю работу без его оплаты. Подтвердите и докажите, что
+                                                        определённый этап работы был сделан, но не давайте всю работу на руки без
+                                                        оплаты.</p>
                                                 </div>
                                             </div>
                                             <div>

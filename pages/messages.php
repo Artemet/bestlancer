@@ -8,8 +8,11 @@ $user_nik = $_SESSION["nik"];
 include "../bd_send/database_connect.php";
 $chat_bg = $user_resolt['chat_bg'];
 //notification_remove
-$notification_sql = "UPDATE `user_notification` SET `messages` = 0 WHERE `nik` = '$user_nik'";
-$notification_query = mysqli_query($bd_connect, $notification_sql);
+$user_nik = $_SESSION["nik"];
+$notification_sql = "UPDATE `user_notification` SET `messages` = 0 WHERE `nik` = ?";
+$notification_stmt = mysqli_prepare($bd_connect, $notification_sql);
+mysqli_stmt_bind_param($notification_stmt, "s", $user_nik);
+mysqli_stmt_execute($notification_stmt);
 
 include "../layouts/header.php";
 echo "<link rel='stylesheet' href='../page_css/messages.css'>";
@@ -28,8 +31,13 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
     <div class="messanger_users">
         <?php
         $attach_temp = 0;
-        $attach_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = '$user_nik' OR `nik_two` = '$user_nik') AND `attach` = 1 AND `deleted` = 0";
-        $attach_query = mysqli_query($bd_connect, $attach_sql);
+        $attach_index = 1;
+        $deleted_index = 0;
+        $attach_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = ? OR `nik_two` = ?) AND `attach` = ? AND `deleted` = ?";
+        $stmt = mysqli_prepare($bd_connect, $attach_sql);
+        mysqli_stmt_bind_param($stmt, "ssii", $user_nik, $user_nik, $attach_index, $deleted_index);
+        mysqli_stmt_execute($stmt);
+        $attach_query = mysqli_stmt_get_result($stmt);
         while ($user_row = mysqli_fetch_assoc($attach_query)):
             $attach_temp++;
             if ($attach_temp == 1):
@@ -49,8 +57,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                     } else {
                         $interlocutor_nik = $user_row["nik_two"];
                     }
-                    $interlocutor_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$interlocutor_nik'";
-                    $interlocutor_query = mysqli_query($bd_connect, $interlocutor_sql);
+                    $interlocutor_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $interlocutor_sql);
+                    mysqli_stmt_bind_param($stmt, "s", $interlocutor_nik);
+                    mysqli_stmt_execute($stmt);
+                    $interlocutor_query = mysqli_stmt_get_result($stmt);
                     $interlocutor_get = mysqli_fetch_assoc($interlocutor_query);
                     $interlocutor_resolt_nik = $interlocutor_get['nik'];
                     ?>
@@ -68,8 +79,12 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                     <?php
                     $message_count = 0;
                     $chat_number = $user_row["chat_id"];
-                    $none_see_message_sql = "SELECT * FROM `messages` WHERE `eye` = 0 AND `message_nik` = '$user_nik' AND `chat_id` = '$chat_number'";
-                    $none_see_message_query = mysqli_query($bd_connect, $none_see_message_sql);
+                    $eye_index = 0;
+                    $none_see_message_sql = "SELECT * FROM `messages` WHERE `eye` = ? AND `message_nik` = ? AND `chat_id` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $none_see_message_sql);
+                    mysqli_stmt_bind_param($stmt, "iss", $eye_index, $user_nik, $chat_number);
+                    mysqli_stmt_execute($stmt);
+                    $none_see_message_query = mysqli_stmt_get_result($stmt);
                     while ($none_see_resolt = mysqli_fetch_assoc($none_see_message_query)) {
                         $message_count++;
                     }
@@ -95,8 +110,13 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
             <?php
         endwhile;
         $users_temp = 0;
-        $user_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = '$user_nik' OR `nik_two` = '$user_nik') AND `attach` = 0 AND `deleted` = 0";
-        $user_query = mysqli_query($bd_connect, $user_sql);
+        $attach_index = 0;
+        $deleted_index = 0;
+        $user_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = ? OR `nik_two` = ?) AND `attach` = ? AND `deleted` = ?";
+        $stmt = mysqli_prepare($bd_connect, $user_sql);
+        mysqli_stmt_bind_param($stmt, "ssii", $user_nik, $user_nik, $attach_index, $deleted_index);
+        mysqli_stmt_execute($stmt);
+        $user_query = mysqli_stmt_get_result($stmt);
         while ($user_row = mysqli_fetch_assoc($user_query)):
             $users_temp++;
 
@@ -117,8 +137,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                     } else {
                         $interlocutor_nik = $user_row["nik_two"];
                     }
-                    $interlocutor_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$interlocutor_nik'";
-                    $interlocutor_query = mysqli_query($bd_connect, $interlocutor_sql);
+                    $interlocutor_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $interlocutor_sql);
+                    mysqli_stmt_bind_param($stmt, "s", $interlocutor_nik);
+                    mysqli_stmt_execute($stmt);
+                    $interlocutor_query = mysqli_stmt_get_result($stmt);
                     $interlocutor_get = mysqli_fetch_assoc($interlocutor_query);
                     $interlocutor_resolt_nik = $interlocutor_get['nik'];
                     ?>
@@ -136,8 +159,12 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                     <?php
                     $message_count = 0;
                     $chat_number = $user_row["chat_id"];
-                    $none_see_message_sql = "SELECT * FROM `messages` WHERE `eye` = 0 AND `message_nik` = '$user_nik' AND `chat_id` = '$chat_number'";
-                    $none_see_message_query = mysqli_query($bd_connect, $none_see_message_sql);
+                    $eye_index = 0;
+                    $none_see_message_sql = "SELECT * FROM `messages` WHERE `eye` = ? AND `message_nik` = ? AND `chat_id` = ?";
+                    $none_see_message_stmt = mysqli_prepare($bd_connect, $none_see_message_sql);
+                    mysqli_stmt_bind_param($none_see_message_stmt, "iss", $eye_index, $user_nik, $chat_number);
+                    mysqli_stmt_execute($none_see_message_stmt);
+                    $none_see_message_query = mysqli_stmt_get_result($none_see_message_stmt);
                     while ($none_see_resolt = mysqli_fetch_assoc($none_see_message_query)) {
                         $message_count++;
                     }
@@ -187,8 +214,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
             exit;
         }
         $companion_nik = null;
-        $companion_sql = "SELECT * FROM `messenger_users` WHERE `chat_id` = '$chat_id'";
-        $companion_query = mysqli_query($bd_connect, $companion_sql);
+        $companion_sql = "SELECT * FROM `messenger_users` WHERE `chat_id` = ?";
+        $companion_stmt = mysqli_prepare($bd_connect, $companion_sql);
+        mysqli_stmt_bind_param($companion_stmt, "i", $chat_id);
+        mysqli_stmt_execute($companion_stmt);
+        $companion_query = mysqli_stmt_get_result($companion_stmt);
         $companion_resolt = mysqli_fetch_assoc($companion_query);
         if ($companion_resolt == null) {
             echo "<div class='companion_choice'><p>Выбирите собеседника</p></div>";
@@ -211,15 +241,21 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
             exit;
         }
         //user_find
-        $user_find_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$companion_nik'";
-        $user_find_query = mysqli_query($bd_connect, $user_find_sql);
+        $user_find_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+        $user_find_stmt = mysqli_prepare($bd_connect, $user_find_sql);
+        mysqli_stmt_bind_param($user_find_stmt, "s", $companion_nik);
+        mysqli_stmt_execute($user_find_stmt);
+        $user_find_query = mysqli_stmt_get_result($user_find_stmt);
         $user_find_resolt = mysqli_fetch_assoc($user_find_query);
         //user_block
         $user_block = false;
         $blocking_id = null;
         $block_class = null;
-        $user_block_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = '$user_nik' OR `main_block` = '$companion_nik'";
-        $user_block_query = mysqli_query($bd_connect, $user_block_sql);
+        $user_block_sql = "SELECT * FROM `messenger_users` WHERE `main_block` = ? OR `main_block` = ?";
+        $user_block_stmt = mysqli_prepare($bd_connect, $user_block_sql);
+        mysqli_stmt_bind_param($user_block_stmt, "ss", $user_nik, $companion_nik);
+        mysqli_stmt_execute($user_block_stmt);
+        $user_block_query = mysqli_stmt_get_result($user_block_stmt);
         while ($user_block_resolt = mysqli_fetch_assoc($user_block_query)) {
             $blocking_id = $user_block_resolt['chat_id'];
             if ($_GET['chat_id'] == $blocking_id) {
@@ -337,8 +373,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                                 <?= $user_find_resolt["name"] ?>
                             </b>
                             <?php
-                            $user_id_sql = "SELECT `id` FROM `user_registoring` WHERE `nik` = '$companion_nik'";
-                            $user_id_query = mysqli_query($bd_connect, $user_id_sql);
+                            $user_id_sql = "SELECT `id` FROM `user_registoring` WHERE `nik` = ?";
+                            $user_id_stmt = mysqli_prepare($bd_connect, $user_id_sql);
+                            mysqli_stmt_bind_param($user_id_stmt, "s", $companion_nik);
+                            mysqli_stmt_execute($user_id_stmt);
+                            $user_id_query = mysqli_stmt_get_result($user_id_stmt);
                             $user_id_resolt = mysqli_fetch_assoc($user_id_query)['id'];
                             ?>
                             <a href="user_page.php?user_id=<?= $user_id_resolt ?>" target="_blank">
@@ -346,8 +385,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                             </a>
                             <div class="chat_number">
                                 <?php
-                                $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = '$user_nik' AND `nik_two` = '$companion_nik') OR (`nik_one` = '$companion_nik' AND `nik_two` = '$user_nik')";
-                                $chat_id_query = mysqli_query($bd_connect, $chat_id_sql);
+                                $chat_id_sql = "SELECT `chat_id` FROM `messenger_users` WHERE (`nik_one` = ? AND `nik_two` = ?) OR (`nik_one` = ? AND `nik_two` = ?)";
+                                $chat_id_stmt = mysqli_prepare($bd_connect, $chat_id_sql);
+                                mysqli_stmt_bind_param($chat_id_stmt, "ssss", $user_nik, $companion_nik, $companion_nik, $user_nik);
+                                mysqli_stmt_execute($chat_id_stmt);
+                                $chat_id_query = mysqli_stmt_get_result($chat_id_stmt);
                                 $chat_id_resolt = mysqli_fetch_assoc($chat_id_query)['chat_id'];
                                 echo "$chat_id_resolt";
                                 ?>
@@ -358,8 +400,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                 <?php
                 if ($companion_resolt['message_attach'] >= 1 && $user_block == false):
                     $message_attach_id = $companion_resolt['message_attach'];
-                    $message_attach_sql = "SELECT * FROM `messages` WHERE `id` = $message_attach_id";
-                    $message_attach_query = mysqli_query($bd_connect, $message_attach_sql);
+                    $message_attach_sql = "SELECT * FROM `messages` WHERE `id` = ?";
+                    $stmt = mysqli_prepare($bd_connect, $message_attach_sql);
+                    mysqli_stmt_bind_param($stmt, "i", $message_attach_id);
+                    mysqli_stmt_execute($stmt);
+                    $message_attach_query = mysqli_stmt_get_result($stmt);
                     $message_attach_resolt = mysqli_fetch_assoc($message_attach_query);
                     ?>
                     <a href="#<?= $message_attach_resolt['id'] ?>" class="attach_link scroll_control">
@@ -395,8 +440,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                 <div class="chat_wrapper">
                     <?php
                     if (isset($_SESSION["nik"])):
-                        $message_sql = "SELECT * FROM `messages` WHERE `chat_id` = '$chat_id'";
-                        $message_query = mysqli_query($bd_connect, $message_sql);
+                        $message_sql = "SELECT * FROM `messages` WHERE `chat_id` = ?";
+                        $stmt = mysqli_prepare($bd_connect, $message_sql);
+                        mysqli_stmt_bind_param($stmt, "s", $chat_id);
+                        mysqli_stmt_execute($stmt);
+                        $message_query = mysqli_stmt_get_result($stmt);
                         $lastDisplayedDate = null;
                         $task_message_temp = 0;
                         while ($message_resolt = mysqli_fetch_assoc($message_query)):
@@ -415,8 +463,10 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
 
                             if ($_SESSION["nik"] == $recipient_user) {
                                 //delete_notification_reminder
-                                $reminder_sql = "UPDATE `messages` SET `eye` = 1 WHERE `chat_id` = '$chat_id' AND `message_nik` = '$recipient_user'";
-                                $reminder_query = mysqli_query($bd_connect, $reminder_sql);
+                                $reminder_sql = "UPDATE `messages` SET `eye` = 1 WHERE `chat_id` = ? AND `message_nik` = ?";
+                                $stmt = mysqli_prepare($bd_connect, $reminder_sql);
+                                mysqli_stmt_bind_param($stmt, "ss", $chat_id, $recipient_user);
+                                mysqli_stmt_execute($stmt);
                             }
                             if ($recipient_user == $_SESSION["nik"]) {
                                 $message_class = "other_user";
@@ -507,8 +557,11 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                                             endif;
                                             if ($message_resolt['answer'] >= 1 && $message_resolt['deleted'] == 0):
                                                 $answerd_id = $message_resolt['answer'];
-                                                $answerd_sql = "SELECT * FROM `messages` WHERE `id` = $answerd_id";
-                                                $answerd_query = mysqli_query($bd_connect, $answerd_sql);
+                                                $answerd_sql = "SELECT * FROM `messages` WHERE `id` = ?";
+                                                $answerd_stmt = mysqli_prepare($bd_connect, $answerd_sql);
+                                                mysqli_stmt_bind_param($answerd_stmt, "i", $answerd_id);
+                                                mysqli_stmt_execute($answerd_stmt);
+                                                $answerd_query = mysqli_stmt_get_result($answerd_stmt);
                                                 $answerd_resolt = mysqli_fetch_assoc($answerd_query);
                                                 ?>
                                                 <div class="answer_wrapper">
@@ -872,7 +925,7 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
                     </div>
                     <div class="value_wrapper">
                         <input type="text" name="message_value" id="" class="right_in message_right"
-                            placeholder="Ваше сообщение">
+                            placeholder="Ваше сообщение...">
                         <div class="smile">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                 viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
