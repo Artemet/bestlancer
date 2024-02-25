@@ -20,19 +20,30 @@
         </div>
         <div class="ask_wrapper">
             <?php
-            $payment_information_arr = array();
+            $payment_information_arr = array("", "");
             if (!empty($responsible_resolt["payment_methods"])) {
-                array_push($payment_information_arr, explode(',', $responsible_resolt["payment_methods"])[0]);
-                array_push($payment_information_arr, explode(',', $responsible_resolt["payment_methods"])[1]);
+                $payment_information_arr[0] = explode(',', $responsible_resolt["payment_methods"])[0];
+                $payment_information_arr[1] = explode(',', $responsible_resolt["payment_methods"])[1];
             }
             //orderer_amount
             function orderer_amount()
             {
                 global $bd_connect, $order_id;
-                $amount_sql = "SELECT `payment_sum` FROM `notifications` WHERE `order_information` = '$order_id' AND `type` = 'payment_ask' ORDER BY `id` DESC LIMIT 1";
-                $amount_query = mysqli_query($bd_connect, $amount_sql);
-                $amount_resolt = mysqli_fetch_assoc($amount_query)['payment_sum'];
-                return intval($amount_resolt);
+                $amount_type = 'payment_ask';
+                $amount_sql = "SELECT `payment_sum` FROM `notifications` WHERE `order_information` = ? AND `type` = ? ORDER BY `id` DESC LIMIT 1";
+
+                $stmt = mysqli_prepare($bd_connect, $amount_sql);
+                mysqli_stmt_bind_param($stmt, "ss", $order_id, $amount_type);
+                mysqli_stmt_execute($stmt);
+
+                $result = mysqli_stmt_get_result($stmt);
+
+                if ($row = mysqli_fetch_assoc($result)) {
+                    $amount_resolt = $row['payment_sum'];
+                    return intval($amount_resolt);
+                } else {
+                    return 0;
+                }
             }
             ?>
             <div>
@@ -56,11 +67,17 @@
                         <div>
                             <div class="requisition_list">
                                 <div>
-                                    <p class="option_name">Киви кашелёк:</p>
+                                    <p class="option_name">Киви кошелек:</p>
                                 </div>
                                 <div>
                                     <p class="requisition" title="Скопировать реквезит">
-                                        <?= $payment_information_arr[0] ?>
+                                        <?php
+                                        if (strlen($payment_information_arr[0]) >= 1) {
+                                            echo $payment_information_arr[0];
+                                        } else {
+                                            echo "<p class='none'>Не указан</p>";
+                                        }
+                                        ?>
                                     </p>
                                 </div>
                             </div>
@@ -120,7 +137,13 @@
                                 </div>
                                 <div>
                                     <p class="requisition" title="Скопировать реквезит">
-                                        <?= $payment_information_arr[1] ?>
+                                        <?php
+                                        if (strlen($payment_information_arr[1]) >= 1) {
+                                            echo $payment_information_arr[1];
+                                        } else {
+                                            echo "<p class='none'>Не указана</p>";
+                                        }
+                                        ?>
                                     </p>
                                 </div>
                             </div>

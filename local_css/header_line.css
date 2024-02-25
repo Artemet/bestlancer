@@ -1,212 +1,214 @@
 /* .header_line */
-.header_line{
-    background-color: rgb(53, 52, 52);
-    height: 100px;
-    border-bottom: 2px solid #d08e0b;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+.header_line {
+  background-color: rgb(53, 52, 52);
+  height: 100px;
+  border-bottom: 2px solid #d08e0b;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
-.header_line .line_wrapper{
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
+.header_line .line_wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
-.header_line .header_part_one{
-    padding-left: 40px;
+.header_line .header_part_one {
+  padding-left: 40px;
 }
-.header_line .header_part_two{
-    padding-right: 40px;
-    color: white;
-    transition: 0.5s;
+.header_line .header_part_two {
+  padding-right: 40px;
+  color: white;
+  transition: 0.5s;
 }
-.header_line .header_part_two .button{
-    cursor: pointer;
+.header_line .header_part_two .button {
+  cursor: pointer;
 }
-.header_line h1{
-    text-transform: uppercase;
+.header_line h1 {
+  text-transform: uppercase;
+  margin: 0;
 }
-.header_line h1 a{
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: white;
+.header_line h1 a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: white;
 }
-.user_panel{
-    display: flex;
-    align-items: center;
+.user_panel {
+  display: flex;
+  align-items: center;
 }
-.user_panel .messages{
-    padding-right: 40px;
+.user_panel .messages {
+  padding-right: 40px;
 }
-.user_panel .notification{
-    padding-right: 40px;
-    position: relative;
+.user_panel .notification {
+  padding-right: 40px;
+  position: relative;
 }
-.user_panel svg{
-    font-size: 25px;
-    cursor: pointer;
-    transition: 0.5s;
+.user_panel svg {
+  font-size: 25px;
+  cursor: pointer;
+  transition: 0.5s;
 }
-.user_panel svg:hover{
-    fill: white !important;
+.user_panel svg:hover {
+  fill: white !important;
 }
-.user_panel .accaunt_change{
-    padding-right: 40px;
-    transition: 0.5s;
+.user_panel .accaunt_change {
+  padding-right: 40px;
+  transition: 0.5s;
 }
-.user{
-    border-radius: 5px;
-    display: none;
-    padding-right: 20px;
-    margin-right: 20px;
-    padding-left: 20px;
-    transition: 0.5s;
+.user {
+  border-radius: 5px;
+  display: none;
+  padding-right: 20px;
+  margin-right: 20px;
+  padding-left: 20px;
+  transition: 0.5s;
 }
-.user:hover{
-    background-color: black;
+.user:hover {
+  background-color: black;
 }
-.user img{
-    height: 40px;
-    width: 40px;
-    border-radius: 5px;
-    border: 3px solid #d08e0b;
-    margin-left: 20px;
+.user img {
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  border: 3px solid #d08e0b;
+  margin-left: 20px;
 }
-.user a{
-    display: flex;
-    align-items: center;
+.user a {
+  display: flex;
+  align-items: center;
 }
-.user p.user_name{
-    font-size: 18px;
-    color: #d08e0b;
+.user p.user_name {
+  font-size: 18px;
+  color: #d08e0b;
 }
-.header_line a{
-    text-decoration: none;
-    color: white;
+.header_line a {
+  text-decoration: none;
+  color: white;
 }
-.header_line h1 a p{
-    color: #d08e0b;
+.header_line h1 a p {
+  color: #d08e0b;
 }
-.header_line .header_part{
-    display: flex;
-    align-items: center;
-    height: 100px;
+.header_line .header_part {
+  display: flex;
+  align-items: center;
+  height: 100px;
 }
-.header_line .logo_img{
-    display: none;
-    height: 70px;
+.header_line .logo_img {
+  display: none;
+  height: 70px;
 }
-.header_line .header_part_one div{
-    padding-right: 50px;
+.header_line .header_part_one div {
+  padding-right: 50px;
 }
-.header_line .links a{
-    margin-right: 20px;
-    transition: 0.5s;
+.header_line .links a {
+  margin-right: 20px;
+  transition: 0.5s;
 }
-.header_line .links a:hover{
-    color: #d08e0b;
+.header_line .links a:hover {
+  color: #d08e0b;
 }
-.header_line .header_part_two div{
-    background-color: #d08e0b;
-    padding: 10px;
-    width: 100px;
-    text-align: center;
-    border-radius: 10px;
-    transition: 0.5s;
+.header_line .header_part_two div {
+  background-color: #d08e0b;
+  padding: 10px;
+  width: 100px;
+  text-align: center;
+  border-radius: 10px;
+  transition: 0.5s;
 }
-.header_line .header_part_two div:hover{
-    background-color: rgb(79, 130, 3);
+.header_line .header_part_two div:hover {
+  background-color: rgb(79, 130, 3);
 }
-.header_line .header_part_two .registor{
-    padding: 0;
-    margin-right: 50px;
+.header_line .header_part_two .registor {
+  padding: 0;
+  margin-right: 50px;
 }
-.header_line .header_part_two .registor a{
-    padding: 10px;
-    background-color: #d08e0b;
-    width: 100px;
-    text-align: center;
-    border-radius: 10px;
-    transition: 0.5s;
+.header_line .header_part_two .registor a {
+  padding: 10px;
+  background-color: #d08e0b;
+  width: 100px;
+  text-align: center;
+  border-radius: 10px;
+  transition: 0.5s;
 }
-.header_line .header_part_two .registor a:hover{
-    background-color: rgb(79, 130, 3);
+.header_line .header_part_two .registor a:hover {
+  background-color: rgb(79, 130, 3);
 }
-.header_line .mobile_menu{
-    display: none;
+.header_line .mobile_menu {
+  display: none;
 }
-.header_line .mobile_menu .menu_sub{
-    position: absolute;
-    display: grid;
-    transition: 0.5s;
-    background-color: white;
-    width: 100%;
-    left: 0;
-    display: none;
-    opacity: 0;
+.header_line .mobile_menu .menu_sub {
+  position: absolute;
+  display: grid;
+  transition: 0.5s;
+  background-color: white;
+  width: 100%;
+  left: 0;
+  top: 87px;
+  display: none;
+  opacity: 0;
 }
-.header_line .mobile_menu .menu_sub_animation{
-    display: grid;
+.header_line .mobile_menu .menu_sub_animation {
+  display: grid;
 }
-.header_line .mobile_menu .menu_sub .cross{
-    position: absolute;
-    right: 0;
-    padding: 5px;
-    font-size: 30px;
-    fill: #d08e0b;
+.header_line .mobile_menu .menu_sub .cross {
+  position: absolute;
+  right: 0;
+  padding: 5px;
+  font-size: 20px;
+  fill: #d08e0b;
 }
-.header_line .mobile_menu .menu_sub a.mobile_links{
-    color: black;
-    padding: 10px;
-    transition: 0.5s;
-    border-bottom: 3px solid rgb(79, 130, 3);
+.header_line .mobile_menu .menu_sub a.mobile_links {
+  color: black;
+  padding: 10px;
+  transition: 0.5s;
+  border-bottom: 3px solid rgb(79, 130, 3);
 }
-.header_line .mobile_menu .menu_sub a.mobile_links:hover{
-    color: #d08e0b;
+.header_line .mobile_menu .menu_sub a.mobile_links:hover {
+  color: #d08e0b;
 }
-.header_line .mobile_menu .menu_sub .buttons{
-    display: flex;
-    padding: 15px 0;
+.header_line .mobile_menu .menu_sub .buttons {
+  display: flex;
+  padding: 15px 0;
 }
-.header_line .mobile_menu .menu_sub .buttons button{
-    margin: 0 10px;
-    padding: 10px 0;
-    width: 150px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: 3px solid #d08e0b;
-    background-color: rgb(53, 52, 52);
-    color: white;
+.header_line .mobile_menu .menu_sub .buttons button {
+  margin: 0 10px;
+  padding: 10px 0;
+  width: 150px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 3px solid #d08e0b;
+  background-color: rgb(53, 52, 52);
+  color: white;
 }
-.header_line .mobile_menu img{
-    padding-top: 13px;
-    height: 70px;
-    transition: 0.5s;
+.header_line .mobile_menu img {
+  padding-top: 13px;
+  height: 70px;
+  transition: 0.5s;
 }
-.header_line .mobile_menu img.animation{
-    opacity: 30%;
+.header_line .mobile_menu img.animation {
+  opacity: 30%;
 }
-.header_line .notification_number{
-    background-color: tomato;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    color: white;
-    font-size: 15px;
-    border-radius: 50%;
-    text-align: center;
-    bottom: 22px;
-    left: 10px;
+.header_line .notification_number {
+  background-color: tomato;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: white;
+  font-size: 15px;
+  border-radius: 50%;
+  text-align: center;
+  bottom: 22px;
+  left: 10px;
 }
-.header_line .notification_number span{
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
+.header_line .notification_number span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
-.header_line .account_icon_none{
-    opacity: 0.5;
-    pointer-events: none;
+.header_line .account_icon_none {
+  opacity: 0.5;
+  pointer-events: none;
 }

@@ -34,7 +34,7 @@
                     url: "../bd_send/user/message_users.php?user_id=<?= $user_id ?>",
                     data: { thirst_message: message_value }
                 })
-                    .done(function () {
+                    .done(function (response) {
                         $('.start_chat_container .overlay').addClass("overlay_active");
                         $('.start_chat_container button').addClass("load");
                         setTimeout(() => {

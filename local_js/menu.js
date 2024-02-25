@@ -13,5 +13,5 @@ function menu_close(){
     get_menu_sub.style.opacity = 0;
     setTimeout( () => {
         get_menu_sub.classList.remove("menu_sub_animation");
-    }, 100);
+    }, 500);
 }

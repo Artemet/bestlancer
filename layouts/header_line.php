@@ -11,8 +11,11 @@
     if (isset($_SESSION["nik"])) {
         include "modal/other.php";
         $my_nik = $_SESSION["nik"];
-        $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = '$my_nik'";
-        $project_filter_query = mysqli_query($bd_connect, $project_filter);
+        $project_filter = "SELECT `filter` FROM `user_registoring` WHERE `nik` = ?";
+        $project_filter_stmt = mysqli_prepare($bd_connect, $project_filter);
+        mysqli_stmt_bind_param($project_filter_stmt, "s", $my_nik);
+        mysqli_stmt_execute($project_filter_stmt);
+        $project_filter_query = mysqli_stmt_get_result($project_filter_stmt);
         $project_filter_resolt = mysqli_fetch_assoc($project_filter_query)['filter'];
         if (empty($project_filter_resolt)) {
             $project_filter_resolt = "tasks.php";
@@ -31,54 +34,60 @@
                 </div>
                 <?php
                 if (strpos($currentURL, "registor") == false):
-                ?>
-                <div class="links">
-                    <?php
-                    $link_temp = -1;
-                    $links_text = array("Заказы", "Фрилансеры", "Услуги", "Форум", "Новости");
-                    $links_href = array("$project_filter_resolt", "#", "../pages/services.php", "#", "../pages/news.php");
-                    foreach ($links_text as $link) {
-                        $link_temp++;
-                        echo "<a href='$links_href[$link_temp]'>$link</a>";
-                    }
                     ?>
-                </div>
-                <?php
+                    <div class="links">
+                        <?php
+                        $link_temp = -1;
+                        $links_text = array("Заказы", "Фрилансеры", "Услуги", "Форум", "Новости");
+                        $links_href = array("$project_filter_resolt", "#", "../pages/services.php", "#", "../pages/news.php");
+                        foreach ($links_text as $link) {
+                            $link_temp++;
+                            echo "<a href='$links_href[$link_temp]'>$link</a>";
+                        }
+                        ?>
+                    </div>
+                    <?php
                 endif;
                 ?>
             </div>
-            <div class="mobile_menu">
-                <div class="img" onclick="menu_open()">
-                    <img src="../res/burger_menu.png" alt="">
-                </div>
-                <div class="menu_sub">
-                    <div class="cross" onclick="menu_close()">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                            viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                            <style>
-                                svg {
-                                    fill: #d08e0b !important
-                                }
-                            </style>
-                            <path
-                                d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                        </svg>
+            <?php
+            if (strpos($currentURL, "registor") == false):
+                ?>
+                <div class="mobile_menu">
+                    <div class="img" onclick="menu_open()">
+                        <img src="../res/burger_menu.png" alt="">
                     </div>
-                    <?php
-                    foreach ($links_text as $link) {
-                        echo "<a href='$links_href[$link_temp]' class='mobile_links'>$link</a>";
-                    }
-                    if (!isset($_SESSION["nik"])) {
-                        echo '<div class="buttons">
-                                    <div class="registor" onclick="open_form_one()"><button>Регистрация</button></div>
+                    <div class="menu_sub">
+                        <div class="cross" onclick="menu_close()">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <style>
+                                    svg {
+                                        fill: #d08e0b !important
+                                    }
+                                </style>
+                                <path
+                                    d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                            </svg>
+                        </div>
+                        <?php
+                        $link_temp = -1;
+                        foreach ($links_text as $link) {
+                            $link_temp++;
+                            echo "<a href='$links_href[$link_temp]' class='mobile_links'>$link</a>";
+                        }
+                        if (!isset($_SESSION["nik"])) {
+                            echo '<div class="buttons">
+                                    <div class="registor" onclick="open_form_one()"><a href="../pages/registor.php"><button>Регистрация</button></a></div>
                                     <div class="login" onclick="open_form_two()"><button>Вход</button></div>
                                 </div>';
-                    }
-                    ?>
+                        }
+                        ?>
+                    </div>
                 </div>
-            </div>
 
-            <?php
+                <?php
+            endif;
             if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true):
                 ?>
                 <div class="user_panel">
@@ -113,8 +122,11 @@
                     if ($result) {
                         while ($row = mysqli_fetch_row($result)) {
                             $table_name = $row[0];
-                            $count_query = "SELECT COUNT(*) AS total FROM $table_name WHERE order_nik = '$user_nik'";
-                            $count_result = mysqli_query($bd_connect, $count_query);
+                            $count_query = "SELECT COUNT(*) AS total FROM $table_name WHERE order_nik = ?";
+                            $count_stmt = mysqli_prepare($bd_connect, $count_query);
+                            mysqli_stmt_bind_param($count_stmt, "s", $user_nik);
+                            mysqli_stmt_execute($count_stmt);
+                            $count_result = mysqli_stmt_get_result($count_stmt);
                             $count_row = mysqli_fetch_assoc($count_result);
                             $total_rows = $count_row['total'];
                             if ($total_rows == 0) {
@@ -126,8 +138,12 @@
                     $notification_temp = 0;
                     $notification_num = null;
                     $message_num = null;
-                    $notification_sql = "SELECT * FROM `user_notification` WHERE `nik` = '$user_nik'";
-                    $notification_query = mysqli_query($bd_connect, $notification_sql);
+                    $notification_sql = "SELECT * FROM `user_notification` WHERE `nik` = ?";
+                    $notification_stmt = mysqli_prepare($bd_connect, $notification_sql);
+                    mysqli_stmt_bind_param($notification_stmt, "s", $user_nik);
+                    mysqli_stmt_execute($notification_stmt);
+                    $notification_query = mysqli_stmt_get_result($notification_stmt);
+
                     while ($notification_resolt = mysqli_fetch_assoc($notification_query)) {
                         $notification_temp++;
                         $message_num = (int) $notification_resolt['messages'];
@@ -208,12 +224,12 @@
                 ?>
                 <div class="header_part header_part_two">
                     <?php
-                        if (strpos($currentURL, "registor") == false):
-                    ?>
-                    <div class="registor button" title="Пройдите регистрацию"><a
-                            href="../pages/registor.php">Регистрация</a></div>
-                    <?php
-                        endif;
+                    if (strpos($currentURL, "registor") == false):
+                        ?>
+                        <div class="registor button" title="Пройдите регистрацию"><a
+                                href="../pages/registor.php">Регистрация</a></div>
+                        <?php
+                    endif;
                     ?>
                     <div class="login button" onclick="open_form_two()" title="Зайдите в аккаунт">Вход</div>
                 </div>

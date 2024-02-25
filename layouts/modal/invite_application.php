@@ -22,23 +22,33 @@
                 $resolt_icon_path = null;
                 $resolt_nik = null;
                 $acquaintance_temp = 0;
-                $acquaintance_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = '$nik' OR `nik_two` = '$nik'";
-                $acquaintance_query = mysqli_query($bd_connect, $acquaintance_sql);
-                while ($acquaintance_resolt = mysqli_fetch_assoc($acquaintance_query)):
+                $acquaintance_sql = "SELECT * FROM `messenger_users` WHERE `nik_one` = ? OR `nik_two` = ?";
+                $acquaintance_stmt = mysqli_prepare($bd_connect, $acquaintance_sql);
+                mysqli_stmt_bind_param($acquaintance_stmt, "ss", $nik, $nik);
+                mysqli_stmt_execute($acquaintance_stmt);
+                $acquaintance_result = mysqli_stmt_get_result($acquaintance_stmt);
+
+                while ($acquaintance_resolt = mysqli_fetch_assoc($acquaintance_result)):
                     $acquaintance_temp++;
                     if ($acquaintance_resolt["nik_one"] == $nik) {
                         $resolt_nik = $acquaintance_resolt["nik_two"];
                     } else {
                         $resolt_nik = $acquaintance_resolt["nik_one"];
                     }
-                    $icon_sql = "SELECT `icon_path` FROM `user_registoring` WHERE `nik` = '$resolt_nik'";
-                    $icon_query = mysqli_query($bd_connect, $icon_sql);
-                    $resolt_icon_path = mysqli_fetch_assoc($icon_query)["icon_path"];
+                    $icon_sql = "SELECT `icon_path` FROM `user_registoring` WHERE `nik` = ?";
+                    $icon_stmt = mysqli_prepare($bd_connect, $icon_sql);
+                    mysqli_stmt_bind_param($icon_stmt, "s", $resolt_nik);
+                    mysqli_stmt_execute($icon_stmt);
+                    $icon_result = mysqli_stmt_get_result($icon_stmt);
+                    $resolt_icon_path = mysqli_fetch_assoc($icon_result)["icon_path"];
                     //past_acquaintance
                     $row_class = null;
                     $past_acquaintance_repeat = false;
-                    $past_acquaintance = "SELECT * FROM `notifications` WHERE `order_nik` = '$resolt_nik' AND `nik` = '$nik' AND `order_information` = '$order_id'";
-                    $past_acquaintance_query = mysqli_query($bd_connect, $past_acquaintance);
+                    $past_acquaintance = "SELECT * FROM `notifications` WHERE `order_nik` = ? AND `nik` = ? AND `order_information` = ?";
+                    $past_stmt = mysqli_prepare($bd_connect, $past_acquaintance);
+                    mysqli_stmt_bind_param($past_stmt, "sss", $resolt_nik, $nik, $order_id);
+                    mysqli_stmt_execute($past_stmt);
+                    $past_acquaintance_query = mysqli_stmt_get_result($past_stmt);
 
                     while ($past_acquaintance_resolt = mysqli_fetch_assoc($past_acquaintance_query)) {
                         $past_acquaintance_repeat = true;
