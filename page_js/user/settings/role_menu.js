@@ -6,13 +6,6 @@ function role_menu(){
     get_role_input.addEventListener("click", function (){
         const get_sub_wrapper = document.querySelector(".settings_container .role_input .sub_wrapper");
         get_sub_wrapper.classList.toggle("sub_wrapper_animation");
-        const get_profile_setting = document.querySelectorAll(".settings_container .setting_sub")[1];
-        get_profile_setting.classList.toggle("menu_include");
-        if (get_profile_setting.className.includes("menu_include")){
-            get_profile_setting.style.height = 300 + "px";
-        } else{
-            get_profile_setting.style.height = profile_height + "px";
-        }
     });
     //option_click_script
     get_input_options.forEach( (item) => {
