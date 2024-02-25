@@ -5,96 +5,81 @@ if (!isset($_SESSION["nik"])) {
     header("Location: ../../pages/home.php");
     exit;
 }
-$price = intval($_POST["price"]);
-$time = intval($_POST["time"]);
-$payment_option = "";
-$payment_choice = "";
+
+$price = $_POST["price"];
+$time = $_POST["time"];
+$payment_option = $_POST["payment_option"];
+$payment_choice = $_POST["payment_choice"];
 $user_message = $_POST["user_message"];
-//application_date
-$date = date("Y.m.d");
-$date_resolt = null;
-list($year, $month, $day) = explode(".", $date);
-$date_array = array($year, $month, $day);
-for ($i = 0; $i < count($date_array); $i++) {
-    if ($i >= 1) {
-        $date_resolt .= ".";
-    }
-    $date_resolt .= $date_array[$i];
-}
 $nik = $_SESSION["nik"];
+
 if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
-    $order_id = $_GET['order_id'];
-    $sql = "SELECT * FROM `orders` WHERE `id` = $order_id";
-    $query = mysqli_query($bd_connect, $sql);
-    $order = mysqli_fetch_assoc($query);
+    $order_id = intval($_GET['order_id']);
+
+    $stmt_order = mysqli_prepare($bd_connect, "SELECT `order_name`, `nik` FROM `orders` WHERE `id` = ?");
+    mysqli_stmt_bind_param($stmt_order, "i", $order_id);
+    mysqli_stmt_execute($stmt_order);
+    $result_order = mysqli_stmt_get_result($stmt_order);
+    $order = mysqli_fetch_assoc($result_order);
     $order_name = $order['order_name'];
     $orderer_nik = $order['nik'];
 
-    //block_check
-    $user_blocked = false;
-    $blocking_orderer = $order['nik'];
-    $block_sql = "SELECT * FROM `messenger_users` WHERE ((`nik_one` = '$nik' AND `nik_two` = '$orderer_nik') OR (`nik_one` = '$orderer_nik' AND `nik_two` = '$nik')) AND `status` = 'block'";
-    $block_query = mysqli_query($bd_connect, $block_sql);
-    while ($block_resolt = mysqli_fetch_assoc($block_query)) {
-        $user_blocked = true;
-    }
-    if ($user_blocked == true) {
-        header("Location: ../../pages/make_application.php?order_id=$order_id");
-        exit;
-    }
-
-    $existingResponseQuery = "SELECT * FROM `orders_responses` WHERE `order_name` = '$order_name' AND `nik` = '$nik'";
-    $existingResponseResult = mysqli_query($bd_connect, $existingResponseQuery);
+    $stmt_response_check = mysqli_prepare($bd_connect, "SELECT * FROM `orders_responses` WHERE `order_name` = ? AND `nik` = ?");
+    mysqli_stmt_bind_param($stmt_response_check, "ss", $order_name, $nik);
+    mysqli_stmt_execute($stmt_response_check);
+    $existingResponseResult = mysqli_stmt_get_result($stmt_response_check);
 
     //price_check
-    $price_id_sql = "SELECT * FROM `orders` WHERE `id` = '$order_id'";
-    $price_id_query = mysqli_query($bd_connect, $price_id_sql);
-    $price_id_row = mysqli_fetch_assoc($price_id_query);
+    $stmt_price_check = mysqli_prepare($bd_connect, "SELECT `order_price` FROM `orders` WHERE `id` = ?");
+    mysqli_stmt_bind_param($stmt_price_check, "i", $order_id);
+    mysqli_stmt_execute($stmt_price_check);
+    $result_price_check = mysqli_stmt_get_result($stmt_price_check);
+    $price_id_row = mysqli_fetch_assoc($result_price_check);
     if ($price_id_row['order_price'] >= 1) {
-        if ($price_id_row['order_price'] < $price || $price == 0) {
+        if ($price_id_row['order_price'] < $price || $price == 0 || preg_match('/[a-zA-Z]/', $price)) {
             header("Location: ../../pages/make_application.php?order_id=$order_id");
             exit;
         }
     }
-    if (preg_match('/[a-zA-Z]/', $price)) {
-        header("Location: ../../pages/make_application.php?order_id=$order_id");
-        exit;
-    }
+
     if (mysqli_num_rows($existingResponseResult) === 0) {
-        //max_date_push
-        $max_date_sql = "SELECT `application_date` FROM `user_registoring` WHERE `nik` = '$nik'";
-        $max_date_query = mysqli_query($bd_connect, $max_date_sql);
-        $max_date_resolt = mysqli_fetch_assoc($max_date_query)['application_date'];
+        $stmt_insert_response = mysqli_prepare($bd_connect, "INSERT INTO `orders_responses` (`id`, `order_id`, `price`, `time`, `payment_option`, `payment_choice`, `user_message`, `nik`, `orderer_nik`, `order_name`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt_insert_response, "idsssssss", $order_id, $price, $time, $payment_option, $payment_choice, $user_message, $nik, $orderer_nik, $order_name);
+        mysqli_stmt_execute($stmt_insert_response);
 
-        $sql = "INSERT INTO `orders_responses` (`id`, `order_id`, `price`, `time`, `payment_option`, `payment_choice`, `user_message`, `nik`, `orderer_nik`, `order_name`, `response_date`, `max_date`) VALUES (NULL, '$order_id', '$price', '$time', '$payment_option', '$payment_choice', '$user_message', '$nik', '$orderer_nik', '$order_name', '$date', '$max_date_resolt')";
-        $order_query = mysqli_query($bd_connect, $sql);
-        if ($order_query) {
-            //time
-            $notification_time = date('H:i');
+        //time
+        $notification_time = date('H:i');
 
-            $notification_add = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `time`, `date`, `payment_sum`, `type`) VALUES (NULL, '$order_name', '$order_id', '', '$orderer_nik', '$nik', '$notification_time', '16 апреля', 0, 'application')";
-            $notification_query = mysqli_query($bd_connect, $notification_add);
-        }
+        $notification_add = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `time`, `date`, `payment_sum`, `type`) VALUES (NULL, ?, ?, '', ?, ?, ?, '3 октября', 0, 'application')";
+        $stmt_notification_add = mysqli_prepare($bd_connect, $notification_add);
+        mysqli_stmt_bind_param($stmt_notification_add, "ssiss", $order_name, $order_id, $orderer_nik, $nik, $notification_time);
+        mysqli_stmt_execute($stmt_notification_add);
     }
 
     //user_notification
     $notification_row = false;
-    $notification_check = "SELECT `nik` FROM `user_notification` WHERE `nik` = '$orderer_nik'";
-    $notification_check_query = mysqli_query($bd_connect, $notification_check);
-    while ($notification_system = mysqli_fetch_assoc($notification_check_query)) {
+    $stmt_notification_check = mysqli_prepare($bd_connect, "SELECT `bell` FROM `user_notification` WHERE `nik` = ?");
+    mysqli_stmt_bind_param($stmt_notification_check, "s", $orderer_nik);
+    mysqli_stmt_execute($stmt_notification_check);
+    $result_notification_check = mysqli_stmt_get_result($stmt_notification_check);
+    $notification_system = mysqli_fetch_assoc($result_notification_check);
+    if ($notification_system) {
         $notification_row = true;
     }
+
     if ($notification_row == false) {
-        $notification_sql = "INSERT INTO `user_notification` (`id`, `messages`, `bell`, `nik`) VALUES (NULL, 0, 1, '$orderer_nik')";
-    } elseif ($notification_row == true) {
-        $old_notification = "SELECT `bell` FROM `user_notification` WHERE `nik` = '$orderer_nik'";
-        $old_notification_query = mysqli_query($bd_connect, $old_notification);
-        $old_notification_resolt = mysqli_fetch_assoc($old_notification_query)['bell'] + 1;
-        $old_notification_resolt = mysqli_real_escape_string($bd_connect, $old_notification_resolt);
-        $notification_sql = "UPDATE `user_notification` SET `bell` = '$old_notification_resolt' WHERE `nik` = '$orderer_nik'";
+        $notification_sql = "INSERT INTO `user_notification` (`id`, `messages`, `bell`, `nik`) VALUES (NULL, 0, 1, ?)";
+    } else {
+        $old_notification_resolt = $notification_system['bell'] + 1;
+        $notification_sql = "UPDATE `user_notification` SET `bell` = ? WHERE `nik` = ?";
     }
-    $notification_query = mysqli_query($bd_connect, $notification_sql);
+
+    $stmt_notification_update = mysqli_prepare($bd_connect, $notification_sql);
+    mysqli_stmt_bind_param($stmt_notification_update, "is", $old_notification_resolt, $orderer_nik);
+    mysqli_stmt_execute($stmt_notification_update);
 } else {
     $order_name = "Заказ не найден!";
 }
+
+header("Location: ../../pages/order_page.php?order_id=$order_id");
 ?>

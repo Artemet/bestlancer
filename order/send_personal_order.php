@@ -22,7 +22,7 @@ if (!empty($_FILES['file_send'])) {
         header("Location: ../positive/positive_order_send.php");
     }
 }
-$order_sql = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `time`, `date`, `payment_sum`, `type`) VALUES (NULL, '$order_name', '$order_information', '$file_name', '$order_nik', '$nik', '00:00:00', '5 сентября', 0, 'personal')";
+$order_sql = "INSERT INTO `notifications` (`id`, `order_name`, `order_information`, `order_file`, `order_nik`, `nik`, `time`, `date`, `payment_sum`, `type`) VALUES (NULL, '$order_name', '$order_information', '$file_name', '$order_nik', '$nik', '00:00:00', '5 мая', 0, 'personal')";
 $order_query = mysqli_query($bd_connect, $order_sql);
 if ($order_query) {
     $notification_row = false;

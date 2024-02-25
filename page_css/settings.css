@@ -44,18 +44,16 @@
     margin-left: 20px;
     padding-top: 10px;
     margin-top: 10px;
+    display: none;
     overflow: hidden;
     transition: 0.5s;
+}
+.settings_container .setting_sub_active{
+    display: block;
 }
 .settings_container .background_options{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-}
-.settings_container .setting_sub_none{
-    border: none;
-    height: 0 !important;
-    padding-top: 0;
-    margin-top: 0;
 }
 .settings_container .setting_sub h3{
     margin: 0;
@@ -64,6 +62,13 @@
 }
 .settings_container .setting_sub div{
     margin-top: 20px;
+}
+.settings_container .requisites_wrapper{
+    transition: 0.5s;
+}
+.settings_container .requisites_wrapper_load{
+    opacity: 0.7;
+    pointer-events: none;
 }
 .settings_container .setting_sub button{
     padding: 5px;
@@ -87,14 +92,11 @@
     margin-top: 5px;
     background-color: rgb(79, 130, 3);
     border-radius: 5px;
-    transition: 0.5s;
-    overflow: hidden;
-    height: 0;
-    position: absolute;
     width: 100%;
+    display: none;
 }
 .settings_container .role_input .sub_wrapper_animation{
-    height: 130px;
+    display: block;
 }
 .settings_container .role_input .sub_option p{
     margin: 0;

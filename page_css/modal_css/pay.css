@@ -72,6 +72,10 @@
 .pay_container .payment_requisition p{
     margin: 0;
 }
+.pay_container .payment_requisition p.none{
+    color: rgb(51, 51, 51);
+    font-size: 16px;
+}
 .pay_container .payment_requisition p.option_name{
     font-size: 15px;
     color: gray;

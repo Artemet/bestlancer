@@ -3,7 +3,6 @@ session_start();
 include "../database_connect.php";
 $order_name = $_POST["order_name"];
 $order_information = $_POST["order_information"];
-
 $date = date("Y.m.d");
 $date_resolt = null;
 list($year, $month, $day) = explode(".", $date);
@@ -21,19 +20,18 @@ if (empty($order_name) || empty($order_information)) {
 if (!empty($_FILES['file_send'])) {
     $file = $_FILES['file_send'];
     $file_name = $file['name'];
-    echo $file_name;
     $pathFile = __DIR__ . '/order_files/' . $file_name;
     if (!move_uploaded_file($file['tmp_name'], $pathFile)) {
-        //no file script
+        echo 'Ошибка';
     }
 }
 $order_price = $_POST["order_price"];
 $order_email = $_SESSION["email"];
 $order_type = $_POST["order_type"];
-if ($order_type != "Заказ" && $order_type != "Вакансия") {
-    echo "Warning: Ошибка с поля, перезагрузите страницу!";
-    exit;
-}
+// if ($order_type !== "Заказ" || $order_type !== "Вакансия") {
+//     header("Location: ../../pages/make_order.php");
+//     exit;
+// }
 
 $main_order_category = $_POST["main_order_category"];
 $medium_order_category = $_POST["medium_order_category"];
@@ -49,6 +47,9 @@ $final_options = array("Иллюстрации и рисунки", "Тату, п
 $final_options_resolt = array_search($final_order_category, $final_options) + 1;
 
 $nik = $_SESSION["nik"];
-$sql = "INSERT INTO `orders` (`id`, `order_name`, `order_information`, `file_path`, `order_price`, `order_email`, `type`, `main_category`, `medium_category`, `final_category`, `date`, `responsible_id`, `progress`, `time`, `nik`) VALUES (NULL, '$order_name', '$order_information', '$file_name', '$order_price', '$order_email', '$order_type', '$main_category_resolt', '$medium_options_resolt', '$final_options_resolt', '$date', 0, 1, 0, '$nik')";
-$query = mysqli_query($bd_connect, $sql);
+$sql = "INSERT INTO `orders` (`id`, `order_name`, `order_information`, `file_path`, `order_price`, `order_email`, `type`, `main_category`, `medium_category`, `final_category`, `date`, `nik`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = mysqli_prepare($bd_connect, $sql);
+mysqli_stmt_bind_param($stmt, "ssssssiiisss", $order_name, $order_information, $file_name, $order_price, $order_email, $order_type, $main_category_resolt, $medium_options_resolt, $final_options_resolt, $date, $nik);
+mysqli_stmt_execute($stmt);
+header("location: ../../pages/tasks.php");
 ?>

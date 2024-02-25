@@ -93,8 +93,7 @@
         width: 90%;
     }
     .bestlancer_about h2{
-        display: grid;
-        padding-bottom: 40px;
+        font-size: 20px;
     }
 }
 @media only screen and (max-width: 503px){

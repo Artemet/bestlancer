@@ -1,0 +1,63 @@
+/* registor_modal_style */
+@media only screen and (max-width: 914px) {
+  .registor_container {
+    margin: 140px 10px;
+  }
+}
+@media only screen and (max-width: 876px) {
+  .registor_container .role_options {
+    grid-template-columns: 1fr;
+  }
+  .registor_container .main_registor_question .line_block {
+    grid-template-columns: 1fr;
+  }
+  .registor_question {
+    width: 85%;
+  }
+  .registor_container .main_registor_question {
+    width: 85%;
+  }
+  .registor_container .code_registor_question {
+    width: 85%;
+  }
+  .registor_container .end_registor_question {
+    width: 85%;
+  }
+  .registor_container .finish_window {
+    width: 85%;
+  }
+}
+@media only screen and (max-width: 657px) {
+  .registor_container .finish_window p {
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 637px) {
+  .registor_container .checkbox_choice p {
+    font-size: 12px;
+  }
+  .registor_container .checkbox_choice p br {
+    display: none;
+  }
+}
+@media only screen and (max-width: 570px) {
+  .question h2 {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .registor_container p.information_text br {
+    display: none;
+  }
+}
+@media only screen and (max-width: 434px) {
+  .question h2 {
+    font-size: 15px;
+  }
+  .question h2 br {
+    display: none;
+  }
+  .registor_container .role_option p {
+    font-size: 14px;
+  }
+}

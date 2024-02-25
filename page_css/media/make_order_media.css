@@ -1,9 +1,49 @@
 /* make_order_media */
-@media only screen and (max-width: 719px){
-    .make_order_container .checkbox_wrapper{
-        display: grid;
-    }
-    .make_order_container .checkbox_sub{
-        position: inherit;
-    }
+@media only screen and (max-width: 719px) {
+  .make_order_container .checkbox_wrapper {
+    display: grid;
+  }
+  .make_order_container .checkbox_sub {
+    position: inherit;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .order_double_container .description p {
+    padding-right: 20%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  b.input_name {
+    font-size: 20px;
+  }
+  .make_order_container .checkbox_block p {
+    font-size: 14px;
+  }
+  .make_order_container .category_part .inputs {
+    grid-template-columns: 1fr;
+  }
+}
+@media only screen and (max-width: 486px) {
+  .order_double_container .option p:not(.description) {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 422px) {
+  .order_double_container .doubles_wrapper {
+    padding: 20px 0;
+  }
+  .order_double_container .description p {
+    padding-right: 10px;
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .order_double_container .text {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .order_double_container p.price {
+    grid-row: 1;
+    padding: 0;
+  }
 }

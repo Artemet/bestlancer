@@ -1,32 +1,76 @@
 /* order_page_media_style */
-@media only screen and (max-width: 757px){
-    .order_page .user_order .part_one{
-        grid-template-columns: 1fr;
-    }
-    .order_page .user_order .part_two{
-        border-top: 2px solid rgb(79, 130, 3);
-        padding: 10px 0;
-        margin: 0 10px;
-    }
-    .order_page .user_order .part_one p{
-        border-right: none;
-    }
-    .order_page .user_order .user_price{
-        margin: auto;
-    }
-    .order_page .user_order .part_one span{
-        padding-left: 0;
-    }
+@media only screen and (max-width: 757px) {
+  .order_page .user_order .part_one {
+    grid-template-columns: 1fr;
+  }
+  .order_page .user_order .part_two {
+    border-top: 2px solid rgb(79, 130, 3);
+    padding: 10px 0;
+    margin: 0 10px;
+  }
+  .order_page .user_order .part_one p {
+    border-right: none;
+  }
+  .order_page .user_order .user_price {
+    margin: auto;
+  }
+  .order_page .user_order .part_one span {
+    padding-left: 0;
+  }
 }
-@media only screen and (max-width: 521px){
-    .order_page .user_order .part_two{
-        grid-template-columns: 1fr;
-    }
-    .order_page .user_order .button_option{
-        width: 100%;
-    }
-    .order_page .user_order .part_two p{
-        padding: 5px 0;
-        text-align: center;
-    }
+@media only screen and (max-width: 555px) {
+  .order_page .header_wrapper {
+    grid-template-columns: 1fr;
+  }
+  .order_page .button_choice {
+    padding: 20px 0;
+    grid-row: 1;
+  }
+}
+@media only screen and (max-width: 521px) {
+  .order_page .user_order .part_two {
+    grid-template-columns: 1fr;
+  }
+  .order_page .user_order .button_option {
+    width: 100%;
+  }
+  .order_page .user_order .part_two p {
+    padding: 5px 0;
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .order_page .button_choice button {
+    width: 100%;
+  }
+  .order_page .application_number_wrapper h2 {
+    font-size: 18px;
+    padding-right: 3px;
+  }
+  .order_page .application_number_wrapper a {
+    font-size: 17px;
+  }
+}
+@media only screen and (max-width: 489px) {
+  .order_page .header h2 {
+    padding-top: 15px;
+    font-size: 20px !important;
+  }
+  .header .header_title {
+    padding-bottom: 15px;
+  }
+  .order_page .order_information {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 434px) {
+  .order_page .application_number_wrapper {
+    grid-gap: 5px;
+  }
+  .order_page .application_number_wrapper a {
+    display: none;
+  }
+  .order_page .user_order .part_one p {
+    font-size: 15px;
+  }
 }

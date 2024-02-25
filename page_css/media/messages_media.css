@@ -13,6 +13,9 @@
     }
 }
 @media only screen and (max-width: 594px){
+    .container{
+        margin: 100px 30px;
+    }
     .messanger_container{
         display: block;
         margin-left: 1px;
@@ -29,5 +32,8 @@
     .user_chat{
         opacity: 0;
         display: none;
+    }
+    .messanger_users .notification_number{
+        right: 10px;
     }
 }

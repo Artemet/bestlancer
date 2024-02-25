@@ -1,441 +1,442 @@
 /* user_portfolio */
-.user_account{
-    border-radius: 10px;
+.user_account {
+  border-radius: 10px;
 }
-.user_account .mobile_choice{
-    display: none;
-    padding: 10px;
+.user_account .mobile_choice {
+  display: none;
+  padding: 10px;
 }
-.user_account .mobile_choice button{
-    width: 100% !important;
+.user_account .mobile_choice button {
+  width: 100% !important;
 }
-.user_information{
-    background-color: white;
-    padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom: 3px solid rgb(79, 130, 3);
-    display: flex;
+.user_information {
+  background-color: white;
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 3px solid rgb(79, 130, 3);
+  display: flex;
 }
-.user_account .project_covers .project{
-    width: 320px;
-    height: 332px;
-    position: relative;
-    border-radius: 20px;
-    background-color: white;
-    transition: 0.5s;
-    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
-    margin-bottom: 50px;
+.user_account .project_covers .project {
+  width: 320px;
+  height: 332px;
+  position: relative;
+  border-radius: 20px;
+  background-color: white;
+  transition: 0.5s;
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  margin-bottom: 50px;
 }
-.user_account p.no_project_text{
-    margin: 0;
-    padding: 0 !important;
+.user_account p.no_project_text {
+  margin: 0;
+  padding: 0 !important;
 }
-.user_account .card_container .user_information{
-    background: none;
-    align-items: center;
-    color: rgb(79, 130, 3);
-    border: none;
+.user_account .card_container .user_information {
+  background: none;
+  align-items: center;
+  color: rgb(79, 130, 3);
+  border: none;
 }
-.user_account p.date{
-    font-size: 12px;
-    color: gray;
-    margin: 0;
-    user-select: none;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    background-color: rgba(255, 255, 255, 0) !important;
+.user_account p.date {
+  font-size: 12px;
+  color: gray;
+  margin: 0;
+  user-select: none;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background-color: rgba(255, 255, 255, 0) !important;
 }
-.user_account a.add_project_link{
-    color: black;
+.user_account a.add_project_link {
+  color: black;
 }
-.user_account .add_project{
-    position: relative;
-    height: 282px;
-    pointer-events: none;
-    margin-bottom: 0 !important;
+.user_account .add_project {
+  position: relative;
+  height: 282px;
+  pointer-events: none;
+  margin-bottom: 0 !important;
 }
-.user_account .add_project .plus{
-    position: absolute;
-    top: 130px;
-    right: 0;
-    left: 0;
-    margin: auto;
-    height: 60px;
-    width: 60px;
-    border: 2px solid #d08e0b;
-    border-radius: 50%;
+.user_account .add_project .plus {
+  position: absolute;
+  top: 130px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  height: 60px;
+  width: 60px;
+  border: 2px solid #d08e0b;
+  border-radius: 50%;
 }
-.user_account .add_project .plus b{
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 10px;
-    text-align: center;
-    font-size: 30px;
+.user_account .add_project .plus b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10px;
+  text-align: center;
+  font-size: 30px;
 }
-.user_account .project_covers{
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+.user_account .project_covers {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.user_account .project img{
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    height: 213px;
-    width: 100%;
+.user_account .project img {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 213px;
+  width: 100%;
 }
-.user_account .card_container .user_information img{
-    height: 35px;
-    width: 35px !important;
-    border-radius: 5px;
-    margin-right: 10px;
+.user_account .card_container .user_information img {
+  height: 35px;
+  width: 35px !important;
+  border-radius: 5px;
+  margin-right: 10px;
 }
-.user_information .time{
-    color: rgb(79, 130, 3);
-    text-decoration: underline;
+.user_information .time {
+  color: rgb(79, 130, 3);
+  text-decoration: underline;
 }
-.user_information .buyer{
-    display: block !important;
+.user_information .buyer {
+  display: block !important;
 }
-.user_information .buyer div{
-    margin-bottom: 3px;
+.user_information .buyer div {
+  margin-bottom: 3px;
 }
-.user_information .information{
-    display: grid;
+.user_information .information {
+  display: grid;
 }
-.user_information .information u{
-    font-size: 20px;
+.user_information .information u {
+  font-size: 20px;
 }
-.user_information img{
-    height: 150px;
-    width: 150px;
-    border-radius: 10px;
-    border: 3px solid #d08e0b;
-    margin-right: 30px;
+.user_information img {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+  border: 3px solid #d08e0b;
+  margin-right: 30px;
 }
-.user_information .name{
-    display: flex;
-    font-weight: 700;
-    font-size: 20px;
-    align-items: center;
+.user_information .name {
+  display: flex;
+  font-weight: 700;
+  font-size: 20px;
+  align-items: center;
 }
-.user_information .name p{
-    margin: 0;
+.user_information .name p {
+  margin: 0;
 }
-.user_information .name p.first_name{
-    padding-right: 5px;
+.user_information .name p.first_name {
+  padding-right: 5px;
 }
-.user_information span.nik{
-    padding-left: 20px;
-    font-size: 15px;
-    font-weight: 300;
-    color: #d08e0b;
+.user_information span.nik {
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #d08e0b;
 }
-.user_information b.reviews{
-    color: rgb(79, 130, 3);
-    line-height: 30px;
+.user_information b.reviews {
+  color: rgb(79, 130, 3);
+  line-height: 30px;
 }
-.user_account .user_work{
-    padding-top: 20px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    border-bottom: 3px solid rgb(79, 130, 3);
+.user_account .user_work {
+  padding-top: 20px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 3px solid rgb(79, 130, 3);
 }
-.user_account .user_work div{
-    padding: 0 25px;
+.user_account .user_work div {
+  padding: 0 25px;
 }
-.user_account .user_work span{
-    font-weight: 700;
-    font-size: 20px;
-    color: #d08e0b;
+.user_account .user_work span {
+  font-weight: 700;
+  font-size: 20px;
+  color: #d08e0b;
 }
-.user_account .account_redactor{
-    padding-left: 100px;
-    position: relative;
+.user_account .account_redactor {
+  padding-left: 100px;
+  position: relative;
 }
-.user_account .account_redactor button{
-    width: 100%;
-    font-size: 20px;
-    border: 3px solid #d08e0b;
-    border-radius: 5px;
-    background-color: rgb(53, 52, 52);
-    color: white;
-    padding: 10px;
-    display: flex;
-    cursor: pointer;
-    transition: 0.5s;
+.user_account .account_redactor button {
+  width: 100%;
+  font-size: 20px;
+  border: 3px solid #d08e0b;
+  border-radius: 5px;
+  background-color: rgb(53, 52, 52);
+  color: white;
+  padding: 10px;
+  display: flex;
+  cursor: pointer;
+  transition: 0.5s;
 }
-.user_account .account_redactor button:hover .arrow{
-    color: #d08e0b;
+.user_account .account_redactor button:hover .arrow {
+  color: #d08e0b;
 }
-.user_account .account_redactor button.animation{
-    border-bottom: 0 solid rgb(79, 130, 3);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+.user_account .account_redactor button.animation {
+  border-bottom: 0 solid rgb(79, 130, 3);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
-.user_account .account_redactor .sub_menu{
-    color: #d08e0b;
-    margin-left: 100px;
-    overflow: hidden;
-    border: 3px solid rgb(79, 130, 3);
-    padding: 10px;
-    display: none;
-    opacity: 0;
-    position: absolute;
-    width: 285.594px;
-    transition: 0.5s;
-    background-color: rgb(53, 52, 52);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+.user_account .account_redactor .sub_menu {
+  color: #d08e0b;
+  margin-left: 100px;
+  overflow: hidden;
+  border: 3px solid rgb(79, 130, 3);
+  padding: 10px;
+  display: none;
+  opacity: 0;
+  position: absolute;
+  width: 285.594px;
+  transition: 0.5s;
+  background-color: rgb(53, 52, 52);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
-.user_account .account_redactor .sub_menu_open{
-    opacity: 1;
+.user_account .account_redactor .sub_menu_open {
+  opacity: 1;
 }
-.user_account .account_redactor .sub_menu_block{
-    display: block;
+.user_account .account_redactor .sub_menu_block {
+  display: block;
 }
-.user_account .account_redactor .arrow{
-    transition: 0.5s;
-    transform: rotate(180deg);
-    padding: 0 20px;
+.user_account .account_redactor .arrow {
+  transition: 0.5s;
+  transform: rotate(180deg);
+  padding: 0 20px;
 }
-.user_account .account_redactor .arrow_rotate{
-    transform: rotate(360deg);
+.user_account .account_redactor .arrow_rotate {
+  transform: rotate(360deg);
 }
-.user_account .account_redactor .sub_menu p{
-    cursor: pointer;
-    transition: 0.5s;
-    border-bottom: 3px solid rgb(79, 130, 3);
-    padding-bottom: 10px;
+.user_account .account_redactor .sub_menu p {
+  cursor: pointer;
+  transition: 0.5s;
+  border-bottom: 3px solid rgb(79, 130, 3);
+  padding-bottom: 10px;
 }
-.user_account .account_redactor .sub_menu a{
-    color: #d08e0b;
-    text-decoration: none;
+.user_account .account_redactor .sub_menu a {
+  color: #d08e0b;
+  text-decoration: none;
 }
-.user_account .account_redactor .sub_menu p:hover{
-    color: white;
+.user_account .account_redactor .sub_menu p:hover {
+  color: white;
 }
-.user_account .account_redactor .sub_menu p.animation_color{
-    color: white;
+.user_account .account_redactor .sub_menu p.animation_color {
+  color: white;
 }
-.user_account .user_block h2{
-    font-size: 35px;
-    color: rgb(79, 130, 3);
-    border-bottom: 3px solid #d08e0b;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+.user_account .user_block h2 {
+  font-size: 35px;
+  color: rgb(79, 130, 3);
+  border-bottom: 3px solid #d08e0b;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
 }
 .user_account .user_block {
-    padding: 10px;
-    background-color: white;
+  padding: 10px;
+  background-color: white;
 }
-.user_account .menu_block{
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+.user_account .menu_block {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
 }
-.user_account .about_user p{
-    font-size: 20px;
-    padding-right: 50px;
+.user_account .about_user p {
+  font-size: 20px;
+  padding-right: 50px;
 }
-.user_account p.no_information{
-    font-size: 14px;
-    color: gray;
-    padding: 0 !important;
-    line-height: normal !important;
+.user_account p.no_information {
+  font-size: 14px;
+  color: gray;
+  padding: 0 !important;
+  line-height: normal !important;
 }
-.user_account .menu_include p{
-    padding: 10px;
-    line-height: 50px;
-    background-color: white;
+.user_account .menu_include p {
+  padding: 10px;
+  line-height: 50px;
+  background-color: white;
 }
-.user_account .menu_include span{
-    background-color: rgb(79, 130, 3);
-    color: white;
-    padding: 10px;
-    border-radius: 50px;
-    margin-right: 15px;
+.user_account .menu_include span {
+  background-color: rgb(79, 130, 3);
+  color: white;
+  padding: 10px;
+  transition: 0.5s;
+  border-radius: 50px;
+  margin-right: 15px;
 }
-.user_account .menu_include .project_add span{
-    background-color: #d08e0b;
+.user_account .menu_include .project_add span {
+  background-color: #d08e0b;
 }
-.user_account .menu_include a{
-    text-decoration: none;
-    width: fit-content;
+.user_account .menu_include a {
+  text-decoration: none;
+  width: fit-content;
 }
-.user_account .menu_block{
-    border-bottom: 3px solid rgb(53, 52, 52);
+.user_account .menu_block {
+  border-bottom: 3px solid rgb(53, 52, 52);
 }
-.user_account .menu_include{
-    position: relative;
-    padding-bottom: 100px;
-    transition: 0.5s;
+.user_account .menu_include {
+  position: relative;
+  padding-bottom: 100px;
+  transition: 0.5s;
 }
-.user_account .menu_include h2{
-    border-bottom: none;
+.user_account .menu_include h2 {
+  border-bottom: none;
 }
-.user_account .sub_menu{
-    z-index: 1;
-    /* position: absolute; */
-    left: 0;
-    right: 0;
-    width: 100%;
-    overflow: hidden;
-    transition: 0.5s;
-    background-color: white;
+.user_account .sub_menu {
+  z-index: 1;
+  /* position: absolute; */
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.5s;
+  background-color: white;
 }
-.sub_menu_animation{
-    height: 0 !important;
+.sub_menu_animation {
+  height: 0 !important;
 }
-.user_account .sub_menu .include{
-    transition: 0.5s;
+.user_account .sub_menu .include {
+  transition: 0.5s;
 }
-.change_profile_container{
-    transition: 0.5s;
+.change_profile_container {
+  transition: 0.5s;
 }
-.change_profile_container_animation{
-    opacity: 1;
+.change_profile_container_animation {
+  opacity: 1;
 }
-.user_account .button_choice button{
-    width: 200px;
-    padding: 5px;
-    font-size: 15px;
-    cursor: pointer;
-    background-color: #d08e0b;
-    color: rgb(51, 51, 51);
-    font-weight: 700;
-    border: none;
-    border-radius: 5px;
-    transition: 0.5s;
+.user_account .button_choice button {
+  width: 200px;
+  padding: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #d08e0b;
+  color: rgb(51, 51, 51);
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  transition: 0.5s;
 }
-.user_account .button_choice button:hover{
-    opacity: 0.7;
+.user_account .button_choice button:hover {
+  opacity: 0.7;
 }
-.user_account .button_choice button.user_block{
-    background-color: red;
-    color: white;
+.user_account .button_choice button.user_block {
+  background-color: red;
+  color: white;
 }
-.user_account .button_choice div{
-    text-align: right;
-    margin: 10px 0;
+.user_account .button_choice div {
+  text-align: right;
+  margin: 10px 0;
 }
-.other_account{
-    display: grid;
-    grid-template-columns: auto auto 1fr;
+.other_account {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
 }
-.user_account a.make_service{
-    color: #d08e0b;
-    font-size: 20px;
-    width: fit-content;
-    transition: 0.5s;
+.user_account a.make_service {
+  color: #d08e0b;
+  font-size: 20px;
+  width: fit-content;
+  transition: 0.5s;
 }
-.user_account a.make_service:hover{
-    opacity: 0.5;
+.user_account a.make_service:hover {
+  opacity: 0.5;
 }
-.user_account b.level{
-    color: #d08e0b;
+.user_account b.level {
+  color: #d08e0b;
 }
-.user_account .level_line{
-    margin-top: 10px;
-    height: 10px;
-    width: 200px;
-    border: 2px solid black;
-    border-radius: 50px;
+.user_account .level_line {
+  margin-top: 10px;
+  height: 10px;
+  width: 200px;
+  border: 2px solid black;
+  border-radius: 50px;
 }
-.user_account div.level{
-    height: 100%;
-    width: 10%;
-    background-color: rgb(79, 130, 3);
-    border-radius: 50px;
+.user_account div.level {
+  height: 100%;
+  background-color: rgb(79, 130, 3);
+  border-radius: 50px;
 }
-.user_account .mobile_redactor{
-    display: none;
-    padding: 10px !important;
+.user_account .mobile_redactor {
+  display: none;
+  padding: 10px !important;
 }
-.user_information .online_information{
-    display: flex;
-    align-items: center;
+.user_information .online_information {
+  display: flex;
+  align-items: center;
 }
-.user_information .online_information p{
-    margin: 0;
+.user_information .online_information p {
+  margin: 0;
 }
-.user_information .online_information .circle{
-    margin-top: 3px;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    margin-right: 5px;
+.user_information .online_information .circle {
+  margin-top: 3px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
-.user_information .online_information .online{
-    background-color: green;
+.user_information .online_information .online {
+  background-color: green;
 }
-.user_information .online_information .not_online{
-    background-color: red;
+.user_information .online_information .not_online {
+  background-color: red;
 }
-.user_reviews .review{
-    padding: 10px;
-    position: relative;
-    border-radius: 20px;
-    background-color: rgba(211, 211, 211, 0.415);
+.user_reviews .review {
+  padding: 10px;
+  position: relative;
+  border-radius: 20px;
+  background-color: rgba(211, 211, 211, 0.415);
 }
-.user_reviews .review .user_icon img{
-    height: 40px;
-    width: 40px;
-    border-radius: 5px;
-    border: 3px solid gray;
-    margin-right: 10px;
+.user_reviews .review .user_icon img {
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  border: 3px solid gray;
+  margin-right: 10px;
 }
-.user_reviews .review .time{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding-right: 5px;
+.user_reviews .review .time {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 5px;
 }
-.user_reviews .review .time p{
-    font-size: 14px;
-    color: gray;
+.user_reviews .review .time p {
+  font-size: 14px;
+  color: gray;
 }
-.user_reviews .review_user{
-    display: flex;
-    align-items: center;
+.user_reviews .review_user {
+  display: flex;
+  align-items: center;
 }
-.user_reviews .review_date{
-    position: absolute;
-    top: 0;
-    right: 0;
+.user_reviews .review_date {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
-.user_reviews .review_date p{
-    margin: 0;
-    padding: 10px;
-    font-size: 12px;
-    color: gray;
+.user_reviews .review_date p {
+  margin: 0;
+  padding: 10px;
+  font-size: 12px;
+  color: gray;
 }
-.user_reviews .line{
-    margin: 0;
+.user_reviews .line {
+  margin: 0;
 }
-.user_reviews .review_quality{
-    display: flex;
-    align-items: center;
+.user_reviews .review_quality {
+  display: flex;
+  align-items: center;
 }
-.user_reviews .reviews_wrapper{
-    display: grid;
-    grid-gap: 30px;
+.user_reviews .reviews_wrapper {
+  display: grid;
+  grid-gap: 30px;
 }
-.user_reviews .review_quality .circle{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
+.user_reviews .review_quality .circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
-.user_reviews .review_quality .good{
-    background-color: rgb(79, 130, 3);
+.user_reviews .review_quality .good {
+  background-color: rgb(79, 130, 3);
 }
-.user_reviews .review_quality .bad{
-    background-color: tomato;
+.user_reviews .review_quality .bad {
+  background-color: tomato;
 }
-.user_reviews .review_quality p{
-    padding-left: 5px;
-    color: #d08e0b;
+.user_reviews .review_quality p {
+  padding-left: 5px;
+  color: #d08e0b;
 }

@@ -131,6 +131,9 @@
     .user_account .user_work{
         grid-template-columns: 1fr;
     }
+    .user_account .user_block h2{
+        font-size: 25px;
+    }
 }
 @media only screen and (max-width: 463px){
     .user_information img{

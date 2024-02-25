@@ -42,6 +42,16 @@
     transition: 0.5s;
     cursor: pointer;
 }
+.order_page .type_information{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.order_page .type_information p{
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+}
 .order_page .header .copy_icon svg:hover{
     opacity: 0.5;
 }
@@ -108,6 +118,7 @@
     pointer-events: none;
 }
 .order_page .users_applications{
+    position: relative;
     background-color: white;
     border-radius: 20px;
     padding: 20px;
