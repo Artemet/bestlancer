@@ -9,12 +9,13 @@ function email_warning()
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     $email_query = mysqli_stmt_get_result($stmt);
-    $email_row = mysqli_fetch_assoc($email_query);
-    if ($email_row) {
+    $row_count = mysqli_num_rows($email_query);
+
+    if ($row_count > 2) {
         header("Location: ../../pages/home.php");
         exit;
     } else {
-        $email_row = false;
+        $email_row = mysqli_fetch_assoc($email_query);
     }
 }
 if (!isset($_SESSION["nik"])) {
