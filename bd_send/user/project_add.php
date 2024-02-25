@@ -76,9 +76,12 @@ if (stripos($previous_page, "add_project") !== false) {
     }
 } elseif (stripos($previous_page, "project_page") !== false) {
     $project_id = $_GET['project_id'];
-    $project_id_sql = "SELECT * FROM project_cover WHERE id = $project_id";
-    $project_id_query = mysqli_query($bd_connect, $project_id_sql);
-    $project_id = mysqli_fetch_assoc($project_id_query);
+    $project_id_sql = "SELECT * FROM project_cover WHERE id = ?";
+    $stmt = mysqli_prepare($bd_connect, $project_id_sql);
+    mysqli_stmt_bind_param($stmt, "i", $project_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $project_row = mysqli_fetch_assoc($result);
 
     $project_name = mysqli_real_escape_string($bd_connect, $project_name);
     $project_link = mysqli_real_escape_string($bd_connect, $project_link);

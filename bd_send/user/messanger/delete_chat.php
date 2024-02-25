@@ -25,16 +25,30 @@ if (isset($_GET["chat_id"]) && is_numeric($_GET["chat_id"])) {
 
 //user_check
 $check_continue = false;
-$check_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = '$my_nik' OR `nik_two` = '$my_nik') AND `chat_id` = $chat_id";
-$check_query = mysqli_query($bd_connect, $check_sql);
-while ($request_count = mysqli_fetch_assoc($check_query)) {
-    $check_continue = true;
+$check_sql = "SELECT * FROM `messenger_users` WHERE (`nik_one` = ? OR `nik_two` = ?) AND `chat_id` = ?";
+$check_query = mysqli_prepare($bd_connect, $check_sql);
+if ($check_query) {
+    mysqli_stmt_bind_param($check_query, "ssi", $my_nik, $my_nik, $chat_id);
+    mysqli_stmt_execute($check_query);
+    $result = mysqli_stmt_get_result($check_query);
+    if (mysqli_num_rows($result) > 0) {
+        $check_continue = true;
+    }
+} else {
+    warning_return();
 }
+
 if ($check_continue == false) {
     warning_return();
 }
 
-$remove_companion_sql = "DELETE FROM `messenger_users` WHERE `chat_id` = '$chat_id'";
-$remove_companion_query = mysqli_query($bd_connect, $remove_companion_sql);
-header("Location: ../../../pages/user.php");
+$remove_companion_sql = "DELETE FROM `messenger_users` WHERE `chat_id` = ?";
+$remove_companion_query = mysqli_prepare($bd_connect, $remove_companion_sql);
+if ($remove_companion_query) {
+    mysqli_stmt_bind_param($remove_companion_query, "i", $chat_id);
+    mysqli_stmt_execute($remove_companion_query);
+    header("Location: ../../../pages/user.php");
+} else {
+    warning_return();
+}
 ?>

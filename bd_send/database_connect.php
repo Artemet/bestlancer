@@ -1,9 +1,17 @@
 <?php
+//local_server
 $bd_login = "root";
 $bd_password = "";
 $bd_name = "bestlancer";
 $bd_connect = new mysqli("localhost", $bd_login, $bd_password, $bd_name);
 date_default_timezone_set('Europe/Moscow');
+
+//net_server
+// $bd_login = "bes5104177_mysql";
+// $bd_password = "5zz+wXyY";
+// $bd_name = "bes5104177_bestlancer";
+// $bd_connect = new mysqli("bes5104177.mysql", $bd_login, $bd_password, $bd_name);
+// date_default_timezone_set('Europe/Moscow');
 
 //user_connect
 if (isset($_SESSION["nik"])) {
@@ -20,4 +28,7 @@ if (isset($_SESSION["nik"])) {
 
     $stmt->close();
 }
+
+//payment_prices
+$vacancy_pay = 250;
 ?>

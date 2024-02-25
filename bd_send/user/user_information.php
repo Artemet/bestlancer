@@ -17,9 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 {
                     global $bd_connect, $icon_resolt;
                     $my_nik = $_SESSION["nik"];
-                    $icon_sql = "SELECT * FROM `user_registoring` WHERE `nik` = '$my_nik'";
-                    $icon_query = mysqli_query($bd_connect, $icon_sql);
-                    $icon_resolt = mysqli_fetch_assoc($icon_query)['icon_path'];
+                    $icon_sql = "SELECT * FROM `user_registoring` WHERE `nik` = ?";
+                    $icon_query = mysqli_prepare($bd_connect, $icon_sql);
+                    mysqli_stmt_bind_param($icon_query, "s", $my_nik);
+                    mysqli_stmt_execute($icon_query);
+                    $icon_result = mysqli_stmt_get_result($icon_query);
+                    $icon_resolt = mysqli_fetch_assoc($icon_result)['icon_path'];
                     if ($icon_resolt == "user.png") {
                         return false;
                     } else {
@@ -40,6 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $user_time = $_POST["start_time"];
         }
         $about_user = $_POST["about_me"];
+        $my_knowledge = str_replace(",", " ", $_POST["knowledges"]);
+        if (empty($my_knowledge)) {
+            $my_knowledge = $user_resolt["skills"];
+        }
         $user_nik = $_SESSION["nik"];
         $user_country = mysqli_real_escape_string($bd_connect, $user_country);
         $user_age = mysqli_real_escape_string($bd_connect, $user_age);
@@ -52,19 +59,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $sql = null;
         if ($user_resolt["role"] == "seller") {
-            $sql = "UPDATE `user_registoring` SET `country` = '$user_country', `age` = '$user_age', `work_time` = '$user_time', `price` = '$user_price', `about` = '$about_user', `icon_path` = '$file_name' WHERE `nik` = '$user_nik'";
+            $sql = "UPDATE `user_registoring` SET `country` = ?, `age` = ?, `work_time` = ?, `price` = ?, `about` = ?, `skills` = ?, `icon_path` = ? WHERE `nik` = ?";
         } else {
-            $sql = "UPDATE `user_registoring` SET `country` = '$user_country', `age` = '$user_age', `about` = '$about_user', `icon_path` = '$file_name' WHERE `nik` = '$user_nik'";
+            $sql = "UPDATE `user_registoring` SET `country` = ?, `age` = ?, `about` = ?, `icon_path` = ? WHERE `nik` = ?";
         }
 
-        $query = mysqli_query($bd_connect, $sql);
+        $query = mysqli_prepare($bd_connect, $sql);
+        if ($user_resolt["role"] == "seller") {
+            mysqli_stmt_bind_param($query, "ssssssss", $user_country, $user_age, $user_time, $user_price, $about_user, $my_knowledge, $file_name, $user_nik);
+        } else {
+            mysqli_stmt_bind_param($query, "sssss", $user_country, $user_age, $about_user, $file_name, $user_nik);
+        }
 
-        if (!$query) {
+        if (mysqli_stmt_execute($query)) {
+            header("Location: ../../pages/user.php");
+            exit();
+        } else {
             header("Location: ../warnings/web_error.php");
-            die('Ошибка выполнения запроса: ' . mysqli_error($bd_connect));
+            exit();
         }
-        header("Location: ../../pages/user.php");
-        exit();
     }
 }
 ?>
