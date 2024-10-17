@@ -7,8 +7,8 @@ $bd_connect = new mysqli("localhost", $bd_login, $bd_password, $bd_name);
 date_default_timezone_set('Europe/Moscow');
 
 //net_server
-// $bd_login = "bes5104177_mysql";
-// $bd_password = "5zz+wXyY";
+// $bd_login = bestlancer;
+// $bd_password = "empty;
 // $bd_name = "bes5104177_bestlancer";
 // $bd_connect = new mysqli("bes5104177.mysql", $bd_login, $bd_password, $bd_name);
 // date_default_timezone_set('Europe/Moscow');
